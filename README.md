@@ -11,23 +11,23 @@ Pour l'instant, chacune de ces applications fait appel a une base de données di
 
 ### User Stories
 
-En tant qu'utilisateur, je veux avoir une interface visuelle.
-En tant qu'utilisateur, je veux pouvoir créer un compte.
-En tant qu'utilisateur, je veux pouvoir supprimer mon compte (depuis une app ikodi).
-En tant qu'utilisateur, je veux pouvoir récupérer mon compte en cas d'oubli de mot de passe.
+En tant qu'utilisateur, je veux avoir une interface visuelle.  
+En tant qu'utilisateur, je veux pouvoir créer un compte.  
+En tant qu'utilisateur, je veux pouvoir supprimer mon compte (depuis une app ikodi).  
+En tant qu'utilisateur, je veux pouvoir récupérer mon compte en cas d'oubli de mot de passe.  
 En tant qu'utilisateur, je veux pouvoir me connecter à toutes les app ikodi grace à ce compte.
 
 ## Arborescence
 
 url: https://auth.ikodi.eu
 
-Accès à l’application depuis une app ikodi
+Accès à l’application depuis une app ikodi  
 url: https://auth.ikodi.eu/?app=appname
 
-Formulaire de creation d'un compte
+Formulaire de creation d'un compte  
 url: https://auth.ikodi.eu/signup
 
-Formulaire de renvoi de mot de passe
+Formulaire de renvoi de mot de passe  
 url: https://auth.ikodi.eu/sendpass
 
 ## Stack technique
@@ -41,7 +41,7 @@ url: https://auth.ikodi.eu/sendpass
 - JWT
 - cors
 - Bases de données :
-- - PostgreSQL (Sequelize)
+    -  PostgreSQL
 
 ## Endpoints
 voir auth-api.ikodi.eu/doc
