@@ -11,8 +11,9 @@ Pour l'instant, chacune de ces applications fait appel a une base de données di
 
 ### User Stories
 
-En tant qu'utilisateur, je veux avoir une interface visuelle.  
+En tant qu'utilisateur, je veux avoir une interface visuelle donnant les différents choix de connexion / creation de compte / réinitialisation de mot de passe.  
 En tant qu'utilisateur, je veux pouvoir créer un compte.  
+En tant qu'utilisateur, je veux pouvoir me connecter.
 En tant qu'utilisateur, je veux pouvoir supprimer mon compte (depuis une app ikodi).  
 En tant qu'utilisateur, je veux pouvoir récupérer mon compte en cas d'oubli de mot de passe.  
 En tant qu'utilisateur, je veux pouvoir me connecter à toutes les app ikodi grace à ce compte.
@@ -34,6 +35,7 @@ url: https://auth.ikodi.eu/sendpass
 
 ### App Front : 
 - Framework : Vue + Vuex
+- json-server
 - axios
 
 ### API :
@@ -42,6 +44,7 @@ url: https://auth.ikodi.eu/sendpass
 - cors
 - Bases de données :
     -  PostgreSQL
+- Swagger
 
 ## Endpoints
-voir auth-api.ikodi.eu/doc
+voir auth.ikodi.eu/doc (quand sera prêt !)
