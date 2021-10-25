@@ -1,16 +1,13 @@
 <template>
   <section class="landing">
-    <div class="hero">
-      <img src="../assets/auth-hero.png" alt="hero img" class="hero__img" />
-      <div class="hero__text">Connect or Signup to IKODI apps</div>
-    </div>
+    <Hero />
     <div class="landing__options">
       <div class="landing__options__socialaccounts">
-        <Button text='Google' />
+        <Button text='Google' icon='<img src="https://img.icons8.com/color/48/000000/google-logo.png"/>'/>
         <Button text='Github' />
         <Button text='Linkedin' />
       </div>
-      <div class="divider --text"></div>
+      <Divider text="OU" />
       <div class="landing__options__formcontainer">
         <form >
           <input type="text" name="email">
@@ -19,9 +16,14 @@
         </form>
       </div>
       <p class="landing__options__forgotpassword">Forgot password ?</p>
-      <div class="divider"></div>
+      <Divider />
+
       <div class="landing__options__createprofile">
-        <button>Create profile</button>
+        <Button 
+          text='Create profile' 
+          width="80%" 
+          className="--grey"
+        />
       </div>
     </div>
   </section>
@@ -29,11 +31,15 @@
 
 <script>
 import Button from './Button.vue';
+import Divider from './Divider.vue';
+import Hero from './Hero.vue';
 
 export default {
   name: 'Landing',
   components: {
-    Button
+    Button,
+    Divider,
+    Hero,
   }
 }
 </script>
@@ -44,7 +50,9 @@ export default {
   height: 50%;
   width: 75%;
   display: flex;
-  border: 1px dashed blue;
+  justify-content: center;
+  align-items: center;
+  // border: 1px dashed blue;
   
   &__options {
     display: flex;
@@ -79,27 +87,18 @@ export default {
       align-items: center;
       justify-content: center;
       height: 25%;
+      width: 100%;
+    }
+    @media (max-width: 750px) {
+      width: 80%;
     }
   }
-}
-.hero {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border: 1px solid green;
-  & img {
+      
+  @media (max-width: 750px) {
+    flex-direction: column;
+    height: 80%;
     width: 100%;
-    border-radius: 15px;
-  }
-  &__text {
-    padding: 20px 0 20px 0;
-    text-align: center;
-    font-size: 1.5rem;
   }
 }
-.divider {
-  width: 80%;
-  border-top: 1px solid $dark;
-}
+
 </style>
