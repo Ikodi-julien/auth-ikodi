@@ -3,9 +3,9 @@
     <Hero />
     <div class="landing__options">
       <div class="landing__options__socialaccounts">
-        <Button text='Google' icon='<img src="https://img.icons8.com/color/48/000000/google-logo.png"/>'/>
-        <Button text='Github' />
-        <Button text='Linkedin' />
+        <Button text='Google' icon='<img src="https://img.icons8.com/color/25/000000/google-logo.png"/>'/>
+        <Button text='Github' icon='<img src="https://img.icons8.com/fluency/25/000000/github.png"/>'/>
+        <Button text='Linkedin' icon='<img src="https://img.icons8.com/fluency/25/000000/linkedin.png"/>'/>
       </div>
       <Divider text="OU" />
       <div class="landing__options__formcontainer">
