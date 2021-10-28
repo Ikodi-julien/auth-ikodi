@@ -1,14 +1,34 @@
 <template>
-  <Landing />
+  <section>
+    <Landing 
+      @toggle-signup="toggleSignup" 
+    />
+    <SignupModal 
+      :showSignup="showSignup"
+      @toggle-signup="toggleSignup" 
+    />
+  </section>
 </template>
 
 <script>
 import Landing from './components/Landing.vue';
+import SignupModal from './components/SignupModal.vue';
 
 export default {
   name: 'App',
   components: {
-    Landing
+    Landing,
+    SignupModal
+  },
+  data() {
+    return {
+      showSignup: false,
+    }
+  },
+  methods: {
+    toggleSignup() {
+      this.showSignup = !this.showSignup
+    }
   }
 }
 </script>
@@ -25,7 +45,7 @@ body {
   background-color: $lighter;
   color: $dark;
 }
-#app {
+#app, section {
   width: 100%;
   height: 100%;
   display: flex;
