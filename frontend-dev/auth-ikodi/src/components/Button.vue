@@ -1,11 +1,12 @@
 <template>
   <button 
     :style="{
+      backgroundColor: color,
       width: width,
     }"
     :class="`btn ${className}`"
   >
-    <span v-show="isIcon" v-html="icon"></span> {{text}}
+    <span v-show="isIcon" v-html="icon"></span> {{text}} 
   </button>
 </template>
 
@@ -29,6 +30,9 @@ export default {
       type: String,
       default: ''
     },
+    color: {
+      type: String
+    },
     icon: {
       type: String,
     }
@@ -50,7 +54,7 @@ export default {
     align-items: center;
     background-color: transparent;
     border: 1px solid $dark;
-    padding: 5px 15px;
+    padding: 5px 8px;
     margin: 5px;
     border-radius: 5px;
     cursor: pointer;
@@ -68,6 +72,13 @@ export default {
   .--grey {
     border: none;
     background-color: #828282;
+    font-weight: 600;
+    color: $lighter;
+  }
+  .--blue {
+    border: none;
+    background-color: #164e7c;
+    font-weight: 600;
     color: $lighter;
   }
 </style>

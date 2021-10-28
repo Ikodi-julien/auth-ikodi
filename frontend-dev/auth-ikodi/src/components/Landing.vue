@@ -3,17 +3,13 @@
     <Hero />
     <div class="landing__options">
       <div class="landing__options__socialaccounts">
-        <Button text='Google' icon='<img src="https://img.icons8.com/color/25/000000/google-logo.png"/>'/>
-        <Button text='Github' icon='<img src="https://img.icons8.com/fluency/25/000000/github.png"/>'/>
-        <Button text='Linkedin' icon='<img src="https://img.icons8.com/fluency/25/000000/linkedin.png"/>'/>
+        <Button text='Google' color="white" icon='<img src="https://img.icons8.com/color/25/000000/google-logo.png"/>'/>
+        <Button text='Github' color="white" icon='<img src="https://img.icons8.com/fluency/25/000000/github.png"/>'/>
+        <Button text='Linkedin' color="white" icon='<img src="https://img.icons8.com/fluency/25/000000/linkedin.png"/>'/>
       </div>
       <Divider text="OU" />
       <div class="landing__options__formcontainer">
-        <form >
-          <input type="text" name="email">
-          <input type="password" name="password">
-          <button type="submit">Connexion</button>
-        </form>
+        <LoginForm />
       </div>
       <p class="landing__options__forgotpassword">Forgot password ?</p>
       <Divider />
@@ -33,6 +29,7 @@
 import Button from './Button.vue';
 import Divider from './Divider.vue';
 import Hero from './Hero.vue';
+import LoginForm from './LoginForm.vue';
 
 export default {
   name: 'Landing',
@@ -40,6 +37,7 @@ export default {
     Button,
     Divider,
     Hero,
+    LoginForm
   }
 }
 </script>
@@ -53,7 +51,7 @@ export default {
   justify-content: center;
   align-items: center;
   // border: 1px dashed blue;
-  
+
   &__options {
     display: flex;
     flex-direction: column;
@@ -63,12 +61,18 @@ export default {
     height: 100%;
     border: 1px solid rgb(16, 92, 105);
     border-radius: 5px;
+    
     &__socialaccounts {
       height: 25%;
       display: flex;
-      width: 100%;
-      justify-content: space-evenly;
+      flex-wrap: wrap;
+      width: 80%;
+      justify-content: space-between;
       align-items: center;
+      
+      @media (max-width: 500px) {
+        width: 95%;
+      }
     }
     &__formcontainer {
       height: 40%;
@@ -91,6 +95,10 @@ export default {
     }
     @media (max-width: 750px) {
       width: 80%;
+    }
+    @media (max-width: 500px) {
+      width: 100%;
+      border: none;
     }
   }
       

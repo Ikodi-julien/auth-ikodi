@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Hero'
+  name: 'Hero',
 }
 </script>
 
@@ -17,6 +17,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-right: 20px;
   
   & img {
@@ -24,14 +25,18 @@ export default {
     border-radius: 15px;
   }
   &__text {
+    width: 90%;
     padding: 20px 0 20px 0;
     text-align: center;
     font-size: 1.5rem;
   }
   
-    @media (max-width: 750px) {
-    width: 80%;
-    margin-right: 0;
+  @media (max-width: 750px) {
+  width: 80%;
+  margin-right: 0;
+  }
+  @media (max-width: 500px) {
+    width: 100%;
   }
 }
 </style>

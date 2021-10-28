@@ -22,6 +22,7 @@ export default {
   border-top: 1px solid $dark;
   display: flex;
   justify-content: center;
+  padding: 5px;
   & span {
     position: absolute;
     background-color: $lighter;
