@@ -1,7 +1,10 @@
 <template>
   <section class="landing">
     <Hero />
-    <Options @toggle-signup="$emit('toggle-signup')"/>
+    <Options 
+      @toggle-signup="$emit('toggle-signup')"
+      @toggle-sendpass="$emit('toggle-sendpass')"
+    />
   </section>
 </template>
 
@@ -15,6 +18,7 @@ export default {
     Hero,
     Options
   },
+  emits: ['toggle-signup', 'toggle-sendpass']
 }
 </script>
 
@@ -22,7 +26,8 @@ export default {
 @import '../styles/vars.scss';
 .landing {
   height: 50%;
-  width: 75%;
+  width: 80%;
+  max-width: 900px;
   display: flex;
   justify-content: center;
   align-items: center;

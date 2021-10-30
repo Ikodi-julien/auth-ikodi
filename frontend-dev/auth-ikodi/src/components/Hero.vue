@@ -1,7 +1,7 @@
 <template>
   <div class="hero">
     <img src="../assets/auth-hero.png" alt="hero img" class="hero__img" />
-    <div class="hero__text">Connect or Signup to IKODI apps</div>
+    <div class="hero__text">Se connecter ou créer un compte</div>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
 
 <style scoped lang="scss">
 .hero {
-  width: 50%;
+  width: 45%;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -9,7 +9,11 @@
     <div class="options__formcontainer">
       <LoginForm />
     </div>
-    <p class="options__forgotpassword">Forgot password ?</p>
+    <p 
+      @click="$emit('toggle-sendpass')"
+      className="options__forgotpassword">
+      Mot de passe perdu ?
+    </p>
     <Divider />
 
     <div class="options__createprofile">
@@ -34,22 +38,30 @@ export default {
     Divider,
     LoginForm
   },
+  methods: {
+    showClic() {
+      console.log('clic');
+    }
+  },
+  emits: ['toggle-signup', 'toggle-sendpass']
 }
 </script>
 
 <style scoped lang="scss">
+@import '../styles/vars.scss';
+
 .options {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 50%;
+    width: 55%;
     height: 100%;
     border: 1px solid rgb(16, 92, 105);
     border-radius: 5px;
     
     &__socialaccounts {
-      height: 25%;
+      height: $h-socialheight;
       display: flex;
       flex-wrap: wrap;
       width: 80%;
@@ -61,22 +73,23 @@ export default {
       }
     }
     &__formcontainer {
-      height: 40%;
+      height: $h-formcontainer;
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     &__forgotpassword {
-      height: 10%;
+      height: $h-forgotpass;
       width: 100%;
       text-align: center;
+      cursor: pointer;
     }
     &__createprofile {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 25%;
+      height: $h-createprofile;
       width: 100%;
     }
     @media (max-width: 750px) {

@@ -1,7 +1,7 @@
 <template>
-  <form >
-    <input type="text" name="email">
-    <input type="password" name="password">
+  <form @submit.prevent >
+    <input type="text" name="email" placeholder="Email">
+    <input type="password" name="password" placeholder="Mot de passe">
     <Button text="Connexion" className="--blue" width="100%" />
   </form>
 </template>
@@ -17,18 +17,6 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 80%;
-    height: 100%;
-    
-    & input {
-      width: 100%;
-      height: 25px;
-    }
-  }
+<style lang="scss">
+  @import '../styles/form.scss';
 </style>

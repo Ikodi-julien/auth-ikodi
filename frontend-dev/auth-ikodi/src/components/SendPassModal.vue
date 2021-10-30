@@ -1,29 +1,29 @@
 <template>
-  <section :class="showSignup ? 'modal --showModal' : 'modal'">
+  <section :class="showSendpass ? 'modal --showModal' : 'modal'">
     <div class="formcontainer">
-      <i class="fas fa-times" @click="$emit('toggleSignup')"></i>
-      <h1 class="modal__title">Création de compte</h1>
+      <i class="fas fa-times" @click="$emit('toggle-sendpass')"></i>
+      <h1 class="modal__title">Réinitialiser le mot de passe</h1>
       <Divider />
-      <SignupForm />
+      <SendPassForm />
     </div>
   </section>
 </template>
 
 <script>
 import Divider from './Divider.vue';
-import SignupForm from './SignupForm.vue';
+import SendPassForm from './SendPassForm.vue';
 
 export default {
-  name: "SignupModal",
+  name: "SendPassModal",
   props: {
-    showSignup: {
+    showSendpass: {
       type: Boolean,
       default: false
     }
   },
   components: {
     Divider,
-    SignupForm
+    SendPassForm
   }
 }
 </script>
@@ -35,6 +35,7 @@ export default {
   font-size: 2rem;;
   top: 15px;
   right: 15px;
+  cursor: pointer;
 }
 .modal {
   position: absolute;

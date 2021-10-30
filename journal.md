@@ -1,5 +1,9 @@
 # Journal auth.ikodi
 
+## 28/10/2021
+
+Le landing est fait avec composants et tout et tout, modals quasi finies mais je viens de tomber sur un exemple d'authentification par techno blockchain avec web3.js, je vais donc me renseigner d'avantage sur la faisabilité même si ça semble réservé aux apps décentralisées.
+
 ## 25/10/2021 (9h - 10h)
 
 Fin des wireframes.
