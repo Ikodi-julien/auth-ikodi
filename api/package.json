@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "An authentication server for ikodi's apps.",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha ./tests/test.js",
+  "scripts":
+  {
+    "test": "mocha --sort ./tests",
     "startDev": "pm2 start ./index.js --watch"
   },
-  "repository": {
+  "repository":
+  {
     "type": "git",
     "url": "git+ssh://git@github.com/Ikodi-julien/auth-ikodi.git"
   },
@@ -20,7 +22,8 @@
   ],
   "author": "Julien Pellin",
   "license": "ISC",
-  "dependencies": {
+  "dependencies":
+  {
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
@@ -34,14 +37,16 @@
     "redis": "^3.1.2",
     "sanitize-html": "^2.4.0"
   },
-  "devDependencies": {
+  "devDependencies":
+  {
     "mocha": "^9.0.1",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
     "supertest": "^6.1.3",
     "faker": "^5.5.3"
   },
-  "bugs": {
+  "bugs":
+  {
     "url": "https://github.com/Ikodi-julien/auth-ikodi/issues"
   },
   "homepage": "https://github.com/Ikodi-julien/auth-ikodi#readme"
