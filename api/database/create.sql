@@ -1,8 +1,10 @@
-DROP TABLE IF EXISTS users;
+DROP SCHEMA IF EXISTS auth CASCADE;
 
 BEGIN;
+CREATE SCHEMA auth;
+ALTER SCHEMA auth OWNER TO "ikodiauth";
 
-CREATE TABLE users OWNER TO ikodiauth(
+CREATE TABLE auth.users (
     id SERIAL PRIMARY KEY,
     firstname character varying(50) NOT NULL,
     lastname character varying(50) NOT NULL,
@@ -10,8 +12,10 @@ CREATE TABLE users OWNER TO ikodiauth(
     email character varying(255)
 );
 
-INSERT INTO users ("firstname", "lastname", "password", "email") VALUES
-('Julien', 'Pellin', '$2b$10$EUaudgeyxHm8Tl0PwEQxi.fGH.8BXR8J3aLyMCZfsDqoIqsdWAeby', 'test@test.fr'),
+ALTER TABLE auth.users OWNER TO "ikodiauth";
+
+INSERT INTO auth.users ("firstname", "lastname", "password", "email") VALUES
+('Julien', 'Pellin', '$2b$10$EUaudgeyxHm8Tl0PwEQxi.fGH.8BXR8J3aLyMCZfsDqoIqsdWAeby', 'juledev@nodejs.fr'),
 ('Bob', 'Le chat', '$un mdp bidon $yuiopyxHm8Tl0PwEQxi.fGH.8BXR8J3aLyMCZfsDqoIqsdWAeby', 'boblechat@gmail.com');
 
 COMMIT;

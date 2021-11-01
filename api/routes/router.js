@@ -2,7 +2,7 @@ const {Router} = require("express");
 const router = Router();
 const {resolve} = require('path');
 
-const {login, signup} = require('../controllers/authController');
+const {login, signup, deleteMe} = require('../controllers/authController');
 
 router.get('/', (req, res) => {
   console.log('GET /');
@@ -12,5 +12,6 @@ router.get('/doc', (req, res) => res.sendFile(resolve('doc.html')));
 
 router.post('/login', login);
 router.post('/signup', signup);
+router.delete('/test/:id', deleteMe);
 
 module.exports = router;
