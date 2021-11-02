@@ -16,6 +16,6 @@ ALTER TABLE auth.users OWNER TO "ikodiauth";
 
 INSERT INTO auth.users ("firstname", "lastname", "password", "email") VALUES
 ('Julien', 'Pellin', '$2b$10$EUaudgeyxHm8Tl0PwEQxi.fGH.8BXR8J3aLyMCZfsDqoIqsdWAeby', 'juledev@nodejs.fr'),
-('Bob', 'Le chat', '$un mdp bidon $yuiopyxHm8Tl0PwEQxi.fGH.8BXR8J3aLyMCZfsDqoIqsdWAeby', 'boblechat@gmail.com');
+('Bob', 'Le chat', '$2b$10$xWIp3.jmgJlzW.ypqttEtuW0LdQ7Ohyx2rh.SZn07rhjaXigu1Bhu', 'boblechat@gmail.com');
 
 COMMIT;

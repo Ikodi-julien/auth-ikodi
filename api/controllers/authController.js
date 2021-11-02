@@ -2,9 +2,9 @@ const queries = require('../queries/authQueries');
 const validator = require('email-validator');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const jwtService = require('../services/jwt.service');
+const {jwtService} = require('../services/jwt.service');
 const cookieService = require('../services/cookie.service');
-const db = require('../database/db');
+const db = require('../database/psqlDB');
 
 module.exports = {
   login: async (req, res) => {
@@ -84,5 +84,11 @@ module.exports = {
   count: async (req, res) => {
     const count = await queries.count();
     res.status(200).json({count});
-  }
+  },
+  getUserData: async(req, res) => {
+
+    
+    res.status(200).json({id: 2, email: "boblechat@gmail.com"});
+  },
+  redirectLogout: (req, res) => {res.redirect('/');}
 }
