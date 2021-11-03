@@ -3,21 +3,22 @@ let request = require('supertest');
 request = request('http://localhost:5050');
 const chai = require('chai');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 const JWT_SECRET = process.env.JWT_SECRET;
-const { jwtService } = require('../services/jwt.service');
 
-let accessToken, refreshToken;
+const { jwtService } = require(path.resolve('services/jwt.service'));
+
 /**
  * GET /me
  */
-describe('Tests jwt', () => {
+describe('GET ME', () => {
 
   describe('Log test user to get jwt', () => {
     it('Should log a test user to get access and refresh-tokens', (done) => {
       request.post('/login')
       .send({
-        "email":'boblechat@gmail.com',
-        "password": 'bob'
+        "email" : "test@test.fr",
+        "password" : "lemdp",
       })
       .expect(200, (err, res) => {
         if (err) return done(err);
@@ -33,6 +34,8 @@ describe('Tests jwt', () => {
 
   describe('GET /me with access-token - success', () => {
     it('should return user data with expected properties', (done) => {
+
+      
       request
         .get(`/me`)
         .set('Cookie', [ accessToken, refreshToken ])
@@ -82,31 +85,32 @@ describe('Tests jwt', () => {
   })
 
   
-//   /**
-//    * PUT /me
-//    */          
-//   describe('PUT /me - success', () => {
-//   it('should add 3 tags to user and return user data ', (done) => {
-//     request
-//       .put(`/v1/me`)
-//       .set('Cookie', [ accessToken, refreshToken ])
-//       .set('Accept', 'application/json')
-//       .send({
-//         "email": "test@test.fr",
-//         "nickname": "test",
-//         "tags": [1, 2, 3 ]
-//       })
-//       .expect('Content-Type', /json/)
-//       .expect(200, (err, res) => {
-//         if (err) return done(err);
-//         chai.expect(res.body).to.have.property('id');
-//         chai.expect(res.body).to.have.property('email');
-//         chai.expect(res.body).to.have.property('nickname');
-//         chai.expect(res.body).to.have.property('tags').with.lengthOf(3);
-//         done();
-//       });
-//     });
-//   }); 
+  // /**
+  //  * PUT /me
+  //  */          
+  // describe('PUT /me - success', () => {
+  // it('should put another email ', (done) => {
+  //   request
+  //     .put(`/me`)
+  //     .set('Cookie', [ accessToken, refreshToken ])
+  //     .set('Accept', 'application/json')
+  //     .send({
+  //       "email" : "newtest@test.fr",
+  //       "password" : "lemdp",
+  //       "firstname" : "test",
+  //       "lastname" : "delapp"
+  //     })
+  //     .expect('Content-Type', /json/)
+  //     .expect(200, (err, res) => {
+  //       if (err) return done(err);
+  //       chai.expect(res.body).to.have.property('id');
+  //       chai.expect(res.body).to.have.property('email').equal('newtest@test.fr');
+  //       chai.expect(res.body).to.have.property('firstname');
+  //       chai.expect(res.body).to.have.property('lastname');
+  //       done();
+  //     });
+  //   });
+  // }); 
   
 //   describe('PUT /me/avatar - success', () => {
 //     it('should add an avatar to user and return user data with avatar property ', (done) => {

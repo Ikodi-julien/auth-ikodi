@@ -11,7 +11,13 @@ module.exports = {
     
     try {
       const accessTokenPayload = jwt.verify(accessToken, JWT_SECRET);
+
+      const [newAccessToken, newRefreshToken] = jwtService.getTokens({id: accessTokenPayload.id});
+          
+      res.cookie('access_token', newAccessToken, cookieService.options);
+      res.cookie('refresh_token', newRefreshToken, cookieService.options);
       
+      // console.log('accessTokenPayload.id', accessTokenPayload.id);
       req.userId = accessTokenPayload.id;
       req.oldJwt = [accessToken, refreshToken];
       next();
@@ -39,6 +45,7 @@ module.exports = {
           req.oldJwt = [accessToken, refreshToken];
           next();
         } catch (error) {
+          
           res.status(401).json(error.name !== 'Error' ?
           error :
           {
@@ -75,11 +82,12 @@ module.exports = {
   },
   verifyLogout: (req, res, next) => {
     const accessToken = req.cookies.access_token || "";
-    const refreshToken = req.cookies.refresh_token || "";
+    // const refreshToken = req.cookies.refresh_token || "";
     // console.log(accessToken, refreshToken)
     
     try {
-      jwt.verify(accessToken, JWT_SECRET);
+      const payload = jwt.verify(accessToken, JWT_SECRET);
+      req.userId = payload.id;
       next();
       
     } catch (error) {

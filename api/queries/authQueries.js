@@ -7,9 +7,16 @@ module.exports = {
    * @returns 
    */
   getOneByEmail: async (email) => {
-    const queryString = `SELECT * FROM auth.users WHERE email=$1`;
+    const queryString = `SELECT id FROM auth.users WHERE email=$1`;
     
     const result = await db.query( queryString, [email]);
+    
+    return result.rowCount ? {userId: result.rows[0].id} : { userId: false };
+  },
+  getMe: async (id) => {
+    const queryString = `SELECT "id", "firstname", "lastname", "email", "password" FROM auth.users WHERE id=$1`;
+    
+    const result = await db.query( queryString, [id]);
     return result.rows[0];
   },
   /**
@@ -35,6 +42,24 @@ module.exports = {
   deleteMe: async (id) => {
     const queryString = `DELETE FROM auth.users WHERE id=$1 RETURNING id`;
     const result = await db.query(queryString, [id]);
+    return result.rows[0].id;
+  },
+  updateMe: async (data) =>{
+    const {
+      id, firstname, lastname, email
+    } = data;
+    
+    const queryString = `UPDATE auth.users SET "firstname"=$2, "lastname"=$3, "email"=$4 WHERE id=$1 RETURNING *`;
+    
+    const result = await db.query( queryString, [id, firstname, lastname, email]);
+    return result.rows[0];
+  },
+  updateMePassword: async (data) =>{
+    const { id, newPassword } = data;
+    
+    const queryString = `UPDATE auth.users SET "password"=$2 WHERE id=$1 RETURNING id`;
+    
+    const result = await db.query( queryString, [id, newPassword]);
     return result.rows[0].id;
   },
   /**

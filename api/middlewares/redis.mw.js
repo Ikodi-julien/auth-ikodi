@@ -1,27 +1,21 @@
 const redisClient = require('../database/redisDB');
-const {accessTokenLifeSpan, refreshTokenLifeSpan} = require('../services/jwt.service');
+const redisService = require('../services/redis.service');
 
 module.exports = {
   verify: (req, res, next) => {
-    const accessToken = req.cookies.access_token || null;
-    const refreshToken = req.cookies.refresh_token || null;
-    
-    if (!accessToken || !refreshToken) {
-      return res.status(401).json({message: 'no credentials found'});
+    const id = req.userId;
+    // console.log('id:', id);
+    if (!id) {
+      return res.status(401).json({message: 'no id found'});
     };
-    // console.log(3);
-    let accessTokenValue, refreshTokenValue;
     
     try {
-      redisClient.get(accessToken, (err, reply) => {
-        accessTokenValue = reply;
-        
-        redisClient.get(refreshToken, (err, reply) => {
-          refreshTokenValue = reply;
-          if (!accessTokenValue && !refreshTokenValue) return next();
-          return res.status(401).json({message: 'tokens invalidated'});
+      redisClient.get(id, (err, reply) => {
+        console.log('id value:', reply);
+        if ( reply === 'login') return next();
+            
+        return res.status(401).json({message: 'tokens invalidated'});
           
-        });
       });
     } catch(error) {
       return res.status(500).json({message: error.message});
@@ -29,17 +23,14 @@ module.exports = {
 
   },
   setLogout: (req, res, next) => {
-    const accessToken = req.cookies.access_token;
-    const refreshToken = req.cookies.refresh_token;
+    const id = req.userId
     
-    if (!accessToken || !refreshToken) {
-      return res.status(401).json({message: 'no credentials found'});
+    if (!id) {
+      return res.status(401).json({message: 'no id found'});
     };
-    console.log('setLogout', accessToken);
-
-    redisClient.setex(accessToken, accessTokenLifeSpan, 'true');
-    redisClient.setex(refreshToken, refreshTokenLifeSpan, 'true');
     
+    redisService.setLogout(id);
     next();
-  }
+  },
+
 }

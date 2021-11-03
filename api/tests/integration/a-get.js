@@ -8,11 +8,11 @@ const chai = require('chai');
 describe('Endpoints accessible without jwt', () => {
   
   describe('GET /', () => {
-    it('should return status 200 and data json', (done) => {
+    it('should return status 200 and html', (done) => {
       request
       .get('/')
       .send()
-      .expect('Content-Type', /json/)
+      .expect('Content-Type', /html/)
       .expect(200, done);
     })
   })
