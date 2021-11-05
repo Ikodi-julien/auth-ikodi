@@ -1,0 +1,10 @@
+$dark: rgb(36, 36, 36);
+$lighter: rgb(247, 245, 241);
+$grey: rgb(0, 0, 0);
+
+/* ---height --- */
+$h-formcontainer: 40%;
+$h-createprofile: 20%;
+$h-divider: 5px;
+$h-socialheight: calc(30% - #{2*$h-divider});
+$h-forgotpass: calc(10% - #{2*$h-divider});
