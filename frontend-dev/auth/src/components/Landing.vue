@@ -1,8 +1,8 @@
 <template>
   <section class="landing">
     <Hero />
-    <Options 
-      @toggle-signup="$emit('toggle-signup')"
+    <Options
+      @toggle-signup="toggleSignup"
       @toggle-sendpass="$emit('toggle-sendpass')"
     />
   </section>
@@ -17,6 +17,11 @@ export default {
   components: {
     Hero,
     Options
+  },
+  methods: {
+    toggleSignup: function() {
+      this.$emit('toggle-signup')
+    }
   },
   emits: ['toggle-signup', 'toggle-sendpass']
 }

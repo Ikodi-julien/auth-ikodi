@@ -30,7 +30,6 @@ describe('LoginForm.vue', () => {
 
   describe('Submit Button', () => {
     it('Button should emit "submit"', async () => {
-      // const wrapper = mount(LoginForm);
       const Button = wrapper.findComponent('Button');
 
       // trigger the element
@@ -41,4 +40,5 @@ describe('LoginForm.vue', () => {
       expect(wrapper.emitted()).to.have.property('submit');
     })
   })
+
 });

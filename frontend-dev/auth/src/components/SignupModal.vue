@@ -1,7 +1,7 @@
 <template>
   <section :class="showSignup ? 'modal --showModal' : 'modal'">
     <div class="formcontainer">
-      <i class="fas fa-times" @click="$emit('toggleSignup')"></i>
+      <i class="fas fa-times" @click="$emit('toggle-signup')"></i>
       <h1 class="modal__title">Création de compte</h1>
       <Divider />
       <SignupForm />
@@ -46,14 +46,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   &__title {
     width: 80%;
     text-align: left;
     font-size: 2rem;
     margin-bottom: 8px;
   }
-  
+
   & .formcontainer {
     position: relative;
     padding: 15px;
@@ -67,7 +67,7 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-  
+
   &.--showModal {
     top: 0;
   }

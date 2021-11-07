@@ -7,7 +7,7 @@
   {
     "integrationTest": "mocha --sort ./tests/integration",
     "unitTest": "mocha --sort ./tests/unit",
-    "startDev": "pm2 start ./index.js --watch"
+    "startDev": "pm2 start ./index.js --watch -n auth-server"
   },
   "repository":
   {

@@ -5,6 +5,8 @@
       width: width,
     }"
     :class="`btn ${className}`"
+    :href="href"
+    :data-test="dataTest"
   >
     <span v-show="isIcon" v-html="icon"></span> {{text}}
   </button>
@@ -31,9 +33,12 @@ export default {
       default: ''
     },
     color: {
-      type: String
+      type: String,
     },
     icon: {
+      type: String,
+    },
+    dataTest: {
       type: String,
     }
   },

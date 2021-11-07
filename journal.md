@@ -1,16 +1,48 @@
 # Journal auth.ikodi
 
+## 07/11/2021
+
+Fait :
+- Fin des tests de composants (initiaux) de l'app Vue,
+
+Ce que j'ai appris :
+- A faire des tests sur les composants Vue, plus compliqué qu'il n'y parait d'autant qu'il faut tester le résultat affiché plutôt que les props ou les méthodes.
+- Bon côté, c'est probablement quasi identique avec React,
+
+Prochaines étapes :
+- Connexion serveur avec le front Vue,
+- Connecter Topics,
+- Connecter Concord (en profiter pour refaire la table cron du scrapper),
+- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
+- Déploiement.
+- Essai de connexion de multiplicorne s'il y a le temps...
+
+## 05/11/2021
+
+Fait :
+- config du projet pour utiliser vue-test-utils avec chai -> ok
+- tests du composant LoginForm.vue -> ok
+
+Ce que j'ai appris :
+- C'est la galère à configurer, à ce stade avec Vue il y a des incompatibilités de version entre vue2 / vue3 et vue-utils. ESLint, c'est la galère aussi pour les mêmes raisons.
+- Utiliser vue-cli pour paramétrer le projet c'est beaucoup plus efficace car tout est prévu compatible direct. D'ailleur recréer un projet avec les bons params et copier-coller le dossier src semble fonctionner rapidement.
+
+Prochaines étapes :
+- Finir de mettre en place les tests des composants Vue,
+- Connexion serveur avec le front Vue,
+- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
+
+
+## 04/11/2021
+
+Choix librairie de tests composants Vue3 -> https://testing-library.com/docs/vue-testing-library/examples
+
 ## 03/11/2021
 
 Mise en place DELETE /me, tests d'intégration + jwt.verify, redis.verify -> ok
 Mise en place PUT /me, tests d'intégration + jwt.verify, redis.verify -> ok
 Mise en place PUT /me/password, tests d'intégration + jwt.verify, redis.verify -> ok
 Mise en place de tests unitaires sur services de l'api (fonctions jwt et redis), -> ok
-
-Prochaines étapes :
-- Mettre en place les tests unitaires des composants Vue,
-- Connexion serveur avec le front Vue,
-- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
 
 ## 02/11/2021 ()
 

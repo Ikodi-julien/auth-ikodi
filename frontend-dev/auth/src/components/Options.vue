@@ -9,19 +9,22 @@
     <div class="options__formcontainer">
       <LoginForm />
     </div>
-    <p 
+    <p
       @click="$emit('toggle-sendpass')"
-      className="options__forgotpassword">
+      className="options__forgotpassword"
+      id="toggle-sendpass"
+    >
       Mot de passe perdu ?
     </p>
     <Divider />
 
     <div class="options__createprofile">
-      <Button 
+      <Button
         @click="$emit('toggle-signup')"
-        text='Create profile' 
-        width="80%" 
+        text='Create profile'
+        width="80%"
         className="--grey"
+        dataTest="toggle-signup"
       />
     </div>
   </div>
@@ -59,7 +62,7 @@ export default {
     height: 100%;
     border: 1px solid rgb(16, 92, 105);
     border-radius: 5px;
-    
+
     &__socialaccounts {
       height: $h-socialheight;
       display: flex;
@@ -67,7 +70,7 @@ export default {
       width: 80%;
       justify-content: space-between;
       align-items: center;
-      
+
       @media (max-width: 500px) {
         width: 95%;
       }
