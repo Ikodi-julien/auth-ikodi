@@ -15,7 +15,7 @@ module.exports = {
    * @returns 
    */
   login: async (req, res) => {
-    const { password, email } = req.body;
+    const { password, email, app } = req.body;
     
     try {
       // Should return status (412) if input empty
@@ -28,8 +28,9 @@ module.exports = {
       if (!validator.validate(email)) return res.status(422).json({message: "invalid email"});
       
       // Should return status (409) if email not in database
+      console.log(email);
       const {userId} = await queries.getOneByEmail(email);
-      // console.log('id in login', id);
+      console.log('id in login', userId);
       if (!userId) return res.status(409).json({message: "user not in db"});
       
       // compare passwords

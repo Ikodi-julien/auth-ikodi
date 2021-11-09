@@ -45,7 +45,7 @@ describe('LOGOUT', () => {
     it('should return status 401', (done) => {
       // console.log('finally', accessToken);
       request
-        .get(`/me`)
+        .get(`/me/credentials`)
         .set('Cookie', [ accessToken, refreshToken ])
         .set('Accept', 'application/json')
         .send()
@@ -63,7 +63,7 @@ describe('LOGOUT', () => {
   /**
    * DELETE /me
    */ 
-  describe('DELETE /me', function() {
+  describe('DELETE /me/credentials', function() {
     
     let accessToken, refreshToken;
     
@@ -84,7 +84,7 @@ describe('LOGOUT', () => {
           describe('Then DELETE /me with access-token - success', function() {
             it('should delete user account and return status 200', (done) => {
               request
-                .delete('/me')
+                .delete('/me/credentials')
                 .set('Cookie', [ accessToken, refreshToken ])
                 .set('Accept', 'application/json')
                 .send()

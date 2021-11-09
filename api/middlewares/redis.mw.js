@@ -11,7 +11,7 @@ module.exports = {
     
     try {
       redisClient.get(id, (err, reply) => {
-        console.log('id value:', reply);
+        // console.log('id value:', reply);
         if ( reply === 'login') return next();
             
         return res.status(401).json({message: 'tokens invalidated'});

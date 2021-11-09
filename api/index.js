@@ -5,9 +5,10 @@ const cors = require('cors');
 const router = require('./routes/router');
 const PORT = process.env.PORT;
 const FRONT_PORT = process.env.FRONT_PORT;
+const APP_PORT = process.env.APP_PORT;
 
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' ? [/\.ikodi.eu\/?$/] : [`http://localhost:${FRONT_PORT}`],
+  origin: process.env.NODE_ENV === 'production' ? [/\.ikodi.eu\/?$/] : [/^http:\/\/localhost\:\d{4}$/],
   credentials: true
 }
 

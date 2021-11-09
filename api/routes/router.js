@@ -25,10 +25,10 @@ router.get('/count', count);
 router.post('/login', login);
 router.post('/signup', signup);
 
-router.get('/me', jwtMW.verify, redisMW.verify, getMe);
-router.delete('/me', jwtMW.verify, redisMW.verify, deleteMe);
+router.get('/me/credentials', jwtMW.verify, redisMW.verify, getMe);
+router.delete('/me/credentials', jwtMW.verify, redisMW.verify, deleteMe);
 router.put('/me/password', jwtMW.verify, redisMW.verify, updateMePassword);
-router.put('/me', jwtMW.verify, redisMW.verify, updateMe);
+router.put('/me/credentials', jwtMW.verify, redisMW.verify, updateMe);
 
 router.post('/logout', jwtMW.verifyLogout, redisMW.setLogout, redirectLogout);
 

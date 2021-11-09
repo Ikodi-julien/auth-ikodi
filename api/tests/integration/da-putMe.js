@@ -30,10 +30,10 @@ describe('PUT ME', () => {
   /**
    * PUT /me
    */          
-  describe('PUT /me - success', () => {
+  describe('PUT /me/credentials - success', () => {
   it('should put another email ', (done) => {
     request
-      .put(`/me`)
+      .put(`/me/credentials`)
       .set('Cookie', [ accessToken, refreshToken ])
       .set('Accept', 'application/json')
       .send({

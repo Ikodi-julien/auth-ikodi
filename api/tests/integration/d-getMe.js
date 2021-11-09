@@ -37,7 +37,7 @@ describe('GET ME', () => {
 
       
       request
-        .get(`/me`)
+        .get(`/me/credentials`)
         .set('Cookie', [ accessToken, refreshToken ])
         .set('Accept', 'application/json')
         .send()
@@ -54,7 +54,7 @@ describe('GET ME', () => {
   describe('GET /me with invalid access-token - fail', () => {
     it('should return status 401 unauthorized', (done) => {
       request
-      .get('/me')
+      .get('/me/credentials')
       .set('Cookie', [ 'access_token=notgood', refreshToken ])
       .set('Accept', 'application/json')
       .send()
@@ -70,7 +70,7 @@ describe('GET ME', () => {
       const expiredAccessToken = jwtService.getExpiredAccessToken({id: payload.id});
       
       request
-        .get(`/me`)
+        .get(`/me/credentials`)
         .set('Cookie', [ `access_token=${expiredAccessToken}`, refreshToken ])
         .set('Accept', 'application/json')
         .send()

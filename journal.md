@@ -1,5 +1,26 @@
 # Journal auth.ikodi
 
+## 08/11/2021
+
+Fait :
+- Le formulaire de login renvoi les messages d'erreur prévu -> ok,
+- Le formulaire de login renvoit les jwt en cookie httponly -> ok,
+- Le formulaire de création de compte renvoi les erreurs prévues -> ok,
+- Le formulaire de création de compte permet de créer un compte -> ok
+- Le login success redirige vers ikodi.eu (en attente de récup de l'app d'origine) -> ok
+- Le signup success fait ensuite le login -> ok
+
+Ce que j'ai appris :
+- Avec une bonne préparation, tout est plus simple :-)
+- Le fait d'avoir passé du temps sur les tests me fait clairement gagner du temps ici (même si quand même c'est overkill pour une petite app comme ça).
+
+Prochaines étapes :
+- Connecter Concord (en profiter pour refaire la table cron du scrapper),
+- Connecter Topics,
+- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
+- Déploiement.
+- Essai de connexion de multiplicorne s'il y a le temps...
+
 ## 07/11/2021
 
 Fait :
@@ -11,11 +32,6 @@ Ce que j'ai appris :
 
 Prochaines étapes :
 - Connexion serveur avec le front Vue,
-- Connecter Topics,
-- Connecter Concord (en profiter pour refaire la table cron du scrapper),
-- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
-- Déploiement.
-- Essai de connexion de multiplicorne s'il y a le temps...
 
 ## 05/11/2021
 
@@ -29,9 +45,6 @@ Ce que j'ai appris :
 
 Prochaines étapes :
 - Finir de mettre en place les tests des composants Vue,
-- Connexion serveur avec le front Vue,
-- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
-
 
 ## 04/11/2021
 

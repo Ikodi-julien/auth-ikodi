@@ -12,12 +12,13 @@
       placeholder="Mot de passe"
       v-model="this.password"
     >
-    <Button @click="$emit('submit')" text="Connexion" className="--blue" width="100%" />
+    <Button @click="$emit('submit')" text="Connexion" className="--blue" width="80%" />
   </form>
 </template>
 
 <script>
 import axios from 'axios';
+import {BASE_URL} from '@/BASE_URL.js';
 import Button from './Button.vue';
 
 export default {
@@ -35,10 +36,31 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        const response = await axios.get("http://localhost:3000/me");
-        console.log(response.data);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const app = urlParams.get('app');
+
+        // // Se logguer et recevoir les jwt en httponly
+        const response = await axios.post(`${BASE_URL}/login`, {
+          email: this.email,
+          password: this.password,
+          app
+        });
+
+        console.log(response.headers);
+        console.log(response.headers['set-cookie']);
+        console.log(response.headers['content-type']);
+        alert("Identification réussie, vous allez être redirigé.");
+
+
+        // // await axios.get(`http://localhost:8001`, {
+        // //   withCredentials: true
+        // // })
+        // location.assign(process.env.NODE_ENV = 'development' ? '/' : `https://${app}.ikodi.eu`);
+
       } catch(error) {
-        console.log(error);
+        const {message} = error.response.data;
+        alert(message);
       }
     }
   },
