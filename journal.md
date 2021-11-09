@@ -1,5 +1,27 @@
 # Journal auth.ikodi
 
+## 09/11/2021
+
+Fait :
+* Modification des routes (légères) dans auth-server pour séparer la logique d'identification liée aux identifiants (email / password / firstname / lastname) de l'accès au contenu du profil de chaque utilisateur (avatar / tags / channels / recommended / ...)
+* Mise en place des tests d'integration pour l'api de concord + réorganisation des tests.
+
+Prochaines étapes :
+* Connecter Concord (en profiter pour refaire la table cron du scrapper),
+  - Modifier les champs dans auth-server, ajouter nickname, faire que juste le pseudo soit obligatoire,
+  - signup depuis le front ->
+  - login depuis le front ->
+  - les channels et tags sont reçus et dispo ->
+  - page discovery s'affiche bien ->
+  - page chatroom s'affiche bien ->
+  - page home s'affiche bien ->
+  - changement de mail ou pseudo ok ->
+  - changement de pwd ->
+* Revoir l'organisation des repos pour le dépoiement, faire un schéma.
+- Mise en place du login avec Google et Github,
+- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
+- Déploiement.
+
 ## 08/11/2021
 
 Fait :
@@ -13,13 +35,6 @@ Fait :
 Ce que j'ai appris :
 - Avec une bonne préparation, tout est plus simple :-)
 - Le fait d'avoir passé du temps sur les tests me fait clairement gagner du temps ici (même si quand même c'est overkill pour une petite app comme ça).
-
-Prochaines étapes :
-- Connecter Concord (en profiter pour refaire la table cron du scrapper),
-- Connecter Topics,
-- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
-- Déploiement.
-- Essai de connexion de multiplicorne s'il y a le temps...
 
 ## 07/11/2021
 

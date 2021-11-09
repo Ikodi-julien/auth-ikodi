@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts":
   {
-    "integrationTest": "mocha --sort ./tests/integration",
-    "unitTest": "mocha --sort ./tests/unit",
+    "test:integration": "mocha --sort ./tests/integration",
+    "test:unit": "mocha --sort ./tests/unit",
     "startDev": "pm2 start ./index.js --watch -n auth-server"
   },
   "repository":
