@@ -1,26 +1,80 @@
 # Journal auth.ikodi
 
+## 12/11/2021
+
+Bon aujourd'hui, fin de la partie raccordement de concord !
+
+* Fix bug avec input pseudo dans Profile ->
+* Update tags -> ok
+* Update avatar -> ok
+* get my channels -> ok
+* get my recommended channels -> ok
+* update pwd -> ok
+* chatrooms fonctionnent -> ok
+* deleteMe -> ok
+
+* Revoir l'organisation des repos pour le déploiement, faire un schéma.
+
+
+Prochaines étapes :
+- Mise en place du login avec Google et Github,
+- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
+ (en profiter pour refaire la table cron du scrapper)
+- Déploiement.
+
+## 11/11/2021
+
+* Connecter Concord,
+  - Reprendre les tests en incluant bien concord-api -> ok, reste l'avatar -> ok
+  - Après tests ok, transposer au niveau app-front -> ok
+  - update mail :
+    - ajouter un formulaire de saisie du nouvel email et pseudo + mdp -> ok
+    - relier à l'action UPDATE_PROFILE -> ok
+    - c'est tout bon -> ok
+  - update pseudo -> ok
+* Faire un script de création de la base de auth-server cohérent avec celui de concord-server -> ok
+* Modifier celui de concord-server en supprimant les données redondantes (nickname, email) -> ok
+
+* Ce que j'ai appris :
+  - Même si cela semble "simple" dès qu'il y a modification de structure de base de données, il vaut mieux reprendre les MCD et se poser des questions puis élaborer un plan avant de faire des modifs, pas coder à fond direct...
+  - Revu react avec redux et composants,
+
+* Flux des requêtes entre les servers et bases de données:
+![Capture d'écran de whimsical](./api/database/database-flow-concord-auth.png)
+
+## 10/11/2021
+
+* Modification côté auth-server :
+  - Seuls email et password obligatoire lors du signup, rendre obligatoire au moins un des "firstname", "lastname", "nickname", rq: les autres éventuelles info devront être stockées dans la bdd de l'app ->ok
+  - signup depuis le front -> ok
+  - login depuis le front -> ok
+  - les channels et tags sont reçus et dispo -> ok
+  - page discovery s'affiche bien -> ok
+  - page chatroom s'affiche bien -> ok
+  - page home s'affiche bien (bonnes infos) :
+    * Il faut créer un user sur auth-server et l'enregistrer aussi dans l'api concord :
+      - Ajout d'un champ 'authid' dans le modèle User de Concord -> ok
+      - Modification du script db-generate.js pour en tenir compte, créé les authid jusqu'à 27 -> ok, une erreur significative corriguée pour la création des channels (un debug de 1h quand même...) et une perte de temps d'une heure supplémentaire sur un truc qui marchait très bien (fuck l'affichage de la table dans le terminal...)
+      - Modification du script create.sql sur auth-server pour commencer les id à 30 -> ok
+      - Modifier les requêtes du front concord par rapport à authId :
+        - Faire séparation claire entre requêtes à auth-server et api-concord, deux middlewares bien séparés -> ok
+        - Après un signup success (auth-server), le front créé un profil dans sa base (concord-server) :
+          - Reprendre les tests en incluant bien concord-api -> ok, reste l'avatar,
+          - Après tests ok, transposer au niveau app-front -> à faire
+          
+* Ce que j'ai appris :
+  - Les tests ça prend du temps à mettre en place (encore que avec l'habitude) et finalement ça fait gagner du temps,
+  - J'ai revu sequelize, c'est bien,
+  - Meilleur compréhension du flux des requêtes entre plusieurs serveurs.
+
 ## 09/11/2021
 
 Fait :
 * Modification des routes (légères) dans auth-server pour séparer la logique d'identification liée aux identifiants (email / password / firstname / lastname) de l'accès au contenu du profil de chaque utilisateur (avatar / tags / channels / recommended / ...)
 * Mise en place des tests d'integration pour l'api de concord + réorganisation des tests.
 
-Prochaines étapes :
-* Connecter Concord (en profiter pour refaire la table cron du scrapper),
-  - Modifier les champs dans auth-server, ajouter nickname, faire que juste le pseudo soit obligatoire,
-  - signup depuis le front ->
-  - login depuis le front ->
-  - les channels et tags sont reçus et dispo ->
-  - page discovery s'affiche bien ->
-  - page chatroom s'affiche bien ->
-  - page home s'affiche bien ->
-  - changement de mail ou pseudo ok ->
-  - changement de pwd ->
-* Revoir l'organisation des repos pour le dépoiement, faire un schéma.
-- Mise en place du login avec Google et Github,
-- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
-- Déploiement.
+Ce que j'ai appris :
+* Une meilleur connaissance des tests avec mocha, jouer avec les callbacks ça peut être marrant...
 
 ## 08/11/2021
 

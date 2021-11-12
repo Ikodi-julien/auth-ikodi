@@ -14,7 +14,7 @@ module.exports = {
     return result.rowCount ? {userId: result.rows[0].id} : { userId: false };
   },
   getMe: async (id) => {
-    const queryString = `SELECT "id", "firstname", "lastname", "email", "password" FROM auth.users WHERE id=$1`;
+    const queryString = `SELECT "id", "firstname", "lastname", "nickname", "email", "password" FROM auth.users WHERE id=$1`;
     
     const result = await db.query( queryString, [id]);
     return result.rows[0];
@@ -26,12 +26,12 @@ module.exports = {
    */
   insertUser: async (data) =>{
     const {
-      firstname, lastname, password, email
+      firstname, lastname, nickname, password, email
     } = data;
     
-    const queryString = `INSERT INTO auth.users ("firstname", "lastname", "email", "password") VALUES ($1,$2,$3,$4) RETURNING id`;
+    const queryString = `INSERT INTO auth.users ("firstname", "lastname", "nickname", "email", "password") VALUES ($1,$2,$3,$4,$5) RETURNING id`;
     
-    const result = await db.query( queryString, [firstname, lastname, email, password]);
+    const result = await db.query( queryString, [firstname, lastname, nickname, email, password]);
     return result.rows[0].id;
   },
   /**
@@ -46,12 +46,12 @@ module.exports = {
   },
   updateMe: async (data) =>{
     const {
-      id, firstname, lastname, email
+      id, firstname, lastname, nickname, email
     } = data;
     
-    const queryString = `UPDATE auth.users SET "firstname"=$2, "lastname"=$3, "email"=$4 WHERE id=$1 RETURNING *`;
+    const queryString = `UPDATE auth.users SET "firstname"=$2, "lastname"=$3, "email"=$4, "nickname"=$5 WHERE id=$1 RETURNING *`;
     
-    const result = await db.query( queryString, [id, firstname, lastname, email]);
+    const result = await db.query( queryString, [id, firstname, lastname, email, nickname]);
     return result.rows[0];
   },
   updateMePassword: async (data) =>{

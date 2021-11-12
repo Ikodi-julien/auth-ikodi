@@ -34,20 +34,20 @@ module.exports = {
       if (!userId) return res.status(409).json({message: "user not in db"});
       
       // compare passwords
-      const user = await queries.getMe(userId);
-      const match = await bcrypt.compare(password, user.password);
+      const me = await queries.getMe(userId);
+      const match = await bcrypt.compare(password, me.password);
       if (!match) return res.status(403).json({message: "invalid password"});
       if (match) {
       // set JWT cookies http only
-      const [accessToken, refreshToken] = jwtService.getTokens({id: user.id});
+      const [accessToken, refreshToken] = jwtService.getTokens({id: me.id});
       
       res.cookie('access_token', accessToken, cookieService.options);
       res.cookie('refresh_token', refreshToken, cookieService.options);
       // set id = loggued in redis
-      redisService.setLogin(user.id);
+      redisService.setLogin(me.id);
       // console.log('login user id :', user.id);
       
-      return res.status(200).json({id: user.id});
+      return res.status(200).json({...me, password: ''});
       }
       
     } catch(error) {
@@ -63,29 +63,32 @@ module.exports = {
    */
   signup: async (req, res) => {
     const {
-      firstname, lastname, password, email
+      firstname, lastname, nickname, password, email
     } = req.body;
     try {
       // status (412) if input empty
       if (
-        firstname === "" ||
-        lastname === "" ||
         email === "" ||
         password === ""
-      ) return res.status(412).json({message: "no empty input allowed"});
-      
+      ) return res.status(412).json({message: "Email et mot de passe doivent être renseignés"});
+      // status(409) at least one of "firstname", "lastname" or "nickname",
+      if (
+        firstname === "" &&
+        lastname === "" &&
+        nickname === ""
+      ) return res.status(409).json({message: "Un nom ou un pseudo est nécessaire"});
       // status (303) if email already in database
       const {userId} = await queries.getOneByEmail(email);
       console.log(userId);
-      if (userId) return res.status(303).json({message: "email already in db"});
+      if (userId) return res.status(303).json({message: "Un compte existe déjà pour cet email"});
       
       // status 422 if invalid email
-      if (!validator.validate(email)) return res.status(422).json({message: "invalid email"});
+      if (!validator.validate(email)) return res.status(422).json({message: "Forme de l'email invalide"});
       
       // Do signup
       const hash = await bcrypt.hash(password, saltRounds)
-      const id = await queries.insertUser({...req.body, password : hash });
-      res.status(200).json({id});
+      const user = await queries.insertUser({...req.body, password : hash });
+      res.status(200).json({...user, password: ''});
       
     } catch(error) {
       console.log(error);
@@ -114,16 +117,14 @@ module.exports = {
   updateMe: async (req, res) => {
     const id = req.userId;
     const {
-      firstname, lastname, password, email
+      firstname, lastname, nickname, password, email
     } = req.body;
     try {
       // status (412) if input empty
       if (
-        firstname === "" ||
-        lastname === "" ||
         email === "" ||
         password === ""
-      ) return res.status(412).json({message: "no empty input allowed"});
+      ) return res.status(412).json({message: "L'email et le mot de passe doivent être renseignés"});
       
       // status 422 if invalid email
       if (!validator.validate(email)) return res.status(422).json({message: "invalid email"});
@@ -140,7 +141,7 @@ module.exports = {
       
       // Do update
       const userUpdated = await queries.updateMe({...req.body, id });
-      res.status(200).json(userUpdated);
+      res.status(200).json({...userUpdated, password: ''});
       
     } catch(error) {
       console.log(error);
@@ -174,7 +175,7 @@ module.exports = {
       // Do update
       const hash = await bcrypt.hash(newPassword, saltRounds);
       const userId = await queries.updateMePassword({id, newPassword: hash });
-      res.status(200).json(userId);
+      res.status(200).json({...userId, message: "Le mot de passe à été modifié"});
       
     } catch(error) {
       console.log(error);
