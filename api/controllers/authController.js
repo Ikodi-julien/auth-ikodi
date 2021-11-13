@@ -15,7 +15,7 @@ module.exports = {
    * @returns 
    */
   login: async (req, res) => {
-    const { password, email, app } = req.body;
+    const { password, email } = req.body;
     
     try {
       // Should return status (412) if input empty
@@ -36,10 +36,10 @@ module.exports = {
       // compare passwords
       const me = await queries.getMe(userId);
       const match = await bcrypt.compare(password, me.password);
-      if (!match) return res.status(403).json({message: "invalid password"});
+      if (!match) return res.status(403).json({message: "Le mot de passe ne correspond pas"});
       if (match) {
       // set JWT cookies http only
-      const [accessToken, refreshToken] = jwtService.getTokens({id: me.id});
+      const [accessToken, refreshToken] = jwtService.getTokens({...me, password: ''});
       
       res.cookie('access_token', accessToken, cookieService.options);
       res.cookie('refresh_token', refreshToken, cookieService.options);
@@ -62,7 +62,7 @@ module.exports = {
    * @returns 
    */
   signup: async (req, res) => {
-    const {
+    let {
       firstname, lastname, nickname, password, email
     } = req.body;
     try {
@@ -86,9 +86,10 @@ module.exports = {
       if (!validator.validate(email)) return res.status(422).json({message: "Forme de l'email invalide"});
       
       // Do signup
+      if (!nickname) nickname = `${firstname}-${lastname}`;
       const hash = await bcrypt.hash(password, saltRounds)
-      const user = await queries.insertUser({...req.body, password : hash });
-      res.status(200).json({...user, password: ''});
+      const user = await queries.insertUser({...req.body, nickname, password : hash });
+      res.status(200).json({...user});
       
     } catch(error) {
       console.log(error);
@@ -102,7 +103,7 @@ module.exports = {
    * @returns 
    */
   deleteMe: async (req, res) => {
-    const id = req.userId;
+    const {id} = req.user;
     if (id === 'undefined') return res.sendStatus(400);
     const deletedId = await queries.deleteMe(id);
     res.status(200).json({id: deletedId});
@@ -115,7 +116,7 @@ module.exports = {
    * @returns 
    */
   updateMe: async (req, res) => {
-    const id = req.userId;
+    const {id} = req.user;
     const {
       firstname, lastname, nickname, password, email
     } = req.body;
@@ -141,7 +142,12 @@ module.exports = {
       
       // Do update
       const userUpdated = await queries.updateMe({...req.body, id });
-      res.status(200).json({...userUpdated, password: ''});
+      
+      // Generate new tokens
+      const [accessToken, refreshToken] = jwtService.getTokens(userUpdated);
+      res.cookie('access_token', accessToken, cookieService.options);
+      res.cookie('refresh_token', refreshToken, cookieService.options);
+      res.status(200).json({message: "credentials updated"});
       
     } catch(error) {
       console.log(error);
@@ -156,7 +162,7 @@ module.exports = {
    */
   updateMePassword: async (req, res) => {
     console.log('update pass');
-    const id = req.userId;
+    const {id} = req.user;
     const {
       password, newPassword
     } = req.body;
@@ -197,7 +203,7 @@ module.exports = {
    * @param {*} res 
    */
   getMe: async(req, res) => {
-    const user = await queries.getMe(req.userId);
+    const user = await queries.getMe(req.user.id);
     // console.log(user);
     res.status(200).json(user);
   },

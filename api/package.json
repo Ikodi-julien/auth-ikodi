@@ -7,7 +7,8 @@
   {
     "test:integration": "mocha --sort ./tests/integration",
     "test:unit": "mocha --sort ./tests/unit",
-    "dev": "pm2 start ./index.js --watch -n auth-5050"
+    "dev": "pm2 start ./index.js --watch -n auth-5050",
+    "generate-db": "sudo -i -u postgres psql -d ikodiauth -f /var/www/html/auth-ikodi/api/database/create.sql"
   },
   "repository":
   {

@@ -3,7 +3,7 @@ const redisService = require('../services/redis.service');
 
 module.exports = {
   verify: (req, res, next) => {
-    const id = req.userId;
+    const id = req.user.id;
     // console.log('id:', id);
     if (!id) {
       return res.status(401).json({message: 'no id found'});
@@ -23,7 +23,7 @@ module.exports = {
 
   },
   setLogout: (req, res, next) => {
-    const id = req.userId
+    const id = req.user.id
     
     if (!id) {
       return res.status(401).json({message: 'no id found'});

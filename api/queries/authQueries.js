@@ -29,7 +29,7 @@ module.exports = {
       firstname, lastname, nickname, password, email
     } = data;
     
-    const queryString = `INSERT INTO auth.users ("firstname", "lastname", "nickname", "email", "password") VALUES ($1,$2,$3,$4,$5) RETURNING id`;
+    const queryString = `INSERT INTO auth.users ("firstname", "lastname", "nickname", "email", "password") VALUES ($1,$2,$3,$4,$5) RETURNING id, firstname, lastname, nickname, email`;
     
     const result = await db.query( queryString, [firstname, lastname, nickname, email, password]);
     return result.rows[0].id;

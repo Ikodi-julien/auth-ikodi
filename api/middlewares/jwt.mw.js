@@ -16,7 +16,7 @@ module.exports = {
       res.cookie('access_token', newAccessToken, cookieService.options);
       res.cookie('refresh_token', newRefreshToken, cookieService.options);
       
-      req.userId = accessTokenPayload.id;
+      req.user = accessTokenPayload;
       req.oldJwt = [accessToken, refreshToken];
       next();
       
@@ -32,7 +32,7 @@ module.exports = {
           res.cookie('access_token', newAccessToken, cookieService.options);
           res.cookie('refresh_token', newRefreshToken, cookieService.options);
           
-          req.userId = refreshTokenPayload.id;
+          req.user = refreshTokenPayload;
           req.oldJwt = [accessToken, refreshToken];
           next();
         } catch (error) {
@@ -61,7 +61,7 @@ module.exports = {
     
     try {
       const payload = jwt.verify(accessToken, JWT_SECRET);
-      req.userId = payload.id;
+      req.user = payload;
       next();
       
     } catch (error) {
