@@ -11,7 +11,14 @@ module.exports = {
     try {
       const accessTokenPayload = jwt.verify(accessToken, JWT_SECRET);
 
-      const [newAccessToken, newRefreshToken] = jwtService.getTokens({id: accessTokenPayload.id});
+      const [newAccessToken, newRefreshToken] = jwtService.getTokens({
+        id: accessTokenPayload.id,
+        firstname: accessTokenPayload.firstname,
+        lastname: accessTokenPayload.lastname,
+        nickname: accessTokenPayload.nickname,
+        email: accessTokenPayload.email,
+        password: '',
+      });
           
       res.cookie('access_token', newAccessToken, cookieService.options);
       res.cookie('refresh_token', newRefreshToken, cookieService.options);
@@ -27,7 +34,14 @@ module.exports = {
         try {
           const refreshTokenPayload = jwt.verify(refreshToken, JWT_SECRET);
           
-          const [newAccessToken, newRefreshToken] = jwtService.getTokens({id: refreshTokenPayload.id});
+          const [newAccessToken, newRefreshToken] = jwtService.getTokens({
+            id: refreshTokenPayload.id,
+            firstname: refreshTokenPayload.firstname,
+            lastname: refreshTokenPayload.lastname,
+            nickname: refreshTokenPayload.nickname,
+            email: refreshTokenPayload.email,
+            password: '',
+          });
           
           res.cookie('access_token', newAccessToken, cookieService.options);
           res.cookie('refresh_token', newRefreshToken, cookieService.options);

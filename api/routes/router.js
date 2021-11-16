@@ -14,18 +14,29 @@ const {
   redirectLogout,
   updateMe,
   updateMePassword,
+  redirect
 } = require('../controllers/authController');
+const googleController = require('../controllers/googleController');
+const githubController = require('../controllers/githubController');
+const apiController = require('../controllers/apiLoginController');
 
 router.get('/', (req, res) => {
   res.sendFile(path.resolve('public/index.html'));
 });
+
+router.get('/google', apiController.redirectUri);
+router.get('/google/auth', googleController.connect, apiController.login, apiController.signup, apiController.login, );
+
+router.get('/github', apiController.redirectUri)
+router.get('/github/auth', githubController.getTokens, githubController.getCredentials, apiController.login, apiController.signup, apiController.login);
+
 router.get('/doc', (req, res) => res.sendFile(resolve('doc.html')));
 router.get('/count', count);
 
-router.post('/login', login);
-router.post('/signup', signup);
+router.post('/login', login, redirect);
+router.post('/signup', signup, login, redirect);
 
-router.get('/me/credentials', jwtMW.verify, redisMW.verify, getMe);
+router.get('/me', jwtMW.verify, redisMW.verify, getMe);
 router.delete('/me/credentials', jwtMW.verify, redisMW.verify, deleteMe);
 router.put('/me/password', jwtMW.verify, redisMW.verify, updateMePassword);
 router.put('/me/credentials', jwtMW.verify, redisMW.verify, updateMe);

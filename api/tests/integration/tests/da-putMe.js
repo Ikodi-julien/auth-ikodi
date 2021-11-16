@@ -43,15 +43,8 @@ describe('PUT ME', () => {
         "lastname" : "delapp"
       })
       .expect('Content-Type', /json/)
-      .expect(200, (err, res) => {
-        if (err) return done(err);
-        chai.expect(res.body).to.have.property('id');
-        chai.expect(res.body).to.have.property('email').equal('newtest@test.fr');
-        chai.expect(res.body).to.have.property('firstname');
-        chai.expect(res.body).to.have.property('lastname');
-        done();
-      });
-    });
+      .expect(200, done);
+    }); 
   }); 
   
   describe('PUT /me/password - success', () => {

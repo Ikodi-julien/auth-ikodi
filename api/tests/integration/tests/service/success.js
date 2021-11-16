@@ -17,12 +17,7 @@ module.exports = {
           })
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
-          .expect(200, (err, res) => {
-            if (err) return done(err);
-            chai.expect(res.body.id).to.be.greaterThanOrEqual(0);
-            newId = res.body.id;
-            done();
-          });
+          .expect(200, done);
       });
     });
   },

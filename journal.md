@@ -1,5 +1,59 @@
 # Journal auth.ikodi
 
+## 16/11/2021
+
+- Fix bug le get /me initial depuis concord non fonctionnel -> ok  
+- Mettre en place la redirection vers l'app depuis Loginform -> ok
+- Compléter la redirection vers l'app depuis Signupform -> ok
+* C'est auth-server qui doit rediriger la response pour concerver les tokens :
+  - Modifier le submit du formulaire, pas d'ajax pour que la requête puisse être redirigée avec les tokens -> ok
+  - Mettre en place le redirect pour apilogin en middleware -> ok
+  - Mettre en place le redirect pour login depuis formulaire -> ok
+  - Mettre en place le redirect pour signup depuis formulaire -> ok    
+- Tests globaux de auth-server ->ok
+
+- Tests globaux de concord avec auth-server ->
+- Fixer les versions sur github ->
+- Mise en place de l'envoi de mail en cas d'oubli de mot de passe ->
+- Fixer la version sur github ->
+- Mise en place de la confirmation du mail lors du signup ->
+- Revoir le front concord (profile, users in channel, )
+- Régler les inputs de mot de passe et controllers de signup (5 caractères minimum, 50 max, une majuscule, un nombre),
+- Tests des build ->
+- Déploiement ->
+
+Appris :
+* Les requêtes Ajax ne permettent pas une redirection de la requêtes, cependant un envoi de formulaire basic le permet, sauvé... mais ça change pas mal au niveau de transport des messages.
+
+## 15/11/2021
+
+* Mise en place du login avec Github -> ok
+* Mise en place login Google sur le modèle Github -> ok
+  - Faire en sorte de rediriger vers auth.ikodi.eu pour faire le login/signup -> ok
+  - refaire une authentification avec route /google/auth -> ok
+* Factoriser les authentifications avec une api (google, github, des autres plus tard ?) -> ok
+* Fix bug pas de nom avec login google -> ok
+* Ajouter une colonne apisignup en DB, default false -> ok
+* Conditionner le message d'erreur au login à cette prop dans les controllers login via form et via api -> ok
+
+Ce que j'ai appris :
+- Fonctionnement du flow OAuth mieux compris,
+
+## 14/11/2021
+
+Fin de la mise en place de login et signup avec Google api, 
+
+Ce que j'ai appris :
+* Faire un bon schéma, c'est bien.
+* Rappel sur google platform,
+* Rappel sur express, redirect et utilisation des middlewares chainés,
+
+## 13/11/2021
+
+* Modification des controller dans auth-server et concord-server pour utiliser le jwt payload plutôt que req.body.
+* Fix des derniers bugs et tests navigateur ok, notamment la création d'un compte en dehors de concord permet de se logguer à concord avec un compte :))
+* Mise à jour des tests d'intégration avec user details dans le jwt
+
 ## 12/11/2021
 
 Bon aujourd'hui, fin de la partie raccordement de concord !
@@ -13,14 +67,11 @@ Bon aujourd'hui, fin de la partie raccordement de concord !
 * chatrooms fonctionnent -> ok
 * deleteMe -> ok
 
-* Revoir l'organisation des repos pour le déploiement, faire un schéma.
+* Revoir l'organisation des repos pour le déploiement -> pas pour l'instant, on verra avec docker plus tard.
 
-
-Prochaines étapes :
-- Mise en place du login avec Google et Github,
-- Mise en place de l'envoi de mail en cas d'oubli de mot de passe,
- (en profiter pour refaire la table cron du scrapper)
-- Déploiement.
+Ce que j'ai appris : 
+* Une utilisation plus efficace des jwt, notamment pour transporter des infos,
+* L'extraction de données de la base vers un fichier csv (COPY ... TO...),
 
 ## 11/11/2021
 
