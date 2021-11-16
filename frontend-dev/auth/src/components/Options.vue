@@ -1,8 +1,12 @@
 <template>
   <div class="options">
     <div class="options__socialaccounts">
-      <Button text='Google' color="white" icon='<img src="https://img.icons8.com/color/25/000000/google-logo.png"/>'/>
-      <Button text='Github' color="white" icon='<img src="https://img.icons8.com/fluency/25/000000/github.png"/>'/>
+      <a :href="this.GOOGLE_URL">
+        <Button text='Google' color="white" icon='<img src="https://img.icons8.com/color/25/000000/google-logo.png"/>'/>
+      </a>
+      <a :href="this.GITHUB_URL">
+        <Button text='Github' color="white" icon='<img src="https://img.icons8.com/fluency/25/000000/github.png"/>'/>
+      </a>
       <Button text='Linkedin' color="white" icon='<img src="https://img.icons8.com/fluency/25/000000/linkedin.png"/>'/>
     </div>
     <Divider text="OU" />
@@ -34,6 +38,7 @@
 import Button from './Button.vue';
 import Divider from './Divider.vue';
 import LoginForm from './LoginForm.vue';
+import {GOOGLE_URL, GITHUB_URL} from '../services/settings';
 
 export default {
   components: {
@@ -41,10 +46,23 @@ export default {
     Divider,
     LoginForm
   },
-  methods: {
-    showClic() {
-      console.log('clic');
+  data() {
+    return {
+      GOOGLE_URL,
+      GITHUB_URL
     }
+  },
+  methods: {
+    // googleLogin() {
+    //   console.log('GOOGLE_URL', GOOGLE_URL);
+    //   window.location = GOOGLE_URL;
+    // }
+  },
+  mounted() {
+    const cookies = document.cookie.split('; ');
+    const appNameCookie = cookies.find(cookie => cookie.substring(0, 9) === 'app_ikodi');
+    const appName = appNameCookie.split('=')[1];
+    console.log(appName);
   },
   emits: ['toggle-signup', 'toggle-sendpass']
 }

@@ -1,5 +1,6 @@
 <template>
-  <form @submit.prevent="onSubmit" >
+  <!-- <form method="post" action="http://localhost:5050/signup" > -->
+  <form @submit.prevent="onSubmit">
     <input
       type="text"
       name="firstname"
@@ -30,6 +31,12 @@
       placeholder="Confirmation du mot de passe"
       v-model="password2"
     >
+    <input
+      type="text"
+      name="app"
+      v-show="false"
+      v-model="this.app"
+    >
     <Button
       text="Valider"
       className="--blue"
@@ -40,8 +47,8 @@
 
 <script>
 import Button from './Button.vue';
-import {BASE_URL} from '@/BASE_URL.js';
-import axios from 'axios';
+import controllers from '@/services/controllers';
+import {BASE_URL} from '@/services/settings';
 
 export default {
   name: 'SignupForm',
@@ -54,41 +61,31 @@ export default {
       lastname: "",
       email: "",
       password1: "",
-      password2: ""
+      password2: "",
+      app: ""
     }
   },
+  mounted() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    this.app = urlParams.get('app');
+  },
   methods: {
-    async onSubmit() {
-
-      if (this.password1 !== this.password2) {
-        alert("Les mots de passe doivent être identiques");
-        return;
+    onSubmit() {
+      const formData = {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email,
+        password1: this.password1,
+        password2: this.password2,
+        app: this.app
       }
 
-      const firstname = this.firstname;
-      const lastname = this.lastname;
-      const email = this.email;
-      const password = this.password1;
+      const isForm = controllers.verifySignupForm(formData);
 
-      try {
-        await axios.post(`${BASE_URL}/signup`, {
-          firstname,
-          lastname,
-          email,
-          password
-        });
+      if (!isForm.valid) return alert(isForm.message);
 
-        await axios.post(`${BASE_URL}/login`, {
-          email,
-          password
-        });
-
-        alert("Identification réussie, vous allez être redirigé.");
-        location.assign('https://ikodi.eu');
-
-      } catch(error) {
-        alert(error.response.data.message);
-      }
+      controllers.post(`${BASE_URL}/signup`, formData)
     }
   }
 }

@@ -34,7 +34,6 @@ describe('GET ME', () => {
 
   describe('GET /me with access-token - success', () => {
     it('should return user data with expected properties', (done) => {
-
       
       request
         .get(`/me/credentials`)
@@ -63,26 +62,26 @@ describe('GET ME', () => {
     })
   })
           
-  describe('GET /me with expired access token but valid refresh token', () => {
-    it('should return user data with expected properties', (done) => {
+  // describe('GET /me with expired access token but valid refresh token', () => {
+  //   it('should return user data with expected properties', (done) => {
       
-      const payload = jwt.decode('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM1ODUxMTgyLCJleHAiOjE2MzU4NTQ3ODJ9.-rr6pNdTZNJmQEqMePeAr3s1XBnmnDMA-s5R-uJ0voQ', JWT_SECRET);
-      const expiredAccessToken = jwtService.getExpiredAccessToken({id: payload.id});
+  //     const payload = jwt.decode('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM1ODUxMTgyLCJleHAiOjE2MzU4NTQ3ODJ9.-rr6pNdTZNJmQEqMePeAr3s1XBnmnDMA-s5R-uJ0voQ', JWT_SECRET);
+  //     const expiredAccessToken = jwtService.getExpiredAccessToken({id: payload.id});
       
-      request
-        .get(`/me/credentials`)
-        .set('Cookie', [ `access_token=${expiredAccessToken}`, refreshToken ])
-        .set('Accept', 'application/json')
-        .send()
-        .expect('Content-Type', /json/)
-        .expect(200, (err, res) => {
-          if (err) return done(err);
-          chai.expect(res.body).to.have.property('id');
-          chai.expect(res.body).to.have.property('email');
-          done();
-        });
-    });
-  })
+  //     request
+  //       .get(`/me/credentials`)
+  //       .set('Cookie', [ `access_token=${expiredAccessToken}`, refreshToken ])
+  //       .set('Accept', 'application/json')
+  //       .send()
+  //       .expect('Content-Type', /json/)
+  //       .expect(200, (err, res) => {
+  //         if (err) return done(err);
+  //         chai.expect(res.body).to.have.property('id');
+  //         chai.expect(res.body).to.have.property('email');
+  //         done();
+  //       });
+  //   });
+  // })
 
   
   // /**

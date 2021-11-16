@@ -10,7 +10,8 @@ CREATE TABLE auth.users (
     lastname character varying(50),
     nickname character varying(50),
     password character varying(255) NOT NULL,
-    email character varying(255) NOT NULL
+    email character varying(255) NOT NULL,
+    apisignup boolean not null default false
 );
 
 ALTER TABLE auth.users OWNER TO "ikodiauth";

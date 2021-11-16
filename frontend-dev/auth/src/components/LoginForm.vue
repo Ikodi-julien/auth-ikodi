@@ -1,7 +1,8 @@
 <template>
   <form @submit.prevent="onSubmit" >
+  <!-- <form method="post" action="http://localhost:5050/login" > -->
     <input
-      type="text"
+      type="email"
       name="email"
       placeholder="Email"
       v-model="this.email"
@@ -12,13 +13,20 @@
       placeholder="Mot de passe"
       v-model="this.password"
     >
+    <input
+      type="text"
+      name="app"
+      v-show="false"
+      v-model="this.app"
+    >
     <Button @click="$emit('submit')" text="Connexion" className="--blue" width="80%" />
   </form>
 </template>
 
 <script>
 import axios from 'axios';
-import {BASE_URL} from '@/BASE_URL.js';
+import {BASE_URL} from '@/services/settings';
+import controllers from '@/services/controllers';
 import Button from './Button.vue';
 
 export default {
@@ -30,42 +38,33 @@ export default {
     return {
       email: "",
       password: "",
+      app: "auth",
       user: {}
     }
   },
+  mounted() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    this.app = urlParams.get('app');
+    const code = urlParams.get('code');
+
+    if (code) controllers.alertCode(code);
+  }
+  ,
   methods: {
-    async onSubmit() {
-      try {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const app = urlParams.get('app');
-
-        // // Se logguer et recevoir les jwt en httponly
-        const response = await axios.post(`${BASE_URL}/login`, {
-          email: this.email,
-          password: this.password,
-          app
-        });
-
-        console.log(response.headers);
-        console.log(response.headers['set-cookie']);
-        console.log(response.headers['content-type']);
-        alert("Identification réussie, vous allez être redirigé.");
-
-
-        // // await axios.get(`http://localhost:8001`, {
-        // //   withCredentials: true
-        // // })
-        // location.assign(process.env.NODE_ENV = 'development' ? '/' : `https://${app}.ikodi.eu`);
-
-      } catch(error) {
-        const {message} = error.response.data;
-        alert(message);
+    onSubmit() {
+      const formData = {
+        email: this.email,
+        password: this.password,
+        app: this.app,
       }
+      const isForm = controllers.verifyLoginForm(formData);
+      if (!isForm.valid) return alert(isForm.message);
+
+      controllers.post(`${BASE_URL}/login`, formData );
     }
   },
   emits: ['submit']
-
 }
 </script>
 

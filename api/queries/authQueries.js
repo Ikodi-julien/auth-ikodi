@@ -7,11 +7,13 @@ module.exports = {
    * @returns 
    */
   getOneByEmail: async (email) => {
-    const queryString = `SELECT id FROM auth.users WHERE email=$1`;
+    const queryString = `SELECT id, apisignup FROM auth.users WHERE email=$1`;
     
     const result = await db.query( queryString, [email]);
     
-    return result.rowCount ? {userId: result.rows[0].id} : { userId: false };
+    return result.rowCount ? {
+      userId: result.rows[0].id, apisignup: result.rows[0].apisignup
+    } : { userId: false };
   },
   getMe: async (id) => {
     const queryString = `SELECT "id", "firstname", "lastname", "nickname", "email", "password" FROM auth.users WHERE id=$1`;
@@ -22,16 +24,16 @@ module.exports = {
   /**
    * Insert new user in table users
    * @param {Object} data - user credentials and name
-   * @returns {Number} user id
+   * @returns {Object} user
    */
   insertUser: async (data) =>{
     const {
-      firstname, lastname, nickname, password, email
+      firstname, lastname, nickname, password, email, apisignup
     } = data;
     
-    const queryString = `INSERT INTO auth.users ("firstname", "lastname", "nickname", "email", "password") VALUES ($1,$2,$3,$4,$5) RETURNING id, firstname, lastname, nickname, email`;
+    const queryString = `INSERT INTO auth.users ("firstname", "lastname", "nickname", "email", "password", "apisignup") VALUES ($1,$2,$3,$4,$5,$6) RETURNING id, firstname, lastname, nickname, email`;
     
-    const result = await db.query( queryString, [firstname, lastname, nickname, email, password]);
+    const result = await db.query( queryString, [firstname, lastname, nickname, email, password, apisignup]);
     return result.rows[0].id;
   },
   /**
