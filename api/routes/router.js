@@ -24,6 +24,11 @@ const {
   getResetPwd,
   resetPwd
 } = require('../controllers/pwdController');
+const {
+  setEmailToken,
+  sendLinkToVerifyMail,
+  verifyMail
+} = require('../controllers/emailController');
 
 router.get('/', (req, res) => {
   res.sendFile(path.resolve('public/index.html'));
@@ -33,7 +38,7 @@ router.get('/doc', (req, res) => res.sendFile(resolve('doc.html')));
 router.get('/count', count);
 
 router.post('/login', login, redirect);
-router.post('/signup', signup, login, redirect);
+router.post('/signup', signup, setEmailToken, sendLinkToVerifyMail);
 router.post('/logout', jwtMW.verifyLogout, redisMW.setLogout, redirectLogout);
 
 router.get('/google', apiController.redirectUri);
@@ -47,8 +52,9 @@ router.delete('/me/credentials', jwtMW.verify, redisMW.verify, deleteMe);
 router.put('/me/password', jwtMW.verify, redisMW.verify, updateMePassword);
 router.put('/me/credentials', jwtMW.verify, redisMW.verify, updateMe);
 
-router.post('/forgot-pwd', sendLink)
-router.get('/reset-pwd/:id/:token', getResetPwd)
-router.post('/reset-pwd/:id/:token', resetPwd)
+router.get('/email-verify/:token', verifyMail, login, redirect);
+router.post('/forgot-pwd', sendLink);
+router.get('/reset-pwd/:id/:token', getResetPwd);
+router.post('/reset-pwd/:id/:token', resetPwd);
 
 module.exports = router;

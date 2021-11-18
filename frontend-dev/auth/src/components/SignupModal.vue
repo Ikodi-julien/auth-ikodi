@@ -4,7 +4,7 @@
       <i class="fas fa-times" @click="$emit('toggle-signup')"></i>
       <h1 class="modal__title">Création de compte</h1>
       <Divider />
-      <SignupForm />
+      <SignupForm @toggle-signup="$emit('toggle-signup')"/>
     </div>
   </section>
 </template>
@@ -24,7 +24,8 @@ export default {
   components: {
     Divider,
     SignupForm
-  }
+  },
+  emits: ['toggle-signup']
 }
 </script>
 

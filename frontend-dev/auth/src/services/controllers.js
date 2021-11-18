@@ -65,6 +65,10 @@ const controllers = {
         alert("Un compte existe déjà pour cet email, utiliser le lien pour récupérer un mot de passe perdu");
         break;
 
+      case 'inactive':
+        alert("L'email pour ce compte n'a pas été confirmé. Vous pouvez soit suivre le lien reçu par mail (valable 10 minutes) ou recréer un compte puis valider le nouveau lien reçu");
+        break;
+
       default:
         break;
     }

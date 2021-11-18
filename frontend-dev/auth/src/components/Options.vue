@@ -52,17 +52,14 @@ export default {
       GITHUB_URL
     }
   },
-  methods: {
-    // googleLogin() {
-    //   console.log('GOOGLE_URL', GOOGLE_URL);
-    //   window.location = GOOGLE_URL;
-    // }
-  },
   mounted() {
+    try {
     const cookies = document.cookie.split('; ');
     const appNameCookie = cookies.find(cookie => cookie.substring(0, 9) === 'app_ikodi');
     const appName = appNameCookie.split('=')[1];
-    console.log(appName);
+    } catch(error) {
+      console.log(error);
+    }
   },
   emits: ['toggle-signup', 'toggle-sendpass']
 }

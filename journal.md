@@ -1,5 +1,43 @@
 # Journal auth.ikodi
 
+## 18/11/2021
+
+Depuis dernier commit :
+- Mise en place de l'envoi de mail en cas d'oubli de mot de passe :
+  - Mettre en place le flow -> ok
+  - Mettre en place l'envoi d'email -> ok
+  - Mettre en forme l'email du lien de reset -> ok
+  - Mettre en forme le formulaire du lien -> ok
+  - Mettre en forme la confirmation du reset -> ok
+  - commit -> ok
+
+- Mise en place de la confirmation du mail lors du signup :
+  - Ajouter une propriété "active" au model User, default to false, et une prop email-verify qui contiendra un hash JWT_SECRET + email, expiresIn: '10m' -> ok
+  - Modifier la query insertUser -> ok
+  - Si signup avec info complètes, envoyer un email à l'adresse donnée avec un lien vers le serveur get('/email-verify/:id/:token) -> ok
+  - Réceptionner le lien -> ok
+  - Vérifier le token avec celui du user ayant l'id fourni -> ok
+  - Si ok, passer la prop active du user à true, passer email-verify à null -> ok
+  - Conditionner le login à user.active = true -> ok
+  - Mise à jour des scénarios à tester et réalisation des scénarios de test -> 
+  - commit ->
+
+A faire :
+- Revoir le front concord (profile, users in channel, )
+- Régler les inputs de mot de passe et controllers de signup, login, reset, ect. (5 caractères minimum, 50 max, une majuscule, un nombre),
+- Tests des build ->
+- Faire la chasse aux console.log ->
+- Fixer la version sur github ->
+- Déploiement ->
+## 17/11/2021
+
+- Tests globaux de concord avec auth-server -> ok
+  - Fix bug sur logout quand jwt expired -> ok
+- Fixer les versions sur github -> 
+  - back concord -> ok sur develop, en attente fin front pour merge sur master,
+  - front concord -> ok sur develop, en attente reprise visuelle Profile et Channel pour merge sur master,
+  - back/front auth -> ok sur develop, sur master après send mail.
+
 ## 16/11/2021
 
 - Fix bug le get /me initial depuis concord non fonctionnel -> ok  
@@ -11,16 +49,7 @@
   - Mettre en place le redirect pour login depuis formulaire -> ok
   - Mettre en place le redirect pour signup depuis formulaire -> ok    
 - Tests globaux de auth-server ->ok
-
-- Tests globaux de concord avec auth-server ->
-- Fixer les versions sur github ->
-- Mise en place de l'envoi de mail en cas d'oubli de mot de passe ->
-- Fixer la version sur github ->
-- Mise en place de la confirmation du mail lors du signup ->
-- Revoir le front concord (profile, users in channel, )
-- Régler les inputs de mot de passe et controllers de signup (5 caractères minimum, 50 max, une majuscule, un nombre),
-- Tests des build ->
-- Déploiement ->
+- Fixer les versions sur github -> ok
 
 Appris :
 * Les requêtes Ajax ne permettent pas une redirection de la requêtes, cependant un envoi de formulaire basic le permet, sauvé... mais ça change pas mal au niveau de transport des messages.

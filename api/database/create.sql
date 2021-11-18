@@ -11,6 +11,8 @@ CREATE TABLE auth.users (
     nickname character varying(50),
     password character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
+    active boolean not null default false,
+    emailtoken character varying(255),
     apisignup boolean not null default false
 );
 

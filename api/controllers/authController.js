@@ -42,8 +42,11 @@ module.exports = {
       
       if (apisignup) return res.redirect('http://localhost:8080/?code=isapisignup');
 
-      // compare passwords
+      // Is account active ?
       const me = await queries.getMe(userId);
+      if (!me.active) return res.redirect('http://localhost:8080/?code=inactive');
+      
+      // compare passwords
       const match = await bcrypt.compare(password, me.password);
       if (!match) return res.redirect('http://localhost:8080/?code=invalidpwd');
       if (match) {
@@ -75,19 +78,19 @@ module.exports = {
     console.log('signup');
     
     let {
-      firstname, lastname, nickname, password1, password2, email
+      firstname, lastname, nickname, password1, password2, email, app
     } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     try {
       // status (412) if input empty
       if (
         email === "" ||
         password1 === "" ||
         password2 === ""
-      ) return res.redirect('http://localhost:8080/?code=empty');
+      ) return res.json({message: "empty"});
 
       // passwords
-      if (password1 !== password2) return res.redirect('http://localhost:8080/?code=diffpwd');
+      if (password1 !== password2) return res.json({message: "diffpwd"});
       
       req.body.password = password1;
       // status(409) at least one of "firstname", "lastname" or "nickname",
@@ -95,21 +98,32 @@ module.exports = {
         firstname === "" &&
         lastname === "" &&
         nickname === ""
-      )  return res.redirect('http://localhost:8080/?code=minname');
+      )  return res.json({message: "minname"});
       
       // status (303) if email already in database
-      const {userId} = await queries.getOneByEmail(email);
-      if (userId) return res.redirect('http://localhost:8080/?code=exist');
+      const {userId, active} = await queries.getOneByEmail(email);
+      if (userId && active) return res.json({message: "exist"});
       
       // status 422 if invalid email
-      if (!validator.validate(email)) return res.redirect('http://localhost:8080/?code=invalidemail');
+      if (!validator.validate(email)) return res.json({message: "invalidemail"});
+      
+      // Delete user if inactive, so it's a new signup
+      if (userId) queries.deleteMe(userId);
       
       // Do signup
       if (!nickname) nickname = `${firstname}-${lastname}`;
-      const hash = await bcrypt.hash(password1, saltRounds)
-      const newUserId = await queries.insertUser({...req.body, nickname, password : hash, apisignup: false });
-      console.log('newUser', newUserId);
+      const hash = await bcrypt.hash(password1, saltRounds);
+      const newUser = await queries.insertUser({
+        ...req.body,
+        nickname, 
+        password : hash, 
+        apisignup: false,
+        active: false,
+      });
       
+      req.user = {...newUser, password: password1, app};
+      console.log('newUser:', req.user);
+
       next();
       
     } catch(error) {
@@ -117,6 +131,7 @@ module.exports = {
       res.sendStatus(500);
     }
   },
+
   /**
    * 
    * @param {*} req 
@@ -235,14 +250,14 @@ module.exports = {
   redirect: (req, res) => {
     let {app} = req.body;
     
-    if (!app) app = 'auth';
+    if (!app || app === "") app = 'auth';
     
     const appUri = process.env.NODE_ENV === 'production'
     ?
     `https://${app}.ikodi.eu` 
     :
     `http://localhost:8001`;
-    
+    console.log('redirect to:', app);
     return res.redirect(appUri);
   }
 }

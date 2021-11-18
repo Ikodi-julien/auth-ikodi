@@ -49,6 +49,7 @@
 import Button from './Button.vue';
 import controllers from '@/services/controllers';
 import {BASE_URL} from '@/services/settings';
+import axios from 'axios';
 
 export default {
   name: 'SignupForm',
@@ -57,12 +58,12 @@ export default {
   },
   data() {
     return {
-      firstname: "",
-      lastname: "",
-      email: "",
-      password1: "",
-      password2: "",
-      app: ""
+      firstname: "ju",
+      lastname: "pe",
+      email: "jupellin39@gmail.com",
+      password1: "bob",
+      password2: "bob",
+      app: "concord"
     }
   },
   mounted() {
@@ -71,7 +72,7 @@ export default {
     this.app = urlParams.get('app');
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       const formData = {
         firstname: this.firstname,
         lastname: this.lastname,
@@ -85,9 +86,21 @@ export default {
 
       if (!isForm.valid) return alert(isForm.message);
 
-      controllers.post(`${BASE_URL}/signup`, formData)
+      try {
+        const response = await axios.post(`${BASE_URL}/signup`, formData);
+        if (response.data.code) controllers.alertCode(response.data.code);
+        alert(response.data.message);
+        this.$emit('toggle-signup')
+
+      } catch(error) {
+        error.response ?
+          alert(error.response.data.message)
+        :
+          alert(error.toString());
+      }
     }
-  }
+  },
+  emits: ['toggle-signup']
 }
 </script>
 
