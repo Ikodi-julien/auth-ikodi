@@ -16,7 +16,7 @@ module.exports = {
     } : { userId: false };
   },
   getMe: async (id) => {
-    const queryString = `SELECT "id", "firstname", "lastname", "nickname", "email", "password" FROM auth.users WHERE id=$1`;
+    const queryString = `SELECT "id", "firstname", "lastname", "nickname", "email", "password", "apisignup" FROM auth.users WHERE id=$1`;
     
     const result = await db.query( queryString, [id]);
     return result.rows[0];
@@ -31,7 +31,7 @@ module.exports = {
       firstname, lastname, nickname, password, email, apisignup
     } = data;
     
-    const queryString = `INSERT INTO auth.users ("firstname", "lastname", "nickname", "email", "password", "apisignup") VALUES ($1,$2,$3,$4,$5,$6) RETURNING id, firstname, lastname, nickname, email`;
+    const queryString = `INSERT INTO auth.users ("firstname", "lastname", "nickname", "email", "password", "apisignup") VALUES ($1,$2,$3,$4,$5,$6) RETURNING id, firstname, lastname, nickname, email, apisignup`;
     
     const result = await db.query( queryString, [firstname, lastname, nickname, email, password, apisignup]);
     return result.rows[0].id;
@@ -48,12 +48,12 @@ module.exports = {
   },
   updateMe: async (data) =>{
     const {
-      id, firstname, lastname, nickname, email
+      id, firstname, lastname, nickname, email, apisignup
     } = data;
     
-    const queryString = `UPDATE auth.users SET "firstname"=$2, "lastname"=$3, "email"=$4, "nickname"=$5 WHERE id=$1 RETURNING *`;
+    const queryString = `UPDATE auth.users SET "firstname"=$2, "lastname"=$3, "email"=$4, "nickname"=$5, "apisignup"=$6 WHERE id=$1 RETURNING *`;
     
-    const result = await db.query( queryString, [id, firstname, lastname, email, nickname]);
+    const result = await db.query( queryString, [id, firstname, lastname, email, nickname, apisignup]);
     return result.rows[0];
   },
   updateMePassword: async (data) =>{

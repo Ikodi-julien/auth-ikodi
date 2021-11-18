@@ -27,25 +27,25 @@ module.exports = {
         password === ""
       ) {
         res.body = req.body;
-        return res.redirect('http://localhost:8081/?code=empty');
+        return res.redirect('http://localhost:8080/?code=empty');
       } 
       
       // Should return status 422 if invalid email
-      if (!validator.validate(email)) return res.redirect('http://localhost:8081/?code=invalidemail');
+      if (!validator.validate(email)) return res.redirect('http://localhost:8080/?code=invalidemail');
       
       
       // Should return status (409) if email not in database
       const {userId, apisignup} = await queries.getOneByEmail(email);
       console.log('id and email in login', userId, email);
       
-      if (!userId) return res.redirect('http://localhost:8081/?code=usernotindb');
+      if (!userId) return res.redirect('http://localhost:8080/?code=usernotindb');
       
-      if (apisignup) return res.redirect('http://localhost:8081/?code=isapisignup');
+      if (apisignup) return res.redirect('http://localhost:8080/?code=isapisignup');
 
       // compare passwords
       const me = await queries.getMe(userId);
       const match = await bcrypt.compare(password, me.password);
-      if (!match) return res.redirect('http://localhost:8081/?code=invalidpwd');
+      if (!match) return res.redirect('http://localhost:8080/?code=invalidpwd');
       if (match) {
       // set JWT cookies http only
       const [accessToken, refreshToken] = jwtService.getTokens({...me, password: ''});
@@ -84,10 +84,10 @@ module.exports = {
         email === "" ||
         password1 === "" ||
         password2 === ""
-      ) return res.redirect('http://localhost:8081/?code=empty');
+      ) return res.redirect('http://localhost:8080/?code=empty');
 
       // passwords
-      if (password1 !== password2) return res.redirect('http://localhost:8081/?code=diffpwd');
+      if (password1 !== password2) return res.redirect('http://localhost:8080/?code=diffpwd');
       
       req.body.password = password1;
       // status(409) at least one of "firstname", "lastname" or "nickname",
@@ -95,14 +95,14 @@ module.exports = {
         firstname === "" &&
         lastname === "" &&
         nickname === ""
-      )  return res.redirect('http://localhost:8081/?code=minname');
+      )  return res.redirect('http://localhost:8080/?code=minname');
       
       // status (303) if email already in database
       const {userId} = await queries.getOneByEmail(email);
-      if (userId) return res.redirect('http://localhost:8081/?code=exist');
+      if (userId) return res.redirect('http://localhost:8080/?code=exist');
       
       // status 422 if invalid email
-      if (!validator.validate(email)) return res.redirect('http://localhost:8081/?code=invalidemail');
+      if (!validator.validate(email)) return res.redirect('http://localhost:8080/?code=invalidemail');
       
       // Do signup
       if (!nickname) nickname = `${firstname}-${lastname}`;

@@ -49,6 +49,6 @@ router.put('/me/credentials', jwtMW.verify, redisMW.verify, updateMe);
 
 router.post('/forgot-pwd', sendLink)
 router.get('/reset-pwd/:id/:token', getResetPwd)
-router.post('/reset-pwd', resetPwd)
+router.post('/reset-pwd/:id/:token', resetPwd)
 
 module.exports = router;
