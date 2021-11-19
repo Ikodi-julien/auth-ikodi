@@ -6,6 +6,7 @@ const redisService = require('../services/redis.service');
 const queries = require('../queries/authQueries');
 const {URL_CHUNK} = require('../services/settings');
 const bcrypt = require('bcrypt');
+const {redirect} = require('./controllers/authController')
 
 module.exports = {
   redirectUri: (req, res) => {
@@ -34,10 +35,9 @@ module.exports = {
     // set id = loggued in redis
     redisService.setLogin(me.id);
     // console.log('login user id :', user.id);
-    // return response.redirect(`${URL_CHUNK}${req.hostname}`);
-    return response.redirect('http://localhost:8001');
+    return redirect(res, res);
   },
-  signup: async (req, response, next) => {
+  signup: async (req, res, next) => {
     console.log('google signup');
     let {
       firstname, lastname, nickname, password, email
@@ -58,7 +58,7 @@ module.exports = {
       
     } catch(error) {
       console.log(error);
-      return response.redirect(`${URL_CHUNK}${req.hostname}`);
+      return res.json({message: error.toString()});
     }
   }
 }

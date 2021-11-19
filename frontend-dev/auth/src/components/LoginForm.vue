@@ -1,18 +1,24 @@
 <template>
   <form @submit.prevent="onSubmit" >
-  <!-- <form method="post" action="http://localhost:5050/login" > -->
     <input
       type="email"
       name="email"
       placeholder="Email"
       v-model="this.email"
     >
-    <input
-      type="password"
-      name="password"
-      placeholder="Mot de passe"
-      v-model="this.password"
-    >
+    <div class="group">
+      <input
+        type="password"
+        name="password"
+        placeholder="Mot de passe"
+        @input="checkPwd"
+        v-model="password"
+        :class="this.isPwdOk ? '--valid' : ''"
+      >
+      <span :class="this.isPwdOk ? '--valid' : '--invalid'">
+        {{this.isPwdOk ? 'Ok !' : 'Minimum 5 caractères dont au moins une majuscule et un nombre'}}
+      </span>
+    </div>
     <input
       type="text"
       name="app"
@@ -24,7 +30,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import {BASE_URL} from '@/services/settings';
 import controllers from '@/services/controllers';
 import Button from './Button.vue';
@@ -39,7 +44,8 @@ export default {
       email: "",
       password: "",
       app: "auth",
-      user: {}
+      user: {},
+      isPwdOk: false
     }
   },
   mounted() {
@@ -62,7 +68,12 @@ export default {
       if (!isForm.valid) return alert(isForm.message);
 
       controllers.post(`${BASE_URL}/login`, formData );
-    }
+    },
+    checkPwd() {
+      // console.log('checkPwd1');
+      const matchRegex = (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/).test(this.password);
+      this.isPwdOk = matchRegex;
+    },
   },
   emits: ['submit']
 }

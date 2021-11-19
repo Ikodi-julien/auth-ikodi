@@ -1,5 +1,4 @@
 <template>
-  <!-- <form method="post" action="http://localhost:5050/signup" > -->
   <form @submit.prevent="onSubmit">
     <input
       type="text"
@@ -19,18 +18,30 @@
       placeholder="Email"
       v-model="email"
     >
-    <input
-      type="password"
-      name="password1"
-      placeholder="Mot de passe"
-      v-model="password1"
-    >
-    <input
-      type="password"
-      name="password2"
-      placeholder="Confirmation du mot de passe"
-      v-model="password2"
-    >
+    <div class="group">
+      <input
+        type="password"
+        name="password1"
+        placeholder="Mot de passe"
+        @input="checkPwd1"
+        v-model="password1"
+        :class="this.isPwd1Ok ? '--valid' : ''"
+      >
+      <span :class="this.isPwd1Ok ? '--valid' : '--invalid'">
+        {{this.isPwd1Ok ? 'Ok !' : 'Minimum 5 caractères dont au moins une majuscule et un nombre'}}
+      </span>
+    </div>
+
+    <div class="group">
+      <input
+        type="password"
+        name="password2"
+        placeholder="Confirmation du mot de passe"
+        v-model="password2"
+        @input="checkPwd2"
+        :class="this.isPwd1Ok && this.isPwd2Ok ? '--valid' : ''"
+      >
+    </div>
     <input
       type="text"
       name="app"
@@ -58,12 +69,14 @@ export default {
   },
   data() {
     return {
-      firstname: "ju",
-      lastname: "pe",
-      email: "jupellin39@gmail.com",
-      password1: "bob",
-      password2: "bob",
-      app: "concord"
+      firstname: "",
+      lastname: "",
+      email: "",
+      password1: "",
+      password2: "",
+      app: "",
+      isPwd1Ok: false,
+      isPwd2Ok: false,
     }
   },
   mounted() {
@@ -98,12 +111,23 @@ export default {
         :
           alert(error.toString());
       }
-    }
+    },
+    checkPwd1() {
+      // console.log('checkPwd1');
+      const matchRegex = (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/).test(this.password1);
+      this.isPwd1Ok = matchRegex;
+      this.checkPwd2();
+    },
+    checkPwd2() {
+      console.log('checkPwd2');
+      return this.isPwd2Ok = (this.password1 === this.password2);
+    },
   },
   emits: ['toggle-signup']
 }
 </script>
 
-<style>
+<style lang="scss">
+@import '../styles/form.scss';
 
 </style>

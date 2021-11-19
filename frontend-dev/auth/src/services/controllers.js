@@ -69,6 +69,10 @@ const controllers = {
         alert("L'email pour ce compte n'a pas été confirmé. Vous pouvez soit suivre le lien reçu par mail (valable 10 minutes) ou recréer un compte puis valider le nouveau lien reçu");
         break;
 
+      case 'invalidpwd':
+        alert("Le mot de passe doit contenir au minimu 5 caractères dont au moins une majuscule et un nombre");
+        break;
+
       default:
         break;
     }

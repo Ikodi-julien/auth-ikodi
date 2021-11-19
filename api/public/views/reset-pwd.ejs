@@ -22,6 +22,7 @@
       <label for="password1">Nouveau mot de passe
         <input type="password" name="password1" id="password1"/>
       </label>
+      <p>Minimum 5 caractères dont une majuscule et un nombre</p>
       <br>
       <label for="password2">Confirmation du mot de passe
         <input type="password" name="password2" id="password2"/>
@@ -61,6 +62,8 @@
 
     if (password1 === "" || password2 === "") return alert("Au moins un champ est vide");
 
+    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/).test(password1)) return alert(
+      "Le mot de passe doit contenir minimum 5 caractères dont une majuscule et un nombre");
     // TODO le contrôle de la forme du mdp (lenght, majuscule, nombre)
     if (password1 !== password2) return alert("les mots de passe sont différents");
 

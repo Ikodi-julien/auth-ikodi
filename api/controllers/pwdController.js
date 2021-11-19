@@ -65,9 +65,11 @@ module.exports = {
     const {password1, password2} = req.body;
     // Check passwords
     if(password1 !== password2) return res.status(409).json({message: "Les mots de passe sont différents"});
+    
     if (password1 === "" || password2 === "") return res.status(409).json({message: "Au moins un champ est vide"});
+    
+    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/).test(password1)) return res.status(409).json({message: "Le mot de passe doit contenir au minimum 5 caractères dont au moins une majuscule et un nombre"});
 
-    // TODO check la forme du mdp comme dans le front
     // Check id in DB
     const user = await getMe(id)
     if (!user) return res.status(409).json({message: "Désolé, ça n'a pas fonctionné. Contacter le sav."});

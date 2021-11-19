@@ -1,5 +1,30 @@
 # Journal auth.ikodi
 
+## 19/11/2021
+
+- Vérifier les variables relatives pour les urls:
+  - Front concord -> ok
+  - Back concord -> ok
+  - Front auth -> ok
+  - Back-auth -> ok
+- Régler les inputs de mot de passe et controllers de signup, login, reset, ect. (5 caractères minimum, 50 max, une majuscule, un nombre) ->
+  - Ajouter les règles en info bulle :
+    - auth front signup -> ok
+    - auth front login -> ok
+    - auth front reset password -> ok
+  - Contrôler ces règles :
+    - auth front signup -> ok
+    - auth front login -> ok
+    - auth front reset password -> ok
+    - auth back signup ->
+    - auth back login ->
+    - auth back reset password ->
+- Vider les champs input pré remplis ->
+- Faire la chasse aux console.log ->
+- Tests des build ->
+- Fixer les version sur github ->
+- Déploiement ->
+
 ## 18/11/2021
 
 Depuis dernier commit :
@@ -19,16 +44,13 @@ Depuis dernier commit :
   - Vérifier le token avec celui du user ayant l'id fourni -> ok
   - Si ok, passer la prop active du user à true, passer email-verify à null -> ok
   - Conditionner le login à user.active = true -> ok
-  - Mise à jour des scénarios à tester et réalisation des scénarios de test -> 
-  - commit ->
+  - Mise à jour des scénarios à tester et réalisation des scénarios de test -> ok
+  - commit -> ok
+- Revoir le front concord :
+  - profile -> ok
+  - users in channel -> ok
+  - commit -> ok
 
-A faire :
-- Revoir le front concord (profile, users in channel, )
-- Régler les inputs de mot de passe et controllers de signup, login, reset, ect. (5 caractères minimum, 50 max, une majuscule, un nombre),
-- Tests des build ->
-- Faire la chasse aux console.log ->
-- Fixer la version sur github ->
-- Déploiement ->
 ## 17/11/2021
 
 - Tests globaux de concord avec auth-server -> ok

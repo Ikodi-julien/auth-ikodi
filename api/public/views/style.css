@@ -12,6 +12,10 @@ body {
   height: 100vh;
 }
 
+p {
+  font-style: italic;
+}
+
 .container {
   background-color: rgb(31, 98, 124);
   width: 90%;

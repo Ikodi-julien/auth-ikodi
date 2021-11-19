@@ -5,7 +5,7 @@ const saltRounds = 10;
 const {jwtService} = require('../services/jwt.service');
 const redisService = require('../services/redis.service');
 const cookieService = require('../services/cookie.service');
-const {BASE_URL, APP_URL} = require('../services/settings');
+const {FRONT_URL} = require('../services/settings');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -27,28 +27,28 @@ module.exports = {
         password === ""
       ) {
         res.body = req.body;
-        return res.redirect('http://localhost:8080/?code=empty');
+        return res.redirect(`${FRONT_URL}/?code=empty`);
       } 
       
       // Should return status 422 if invalid email
-      if (!validator.validate(email)) return res.redirect('http://localhost:8080/?code=invalidemail');
+      if (!validator.validate(email)) return res.redirect(`${FRONT_URL}/?code=invalidemail`);
       
       
       // Should return status (409) if email not in database
       const {userId, apisignup} = await queries.getOneByEmail(email);
       console.log('id and email in login', userId, email);
       
-      if (!userId) return res.redirect('http://localhost:8080/?code=usernotindb');
+      if (!userId) return res.redirect(`${FRONT_URL}/?code=usernotindb`);
       
-      if (apisignup) return res.redirect('http://localhost:8080/?code=isapisignup');
+      if (apisignup) return res.redirect(`${FRONT_URL}/?code=isapisignup`);
 
       // Is account active ?
       const me = await queries.getMe(userId);
-      if (!me.active) return res.redirect('http://localhost:8080/?code=inactive');
+      if (!me.active) return res.redirect(`${FRONT_URL}/?code=inactive`);
       
       // compare passwords
       const match = await bcrypt.compare(password, me.password);
-      if (!match) return res.redirect('http://localhost:8080/?code=invalidpwd');
+      if (!match) return res.redirect(`${FRONT_URL}/?code=invalidpwd`);
       if (match) {
       // set JWT cookies http only
       const [accessToken, refreshToken] = jwtService.getTokens({...me, password: ''});
@@ -91,6 +91,7 @@ module.exports = {
 
       // passwords
       if (password1 !== password2) return res.json({message: "diffpwd"});
+      if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/).test(password1)) return res.json({message: "invalidpwd"});
       
       req.body.password = password1;
       // status(409) at least one of "firstname", "lastname" or "nickname",
@@ -256,7 +257,7 @@ module.exports = {
     ?
     `https://${app}.ikodi.eu` 
     :
-    `http://localhost:8001`;
+    `${FRONT_URL}`;
     console.log('redirect to:', app);
     return res.redirect(appUri);
   }
