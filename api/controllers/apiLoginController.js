@@ -6,7 +6,7 @@ const redisService = require('../services/redis.service');
 const queries = require('../queries/authQueries');
 const {URL_CHUNK} = require('../services/settings');
 const bcrypt = require('bcrypt');
-const {redirect} = require('./controllers/authController')
+const {redirect} = require('./authController')
 
 module.exports = {
   redirectUri: (req, res) => {

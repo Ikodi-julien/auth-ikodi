@@ -1,5 +1,16 @@
 # Journal auth.ikodi
 
+## 20/11/2021
+
+Déploiement:
+  - Création de l'enregistrements DNS -> ok
+  - Cloner les repos + faire les builds ->
+  - Créer / modifier les bases de données PSQL ->
+  - Paramètrer proxy Nginx ->
+  - Certificats pour Https ->
+  - Tests des scenari ->
+  - Fixer les masters ->
+
 ## 19/11/2021
 
 - Vérifier les variables relatives pour les urls:
@@ -16,14 +27,14 @@
     - auth front signup -> ok
     - auth front login -> ok
     - auth front reset password -> ok
-    - auth back signup ->
-    - auth back login ->
-    - auth back reset password ->
-- Vider les champs input pré remplis ->
-- Faire la chasse aux console.log ->
-- Tests des build ->
-- Fixer les version sur github ->
-- Déploiement ->
+    - auth back signup -> ok
+    - auth back login -> non fait
+    - auth back reset password -> ok
+- Vider les champs input pré remplis:
+  - auth -> ok
+  - concord -> ok
+- Faire la chasse aux console.log -> ok
+- COMMIT -> ok
 
 ## 18/11/2021
 
