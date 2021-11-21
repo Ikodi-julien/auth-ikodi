@@ -87,11 +87,11 @@ module.exports = {
         email === "" ||
         password1 === "" ||
         password2 === ""
-      ) return res.json({message: "empty"});
+      ) return res.json({code: "empty"});
 
       // passwords
-      if (password1 !== password2) return res.json({message: "diffpwd"});
-      if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/).test(password1)) return res.json({message: "invalidpwd"});
+      if (password1 !== password2) return res.json({code: "diffpwd"});
+      if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/).test(password1)) return res.json({code: "invalidpwd"});
       
       req.body.password = password1;
       // status(409) at least one of "firstname", "lastname" or "nickname",
@@ -99,14 +99,14 @@ module.exports = {
         firstname === "" &&
         lastname === "" &&
         nickname === ""
-      )  return res.json({message: "minname"});
+      )  return res.json({code: "minname"});
       
       // status (303) if email already in database
       const {userId, active} = await queries.getOneByEmail(email);
-      if (userId && active) return res.json({message: "exist"});
+      if (userId && active) return res.json({code: "exist"});
       
       // status 422 if invalid email
-      if (!validator.validate(email)) return res.json({message: "invalidemail"});
+      if (!validator.validate(email)) return res.json({code: "invalidemail"});
       
       // Delete user if inactive, so it's a new signup
       if (userId) queries.deleteMe(userId);
@@ -251,7 +251,7 @@ module.exports = {
   redirect: (req, res) => {
     let {app} = req.body;
     
-    if (!app || app === "") app = 'auth';
+    if (!app || app === "" || app === "null") app = 'auth';
     
     const appUri = process.env.NODE_ENV === 'production'
     ?
