@@ -4,7 +4,7 @@
       <a :href="`${this.GOOGLE_URL}?app=${this.app}`">
         <Button text='Google' color="white" icon='<img src="https://img.icons8.com/color/25/000000/google-logo.png"/>'/>
       </a>
-      <a :href="this.GITHUB_URL">
+      <a :href="`${this.GITHUB_URL}?app=${this.app}`">
         <Button text='Github' color="white" icon='<img src="https://img.icons8.com/fluency/25/000000/github.png"/>'/>
       </a>
       <Button text='Linkedin' color="white" icon='<img src="https://img.icons8.com/fluency/25/000000/linkedin.png"/>'/>
