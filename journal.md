@@ -21,9 +21,9 @@
       - comportement attendu -> même après des erreurs de saisie dans un formulaire, le login et le signup success devrait rediriger vers l'app d'origine.
     * Il est possible de modifier son email depuis son profil:
       - comportement attendu -> un changement d'email entraine un nouveau signup.
-    * Lors du login avec Google l'utilisateur est redirigé sur auth.ikodi.eu/# :
+    * _Lors du login avec Google l'utilisateur est redirigé sur auth.ikodi.eu/# :_
       - comportement attendu : L'utilisateur est redirigé sur l'app d'origine.
-    * Lors du login avec github, l'utilisateur est redirigé sur auth.ikodi.eu sans autre action :
+    * _Lors du login avec github, l'utilisateur est redirigé sur auth.ikodi.eu sans autre action :_
       - comportement attendu : l'utilisateur est redirigé sur l'interface d'authentification de github puis loggué sur l'app d'origine.
   - CONCORD : 
     * Lors de l'update du profil il faut donner aussi l'email si on ne veut changer que le pseudo :
@@ -34,9 +34,23 @@
       - comportement attendu : L'utilisateur est redirigé sur la page d'accueil
       NB: Vérifier l'état de la DB dans concord (ok dans auth).
 
+* résolution issues :
+  * Lors du login avec Google l'utilisateur est redirigé sur auth.ikodi.eu/#:
+    - Modification au niveau front pour envoyer le nom de l'app en query -> ok
+    - Modification du googleconnect() pour mettre appaname en cookie -> ok
+    - Récupération de appname dans apiLogin -> ok
+    - Faire un build et deploy :
+      - Fix problématique au niveau du domain des cookies placés par concord-api à "ikodi.eu" au lieu de "concord.ikodi.eu", cela faisait doublon et finissait par provoquer une erreur 'jwt expired'
+    - issue résolue et déployée -> ok
+  * Lors du login avec github, l'utilisateur est redirigé sur auth.ikodi.eu sans autre action :
+    - Modification au niveau front pour envoyer le nom de l'app en query -> ok
+    - Récupération de appname dans apiLogin -> ok
+    - Faire un build et deploy -> ok
+
+
 ## 21/11/2021
 
-Déploiement : Vite fait le soir j'ai fait et tester le build du front de concord
+Déploiement : Vite fait le soir j'ai fait et testé le build du front de concord
 
 ## 20/11/2021
 
