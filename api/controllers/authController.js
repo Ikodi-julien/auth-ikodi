@@ -250,7 +250,6 @@ module.exports = {
   ,
   redirect: (req, res) => {
     let {app} = req.body;
-    
     if (!app || app === "" || app === "null") app = 'auth';
     
     const appUri = process.env.NODE_ENV === 'production'

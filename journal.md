@@ -1,15 +1,62 @@
 # Journal auth.ikodi
 
+## 22/11/2021 :
+
+* CONCORD :
+  - Faire le build du front et le vérifier -> ok
+  - Servir le front depuis l'api concord -> ok
+  - Cloner le repo api contenant le build du front -> ok
+  - Voir si config pm2 ok -> ok
+  - Voir si config nginx ok (les ports des app) -> ok
+  - Démarrer l'api -> ok
+  - Démarrer le front -> ok
+  - Tests scenari -> ok
+  - Fixer les masters -> après issues soldées.
+  - Saisir les issues dans les repos respectifs ->
+  - Solder les issues ->
+
+* ISSUES :
+  - AUTH : 
+    * Lors d'une erreur de mot de passe au login, le nom de l'app origine n'est pas conservé:
+      - comportement attendu -> même après des erreurs de saisie dans un formulaire, le login et le signup success devrait rediriger vers l'app d'origine.
+    * Il est possible de modifier son email depuis son profil:
+      - comportement attendu -> un changement d'email entraine un nouveau signup.
+    * Lors du login avec Google l'utilisateur est redirigé sur auth.ikodi.eu/# :
+      - comportement attendu : L'utilisateur est redirigé sur l'app d'origine.
+    * Lors du login avec github, l'utilisateur est redirigé sur auth.ikodi.eu sans autre action :
+      - comportement attendu : l'utilisateur est redirigé sur l'interface d'authentification de github puis loggué sur l'app d'origine.
+  - CONCORD : 
+    * Lors de l'update du profil il faut donner aussi l'email si on ne veut changer que le pseudo :
+      - Comportement attendu -> pouvoir changer de pseudo sans renseigner l'email et vice-versa.
+    * L'utilisateur peut changer son mot de passe pour un non-conforme:
+      - comportement attendu -> l'utilisateur devrait recevoir un message l'informant du format attendu pour le mot de passe.
+    * Après une suppression de compte, la dernière page visitée s'affiche:
+      - comportement attendu : L'utilisateur est redirigé sur la page d'accueil
+      NB: Vérifier l'état de la DB dans concord (ok dans auth).
+
+## 21/11/2021
+
+Déploiement : Vite fait le soir j'ai fait et tester le build du front de concord
+
 ## 20/11/2021
 
 Déploiement:
+* AUTH-server :
   - Création de l'enregistrements DNS -> ok
-  - Cloner les repos + faire les builds ->
-  - Créer / modifier les bases de données PSQL ->
+  - Cloner le repo + faire les builds pour auth-server:
+    - augmenter la taille du disque de l'instance -> ok (16Go)
+    - Modifier les DNS avec la nouvelle adresse de l'instance -> ok
+    - Downgrade la version de node car incompatible avec la version de node-sass -> ok
+    - Démarrer le server auth avec pm2 -> ok
+    - création des fichiers .env, google_key et github_key pour éviter les erreurs -> ok
+    
+  - Créer / modifier la base de données PSQL -> ok
   - Paramètrer proxy Nginx ->
-  - Certificats pour Https ->
-  - Tests des scenari ->
-  - Fixer les masters ->
+    - Ajout de l'upstream dans conf.d/ -> ok
+    - Création de la conf dans sites-availables -> ok (attention, la conf auto par certbot ne suffit pas)
+    - Certificats pour Https avec certbot -> ok
+  - Tests des scenari -> ok
+  - Fixer les masters -> ok
 
 ## 19/11/2021
 

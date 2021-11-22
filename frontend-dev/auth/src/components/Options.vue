@@ -1,7 +1,7 @@
 <template>
   <div class="options">
     <div class="options__socialaccounts">
-      <a :href="this.GOOGLE_URL">
+      <a :href="`${this.GOOGLE_URL}?app=${this.app}`">
         <Button text='Google' color="white" icon='<img src="https://img.icons8.com/color/25/000000/google-logo.png"/>'/>
       </a>
       <a :href="this.GITHUB_URL">
@@ -49,17 +49,14 @@ export default {
   data() {
     return {
       GOOGLE_URL,
-      GITHUB_URL
+      GITHUB_URL,
+      app
     }
   },
   mounted() {
-    try {
-    const cookies = document.cookie.split('; ');
-    const appNameCookie = cookies.find(cookie => cookie.substring(0, 9) === 'app_ikodi');
-    const appName = appNameCookie.split('=')[1];
-    } catch(error) {
-      console.log(error);
-    }
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    this.app = urlParams.get('app');
   },
   emits: ['toggle-signup', 'toggle-sendpass']
 }
