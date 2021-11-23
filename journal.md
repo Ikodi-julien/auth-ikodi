@@ -1,5 +1,10 @@
 # Journal auth.ikodi
 
+## 23/11/2021 et les jours suivants
+
+* Poursuite de la rédaction des issues,
+* Màj du Readme.md
+
 ## 22/11/2021 :
 
 * CONCORD :

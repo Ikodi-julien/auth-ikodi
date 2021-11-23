@@ -2,12 +2,17 @@
 
 ## Présentation
 
-Afin d'apprendre les langages de programmation et le développement web, j'ai créé plusieurs applications nécessitant la création d'un compte utilisateur.
-A ce jour : chronofit, topics, concord et multiplicorne.
-
-Pour l'instant, chacune de ces applications fait appel a une base de données différente. Le projet est de créer une interface utilisateur couplée à une API rest permettant la création d'un compte utilisateur unique autorisant l'accès à toutes ces applications.
+Ayant créé plusieurs applications nécessitant une authentification et la création d'un compte utilisateur, le projet est de créer une interface utilisateur couplée à une API rest permettant la création d'un compte utilisateur unique autorisant l'accès à toutes ces applications.
 
 ## Fonctionnalités
+
+- Interface utilisateur dédiée commune,
+- Création de compte et login,
+- Authentification par email + mot de passe ou api tiers (google, github),
+- Authorisation par jsonwebtoken, y compris transport données utilisateur dans le payload,
+- Transversalité avec autres applications, un seul login pour une identification sur les autres applications,
+- Vérification d'email par envoi de lien de confirmation,
+- Reset du mot de passe par envoi de mail avec token,
 
 ### User Stories
 
@@ -18,33 +23,27 @@ En tant qu'utilisateur, je veux pouvoir supprimer mon compte (depuis une app iko
 En tant qu'utilisateur, je veux pouvoir récupérer mon compte en cas d'oubli de mot de passe.  
 En tant qu'utilisateur, je veux pouvoir me connecter à toutes les app ikodi grace à ce compte.
 
-## Arborescence
-
-url: https://auth.ikodi.eu
-
-Accès à l’application depuis une app ikodi  
-url: https://auth.ikodi.eu/?app=appname
-
-Formulaire de creation d'un compte  
-url: https://auth.ikodi.eu/signup
-
-Formulaire de renvoi de mot de passe  
-url: https://auth.ikodi.eu/sendpass
+En tant que webmaster, je veux que les échanges soient sécurisés,
+En tant que webmaster, je veux que la validité des emails des utilisateurs soit vérifiée,
 
 ## Stack technique
 
-### App Front : 
-- Framework : Vue + Vuex
-- json-server
-- axios
+### Frontend :
+- Vue.js,
+- Axios,
+- Tests avec mocha + chaï,
 
-### API :
-- Framework : Express
-- JWT
-- cors
-- Bases de données :
-    -  PostgreSQL
-- Swagger
+### Backend:
+- API REST avec express, axios, cors,
+- Base de donnée persistante PostgreSQL + callback,
+- Redis pour le status de l’utilisateur,
+- Authentification :
+    - Formulaire email + password avec cryptage ou
+    - API tiers (google, github, linkedin)
+- Authorisation par token JWT en cookie http-only,
+- Envoi de mails avec Nodemailer,
 
-## Endpoints
-voir auth.ikodi.eu/doc (quand sera prêt !)
+### Déploiement :
+- Instance EC2 d’AWS,
+- Connexion ssh,
+- Proxy nginx,
