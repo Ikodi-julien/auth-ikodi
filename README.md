@@ -42,6 +42,7 @@ En tant que webmaster, je veux que la validité des emails des utilisateurs soit
     - API tiers (google, github, linkedin)
 - Authorisation par token JWT en cookie http-only,
 - Envoi de mails avec Nodemailer,
+- EJS comme moteur de vues des pages envoyées par le serveur.
 
 ### Déploiement :
 - Instance EC2 d’AWS,
