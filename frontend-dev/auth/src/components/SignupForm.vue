@@ -74,7 +74,7 @@ export default {
       email: "",
       password1: "",
       password2: "",
-      app: "",
+      app: "auth",
       isPwd1Ok: false,
       isPwd2Ok: false,
     }
