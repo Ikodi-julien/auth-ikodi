@@ -41,8 +41,8 @@ export default {
   },
   data() {
     return {
-      email: "",
-      password: "",
+      email: "jupellin39@gmail.com",
+      password: "bobP71",
       app: "auth",
       user: {},
       isPwdOk: false

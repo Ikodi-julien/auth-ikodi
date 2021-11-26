@@ -102,7 +102,7 @@ export default {
       try {
         const response = await axios.post(`${BASE_URL}/signup`, formData);
         if (response.data.code) controllers.alertCode(response.data.code);
-        // if (response.data.message) alert(response.data.message);
+        if (response.data.message) alert(response.data.message);
         this.$emit('toggle-signup')
 
       } catch(error) {
