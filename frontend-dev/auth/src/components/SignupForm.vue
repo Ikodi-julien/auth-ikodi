@@ -97,12 +97,12 @@ export default {
 
       const isForm = controllers.verifySignupForm(formData);
 
-      if (!isForm.valid) return alert(isForm.message);
+      if (!isForm.valid) return isForm.messages.forEach(message => alert(message));
 
       try {
         const response = await axios.post(`${BASE_URL}/signup`, formData);
-        if (response.data.code) controllers.alertCode(response.data.code);
-        if (response.data.message) alert(response.data.message);
+        if (response.data.code) return controllers.alertCode(response.data.code);
+        if (response.data.message) return alert(response.data.message);
         this.$emit('toggle-signup')
 
       } catch(error) {

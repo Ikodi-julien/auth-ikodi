@@ -4,6 +4,7 @@
       type="email"
       name="email"
       placeholder="Email"
+      max="250"
       v-model="this.email"
     >
     <div class="group">
@@ -11,6 +12,7 @@
         type="password"
         name="password"
         placeholder="Mot de passe"
+        max="250"
         @input="checkPwd"
         v-model="password"
         :class="this.isPwdOk ? '--valid' : ''"
