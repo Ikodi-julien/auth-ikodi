@@ -18,17 +18,28 @@ const controllers = {
     for (const item in formData) {
       if (formData[item] === "") return {valid: false, message: "Il manque l'email ou le mot de passe"};
     }
+    if (formData.password.length < 5) return {valid: false, message: "Le mot de passe doit être composé de 5 caractères au minimum dont au moins une majuscule et un nombre."}
+
     return {valid: true};
   },
   verifySignupForm: function(formData) {
-    // console.log('formData', formData);
+    let messages = [];
+
     // empty input
     if (formData.firstname === "" &&
-    formData.lastname === "") return {valid: false, message: "Renseigner au moins un du prénom ou du nom"};
-    if (formData.email === "" || formData.password1 === "" || formData.password2 === "") return {valid: false, message: "Email et mots de passe obligatoires"};
-    // password diff
-    if (formData.password1 !== formData.password2) return {valid: false, message: "Les mots de passe sont différents"};
+    formData.lastname === "") messages.push("Renseigner au moins un du prénom ou du nom");
+    if (
+      formData.email === "" ||
+      formData.password1 === "" ||
+      formData.password2 === "") messages.push("Email et mots de passe obligatoires");
 
+    // password diff
+    if (formData.password1 !== formData.password2) messages.push("Les mots de passe sont différents");
+
+    // password don't pass regex
+    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/).test(formData.password1)) messages.push("Le mot de passe doit être composé de 5 caractères au minimum dont au moins une majuscule et un nombre.");
+
+    if (messages.length) return {valid: false, messages};
     return {valid: true};
   },
   alertCode: function(code) {
@@ -49,10 +60,6 @@ const controllers = {
         alert("Compte créer à partir d'un compte Google ou Github ou autre, donc peut-être réessayer avec un de ceux là ?");
         break;
 
-      case 'invalidpwd':
-        alert("Erreur de mot de passe");
-        break;
-
       case 'diffpwd':
         alert("Les mots de passe ne sont pas identiques");
         break;
@@ -70,7 +77,7 @@ const controllers = {
         break;
 
       case 'invalidpwd':
-        alert("Le mot de passe doit contenir au minimu 5 caractères dont au moins une majuscule et un nombre");
+        alert("Le mot de passe doit contenir au minimum 5 caractères dont au moins une majuscule et un nombre");
         break;
 
       default:
