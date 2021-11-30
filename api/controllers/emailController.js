@@ -9,8 +9,7 @@ module.exports = {
   setEmailToken: async (req, res, next) => {
     console.log('setEmailToken');
     const {id, email, password, app} = req.user;
-    // console.log('newUser', newUserId);
-    const emailToken = jwt.sign({id, email, password, app}, JWT_SECRET, {expiresIn: '10m'});
+    const emailToken = jwt.sign({id, email, password, app}, JWT_SECRET, {expiresIn: '15m'});
     try {
       await queries.updateEmailToken({id, emailToken});
       req.user.emailToken = emailToken;

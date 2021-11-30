@@ -91,6 +91,5 @@ module.exports = {
       console.log(error.message);
       res.send(error.message);
     }
-    res.send
   },
 }
