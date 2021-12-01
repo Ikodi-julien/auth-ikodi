@@ -250,14 +250,14 @@ module.exports = {
   ,
   redirect: (req, res) => {
     let {app} = req.body;
-    if (!app || app === "" || app === "null") app = 'auth';
+    if (!app || app === "" || app === "null") return res.render('login-success', {email: req.body.email });
     
     const appUri = process.env.NODE_ENV === 'production'
     ?
     `https://${app}.ikodi.eu` 
     :
     `${FRONT_URL}`;
-    console.log('redirect to:', app);
+    // console.log('redirect to:', app);
     return res.redirect(appUri);
   }
 }

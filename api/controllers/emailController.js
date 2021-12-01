@@ -27,7 +27,7 @@ module.exports = {
     
     try {
       await mailer.sendMail(email, "IKODI - Validation de la création de compte", `${beginning}${link}${end}`);
-      
+      console.log(link);
       res.status(200).json({message: `Un lien pour confirmer votre adresse mail a été envoyé à ${req.user.email}, vérifiez votre boite mail ;-)`});
       
     } catch(error) {
