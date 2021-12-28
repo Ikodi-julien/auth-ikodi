@@ -48,6 +48,7 @@ module.exports = {
         const [accessToken, refreshToken] = jwtService.getTokens({
           ...me,
           password: "",
+          id: me.userId,
         });
 
         console.log(
