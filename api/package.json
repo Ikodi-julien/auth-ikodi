@@ -6,7 +6,7 @@
   "scripts": {
     "test:integration": "mocha --sort ./tests/integration",
     "test:unit": "mocha --sort ./tests/unit",
-    "start": "node index.js",
+    "start": "NODE_ENV=production node index.js",
     "dev": "pm2 start ./index.js --watch -n auth-5050",
     "generate-db": "sudo -i -u postgres psql -d ikodiauth -f /var/www/html/auth-ikodi/api/database/create.sql",
     "deploy": "git pull && npm i && pm2 restart 9"
