@@ -36,19 +36,18 @@ module.exports = {
       console.log("id and email in login", me.userId, me.email);
 
       if (!me.userId) return res.redirect(`${FRONT_URL}/?code=usernotindb`);
-
       if (me.apisignup) return res.redirect(`${FRONT_URL}/?code=isapisignup`);
       // Is account active ?
       if (!me.active) return res.redirect(`${FRONT_URL}/?code=inactive`);
       // compare passwords
-      const match = await bcrypt.compare(password, me.password);
+      const user = await queries.getMe(me.userId);
+      const match = await bcrypt.compare(password, user.password);
       if (!match) return res.redirect(`${FRONT_URL}/?code=invalidpwd`);
       if (match) {
         // set JWT cookies http only
         const [accessToken, refreshToken] = jwtService.getTokens({
-          ...me,
+          ...user,
           password: "",
-          id: me.userId,
         });
 
         console.log(

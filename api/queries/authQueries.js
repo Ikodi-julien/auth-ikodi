@@ -16,7 +16,6 @@ module.exports = {
           userId: result.rows[0].id,
           apisignup: result.rows[0].apisignup,
           active: result.rows[0].active,
-          password: result.rows[0].password,
         }
       : {
           userId: false,
