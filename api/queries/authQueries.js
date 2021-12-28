@@ -7,7 +7,7 @@ module.exports = {
    * @returns
    */
   getOneByEmail: async (email) => {
-    const queryString = `SELECT id, apisignup, active FROM auth.users WHERE email=$1`;
+    const queryString = `SELECT id, apisignup, active, password FROM auth.users WHERE email=$1`;
 
     const result = await db.query(queryString, [email]);
 
