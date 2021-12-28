@@ -32,21 +32,21 @@ module.exports = {
         return res.redirect(`${FRONT_URL}/?code=invalidemail`);
 
       // Should return status (409) if email not in database
-      const user = await queries.getOneByEmail(email);
-      console.log("id and email in login", user.userId, user.email);
+      const me = await queries.getOneByEmail(email);
+      console.log("id and email in login", me.userId, me.email);
 
-      if (!user.userId) return res.redirect(`${FRONT_URL}/?code=usernotindb`);
+      if (!me.userId) return res.redirect(`${FRONT_URL}/?code=usernotindb`);
 
-      if (user.apisignup) return res.redirect(`${FRONT_URL}/?code=isapisignup`);
+      if (me.apisignup) return res.redirect(`${FRONT_URL}/?code=isapisignup`);
       // Is account active ?
-      if (!user.active) return res.redirect(`${FRONT_URL}/?code=inactive`);
+      if (!me.active) return res.redirect(`${FRONT_URL}/?code=inactive`);
       // compare passwords
-      const match = await bcrypt.compare(password, user.password);
+      const match = await bcrypt.compare(password, me.password);
       if (!match) return res.redirect(`${FRONT_URL}/?code=invalidpwd`);
       if (match) {
         // set JWT cookies http only
         const [accessToken, refreshToken] = jwtService.getTokens({
-          ...user,
+          ...me,
           password: "",
         });
 
@@ -58,7 +58,7 @@ module.exports = {
         res.cookie("access_token", accessToken, cookieService.options);
         res.cookie("refresh_token", refreshToken, cookieService.options);
         // set id = loggued in redis
-        redisService.setLogin(user.userId);
+        redisService.setLogin(me.userId);
 
         next();
       }
