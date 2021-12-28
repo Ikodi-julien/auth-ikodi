@@ -136,6 +136,7 @@ module.exports = {
     const { id } = req.user;
     if (id === "undefined") return res.sendStatus(400);
     const deletedId = await queries.deleteMe(id);
+    redisService.setLogout(id);
     res.status(200).json({ id: deletedId });
   },
   /**
