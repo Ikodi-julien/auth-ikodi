@@ -4,36 +4,36 @@
       <i class="fas fa-times" @click="$emit('toggle-signup')"></i>
       <h1 class="modal__title">Création de compte</h1>
       <Divider />
-      <SignupForm @toggle-signup="$emit('toggle-signup')"/>
+      <SignupForm @toggle-signup="$emit('toggle-signup')" />
     </div>
   </section>
 </template>
 
 <script>
-import Divider from './Divider.vue';
-import SignupForm from './SignupForm.vue';
+import Divider from "./Divider.vue";
+import SignupForm from "./SignupForm.vue";
 
 export default {
   name: "SignupModal",
   props: {
     showSignup: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: {
     Divider,
-    SignupForm
+    SignupForm,
   },
-  emits: ['toggle-signup']
-}
+  emits: ["toggle-signup"],
+};
 </script>
 
-<style lang="scss">
-@import '../styles/vars';
+<style lang="scss" scoped>
+@import "../styles/vars";
 .fa-times {
   position: absolute;
-  font-size: 2rem;;
+  font-size: 2rem;
   top: 15px;
   right: 15px;
 }
@@ -41,7 +41,7 @@ export default {
   position: absolute;
   top: -100vh;
   left: 0;
-  background-color: rgba(0,0,0, 0.95);
+  background-color: rgba(255, 255, 255, 0.8);
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -61,6 +61,7 @@ export default {
     padding-top: 40px;
     border-radius: 5px;
     background-color: $lighter;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
     width: 50%;
     max-width: 600px;
     min-width: 290px;
