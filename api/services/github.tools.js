@@ -1,4 +1,8 @@
-const githubKey = require('./github_key_local.json');
+const githubKey =
+  process.env.NODE_ENV === "production"
+    ? require("./github_key")
+    : require("./github_key_local.json");
+
 const {
   client_id,
   client_secret,
@@ -7,7 +11,7 @@ const {
   authorizationPath,
   redirect_uri,
   scope,
-  userPath
+  userPath,
 } = githubKey.web;
 
 const config = {
@@ -19,18 +23,22 @@ const config = {
     tokenHost: tokenHost,
     tokenPath: tokenPath,
     authorizePath: authorizationPath,
-  }
+  },
 };
- 
-const { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } = require('simple-oauth2');
+
+const {
+  ClientCredentials,
+  ResourceOwnerPassword,
+  AuthorizationCode,
+} = require("simple-oauth2");
 
 const client = new AuthorizationCode(config);
 
 const githubAuthUri = client.authorizeURL({
   redirect_uri: redirect_uri,
   scope: scope,
-  state: '',
-})
+  state: "",
+});
 
 const getTokens = async (code) => {
   const tokenParams = {
@@ -42,7 +50,7 @@ const getTokens = async (code) => {
   try {
     return await client.getToken(tokenParams);
   } catch (error) {
-    console.log('Access Token Error', error.message);
+    console.log("Access Token Error", error.message);
   }
-}
-module.exports = {githubAuthUri, getTokens, userPath}
+};
+module.exports = { githubAuthUri, getTokens, userPath };

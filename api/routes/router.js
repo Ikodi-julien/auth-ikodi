@@ -1,60 +1,76 @@
-const {Router} = require("express");
+const { Router } = require("express");
 const router = Router();
-const {resolve} = require('path');
-const jwtMW = require('../middlewares/jwt.mw');
-const redisMW = require('../middlewares/redis.mw');
-const path = require('path');
+const { resolve } = require("path");
+const jwtMW = require("../middlewares/jwt.mw");
+const redisMW = require("../middlewares/redis.mw");
+const accountIsActive = require("../middlewares/accountIsActive");
+const path = require("path");
 
 const {
-  login, 
-  signup, 
-  count, 
+  login,
+  signup,
+  count,
   deleteMe,
   getMe,
   redirectLogout,
   updateMe,
   updateMePassword,
-  redirect
-} = require('../controllers/authController');
-const googleController = require('../controllers/googleController');
-const githubController = require('../controllers/githubController');
-const apiController = require('../controllers/apiLoginController');
+  redirect,
+} = require("../controllers/authController");
+const googleController = require("../controllers/googleController");
+const githubController = require("../controllers/githubController");
+const apiController = require("../controllers/apiLoginController");
 const {
   sendLink,
   getResetPwd,
-  resetPwd
-} = require('../controllers/pwdController');
+  resetPwd,
+} = require("../controllers/pwdController");
 const {
   setEmailToken,
   sendLinkToVerifyMail,
-  verifyMail
-} = require('../controllers/emailController');
+  verifyMail,
+} = require("../controllers/emailController");
 
-router.get('/', (req, res) => {
-  res.sendFile(path.resolve('public/index.html'));
+/* -------------------------------------------------------- */
+
+router.get("/", (req, res) => {
+  res.sendFile(path.resolve("public/index.html"));
 });
 
-router.get('/doc', (req, res) => res.sendFile(resolve('doc.html')));
-router.get('/count', count);
+router.get("/doc", (req, res) => res.sendFile(resolve("doc.html")));
+router.get("/count", count);
 
-router.post('/login', login, redirect);
-router.post('/signup', signup, setEmailToken, sendLinkToVerifyMail);
-router.post('/logout', jwtMW.verifyLogout, redisMW.setLogout, redirectLogout);
+router.post("/login", login, redirect);
+router.post("/signup", signup, setEmailToken, sendLinkToVerifyMail);
+router.get("/email-verify/:token", verifyMail, login, redirect);
+router.post("/logout", jwtMW.verifyLogout, redisMW.setLogout, redirectLogout);
 
-router.get('/google', apiController.redirectUri);
-router.get('/google/auth', googleController.connect, apiController.login, apiController.signup, apiController.login, );
+router.get("/google", apiController.redirectUri);
+router.get(
+  "/google/auth",
+  googleController.connect,
+  apiController.login,
+  apiController.signup,
+  apiController.login
+);
 
-router.get('/github', apiController.redirectUri)
-router.get('/github/auth', githubController.getTokens, githubController.getCredentials, apiController.login, apiController.signup, apiController.login);
+router.get("/github", apiController.redirectUri);
+router.get(
+  "/github/auth",
+  githubController.getTokens,
+  githubController.getCredentials,
+  apiController.login,
+  apiController.signup,
+  apiController.login
+);
 
-router.get('/me', jwtMW.verify, redisMW.verify, getMe);
-router.delete('/me/credentials', jwtMW.verify, redisMW.verify, deleteMe);
-router.put('/me/password', jwtMW.verify, redisMW.verify, updateMePassword);
-router.put('/me/credentials', jwtMW.verify, redisMW.verify, updateMe);
+router.get("/me", jwtMW.verify, redisMW.verify, getMe);
+router.delete("/me/credentials", jwtMW.verify, redisMW.verify, deleteMe);
+router.put("/me/password", jwtMW.verify, redisMW.verify, updateMePassword);
+router.put("/me/credentials", jwtMW.verify, redisMW.verify, updateMe);
 
-router.get('/email-verify/:token', verifyMail, login, redirect);
-router.post('/forgot-pwd', sendLink);
-router.get('/reset-pwd/:id/:token', getResetPwd);
-router.post('/reset-pwd/:id/:token', resetPwd);
+router.post("/forgot-pwd", accountIsActive, sendLink);
+router.get("/reset-pwd/:id/:token", getResetPwd);
+router.post("/reset-pwd/:id/:token", resetPwd);
 
 module.exports = router;

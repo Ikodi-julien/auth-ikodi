@@ -11,15 +11,17 @@
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Roboto&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="/views/style.css">
-  <title>IKODI - Mot de passe réinitialisé</title>
+  <title>IKODI - Authentification réussie</title>
 </head>
 
 <body>
   <section class="container">
-    <h1>Le mot de passe pour <%= email %> a bien été modifié</h1>
-    <p>Vous pouvez vous connecter à Concord, les autres apps ou pages sont sans connexion à part Multiplicorne et Topics qui ne sont pas encore reliés 😑</p>
+    <h1>Authentification réussie pour <%= email %></h1>
+    <div>
+      <p>Des tokens d'autorisation ont été placés dans votre navigateur, vous permettant de vous connecter à <a href="https://concord.ikodi.eu">Concord</a> sans recréer de compte.</p>
+      <p>Hélas, Multiplicorne et Topics ne sont pas encore reliés  😑</p>
+    </div>
     <%- include('partials/links.ejs') %> 
-
   </section>
 </body>
 

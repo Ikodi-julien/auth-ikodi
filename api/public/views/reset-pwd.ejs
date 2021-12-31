@@ -16,7 +16,7 @@
 
 <body>
   <section class="container">
-    <img src="/img/auth-hero.64407225.png" alt="hero ikodi">
+    <img src="/views/img/auth-hero.png" alt="hero ikodi">
     <h1>Réinitialisation du mot de passe pour <%= email %></h1>
     <form id="form">
       <label for="password1">Nouveau mot de passe
@@ -53,20 +53,16 @@
     form.submit();
     document.body.removeChild(form);
   };
-
   fakeForm.addEventListener('submit', (evt) =>
   {
     evt.preventDefault();
     const password1 = document.getElementById('password1').value;
     const password2 = document.getElementById('password2').value;
-
     if (password1 === "" || password2 === "") return alert("Au moins un champ est vide");
-
     if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/).test(password1)) return alert(
       "Le mot de passe doit contenir minimum 5 caractères dont une majuscule et un nombre");
     // TODO le contrôle de la forme du mdp (lenght, majuscule, nombre)
     if (password1 !== password2) return alert("les mots de passe sont différents");
-
     postData("",
     {
       password1,
