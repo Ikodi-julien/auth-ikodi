@@ -30,7 +30,7 @@
     </p>
     <Divider />
 
-    <div class="options__createprofile">
+    <div class="options__createprofile" v-show="!isLoggued">
       <Button
         @click="$emit('toggle-signup')"
         text="Créer un compte"
@@ -39,7 +39,7 @@
         dataTest="toggle-signup"
       />
     </div>
-    <div class="options__createprofile">
+    <div class="options__createprofile" v-show="isLoggued">
       <Button
         @click="$emit('toggle-profile')"
         text="Modifier mes infos"
@@ -69,6 +69,12 @@ export default {
       GITHUB_URL,
       app,
     };
+  },
+  props: {
+    isLoggued: {
+      type: Boolean,
+      default: false,
+    },
   },
   mounted() {
     const queryString = window.location.search;

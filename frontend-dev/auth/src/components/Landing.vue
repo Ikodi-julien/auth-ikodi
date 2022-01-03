@@ -5,6 +5,7 @@
       @toggle-signup="$emit('toggle-signup')"
       @toggle-sendpass="$emit('toggle-sendpass')"
       @toggle-profile="$emit('toggle-profile')"
+      :isLoggued="this.isLoggued"
     />
   </section>
 </template>
@@ -15,6 +16,12 @@ import Options from "./Options.vue";
 
 export default {
   name: "Landing",
+  props: {
+    isLoggued: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: {
     Hero,
     Options,
