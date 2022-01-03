@@ -2,33 +2,29 @@
   <section class="landing">
     <Hero />
     <Options
-      @toggle-signup="toggleSignup"
+      @toggle-signup="$emit('toggle-signup')"
       @toggle-sendpass="$emit('toggle-sendpass')"
+      @toggle-profile="$emit('toggle-profile')"
     />
   </section>
 </template>
 
 <script>
-import Hero from './Hero.vue';
-import Options from './Options.vue';
+import Hero from "./Hero.vue";
+import Options from "./Options.vue";
 
 export default {
-  name: 'Landing',
+  name: "Landing",
   components: {
     Hero,
-    Options
+    Options,
   },
-  methods: {
-    toggleSignup: function() {
-      this.$emit('toggle-signup')
-    }
-  },
-  emits: ['toggle-signup', 'toggle-sendpass']
-}
+  emits: ["toggle-signup", "toggle-sendpass", "toggle-profile"],
+};
 </script>
 
 <style scoped lang="scss">
-@import '../styles/vars.scss';
+@import "../styles/vars.scss";
 .landing {
   height: 50%;
   width: 80%;
@@ -43,5 +39,4 @@ export default {
     width: 100%;
   }
 }
-
 </style>

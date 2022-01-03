@@ -1,70 +1,53 @@
 <template>
   <section>
-    <Landing 
-      @toggle-signup="toggleSignup" 
-      @toggle-sendpass="toggleSendpass" 
+    <Landing
+      @toggle-signup="toggleSignup"
+      @toggle-sendpass="toggleSendpass"
+      @toggle-profile="toggleProfile"
     />
-    <SignupModal 
-      :showSignup="showSignup"
-      @toggle-signup="toggleSignup" 
-    />
-    <SendPassModal 
-      :showSendpass="showSendpass"
-      @toggle-sendpass="toggleSendpass" 
-    />
+    <SignupModal :showSignup="showSignup" @toggle-signup="toggleSignup" />
+    <SendPassModal :showSendpass="showSendpass" @toggle-sendpass="toggleSendpass" />
+    <ProfileModal :showProfile="showProfile" @toggle-profile="toggleProfile" />
   </section>
 </template>
 
 <script>
-import Landing from './components/Landing.vue';
-import SignupModal from './components/SignupModal.vue';
-import SendPassModal from './components/SendPassModal.vue';
+import Landing from "./components/Landing.vue";
+import SignupModal from "./components/SignupModal.vue";
+import SendPassModal from "./components/SendPassModal.vue";
+import ProfileModal from "./components/ProfileModal.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Landing,
     SignupModal,
-    SendPassModal
+    SendPassModal,
+    ProfileModal,
   },
   data() {
     return {
       showSignup: false,
-      showSendpass: false
-    }
+      showSendpass: false,
+      showProfile: false,
+    };
   },
   methods: {
     toggleSignup() {
-      this.showSignup = !this.showSignup
+      this.showSignup = !this.showSignup;
     },
     toggleSendpass() {
-      this.showSendpass = !this.showSendpass
-    }
-  }
-}
+      this.showSendpass = !this.showSendpass;
+    },
+    toggleProfile() {
+      this.showProfile = !this.showProfile;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-@import 'styles/reset.css';
-@import 'styles/vars.scss';
-
-body {
-  width: 100vw;
-  height: 100vh;
-  min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  background-color: $lighter;
-  color: $dark;
-}
-#app, section {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  @media (max-width: 500px) {
-    align-items: flex-start;
-  }
-}
+@import "styles/reset.css";
+@import "styles/vars.scss";
+@import "styles/global.scss";
 </style>

@@ -1,12 +1,14 @@
-const redisClient = require('../database/redisDB');
-const {refreshTokenLifeSpan} = require('../services/jwt.service');
+const redisClient = require("../database/redisDB");
+const { refreshTokenLifeSpan } = require("../services/jwt.service");
 
 module.exports = {
   setLogin: (id) => {
-    redisClient.setex(id, refreshTokenLifeSpan, 'login');
+    // console.log("redis set login:", id);
+    redisClient.setex(id, refreshTokenLifeSpan, "login");
   },
-    
+
   setLogout: (id) => {
-    redisClient.setex(id, refreshTokenLifeSpan, 'logout');
-  }
-}
+    // console.log("redis set logout:", id);
+    redisClient.setex(id, refreshTokenLifeSpan, "logout");
+  },
+};
