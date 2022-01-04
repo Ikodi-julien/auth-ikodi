@@ -4,14 +4,18 @@
       <i class="fas fa-times" @click="$emit('toggle-profile')"></i>
       <h1 class="modal__title">Modifier le Profil</h1>
       <Divider />
-      <SignupForm @toggle-profile="$emit('toggle-profile')" />
+      <ProfileForm @toggle-profileform="$emit('toggle-profileform')" :user="user" />
+      <h2 class="modal__title">Modifier le mot de passe</h2>
+      <Divider />
+      <PasswordForm @toggle-passform="$emit('toggle-passform')" :user="user" />
     </div>
   </section>
 </template>
 
 <script>
 import Divider from "./Divider.vue";
-import SignupForm from "./SignupForm.vue";
+import ProfileForm from "./ProfileForm.vue";
+import PasswordForm from "./PasswordForm.vue";
 
 export default {
   name: "ProfileModal",
@@ -20,15 +24,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    user: {
+      type: Object,
+      default: {},
+    },
   },
   components: {
     Divider,
-    SignupForm,
+    ProfileForm,
+    PasswordForm,
   },
   emits: ["toggle-profile"],
 };
 </script>
 
-<style lang="scss">
-@import "/src/styles/modal.scss";
-</style>
+<style lang="scss"></style>

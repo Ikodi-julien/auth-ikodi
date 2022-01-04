@@ -71,6 +71,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "../styles/form.scss";
-</style>
+<style lang="scss"></style>

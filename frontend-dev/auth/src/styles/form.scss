@@ -1,4 +1,4 @@
-@import 'vars.scss';
+@import "vars.scss";
 
 form {
   display: flex;
@@ -9,11 +9,15 @@ form {
   height: 100%;
   margin: 8px 0;
 
+  &.partial {
+    padding: 1rem 0 2rem;
+  }
+
   & input {
     width: 100%;
     padding: 0 0 0 10px;
     height: 30px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     border: 1px solid $dark;
     border-radius: 5px;
   }
@@ -22,6 +26,27 @@ form {
     display: flex;
     width: 100%;
     justify-content: space-between;
+
+    @media screen and (max-width: 768px) {
+      flex-wrap: wrap;
+    }
+    & label {
+      width: 34%;
+      display: flex;
+      align-items: center;
+      padding: 0 0 5px;
+      justify-content: flex-end;
+      @media screen and (max-width: 768px) {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+    & input {
+      width: 64%;
+      @media screen and (max-width: 768px) {
+        width: 100%;
+      }
+    }
   }
 
   & .group {
@@ -33,7 +58,7 @@ form {
 
     input {
       &:focus {
-        +span {
+        + span {
           background-color: white;
           border-radius: 4px;
           padding: 4px 8px;
@@ -48,14 +73,12 @@ form {
           &.--valid {
             display: none;
           }
-
         }
 
         &.--valid {
           background-color: rgba(0, 128, 0, 0.1);
         }
       }
-
     }
   }
 }

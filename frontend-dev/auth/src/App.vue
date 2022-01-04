@@ -4,11 +4,11 @@
       @toggle-signup="toggleSignup"
       @toggle-sendpass="toggleSendpass"
       @toggle-profile="toggleProfile"
-      :isLoggued="isLoggued"
+      :user="user"
     />
     <SignupModal :showSignup="showSignup" @toggle-signup="toggleSignup" />
     <SendPassModal :showSendpass="showSendpass" @toggle-sendpass="toggleSendpass" />
-    <ProfileModal :showProfile="showProfile" @toggle-profile="toggleProfile" />
+    <ProfileModal :showProfile="showProfile" @toggle-profile="toggleProfile" :user="user" />
     <CookieConsent />
   </section>
 </template>
@@ -36,12 +36,14 @@ export default {
       showSendpass: false,
       showProfile: false,
       // user state
-      isLoggued: false,
-      userId: "-1",
-      nickname: "",
-      firstname: "",
-      lastname: "",
-      email: "",
+      user: {
+        isLoggued: false,
+        id: "-1",
+        nickname: "",
+        firstname: "",
+        lastname: "",
+        email: "",
+      },
     };
   },
   async mounted() {
@@ -50,12 +52,12 @@ export default {
 
       console.log(response.data);
       // set user state
-      this.userId = response.data.id;
-      this.nickname = response.data.nickname;
-      this.firstname = response.data.firstname;
-      this.lastname = response.data.lastname;
-      this.email = response.data.email;
-      this.isLoggued = true;
+      this.user.id = response.data.id;
+      this.user.nickname = response.data.nickname;
+      this.user.firstname = response.data.firstname;
+      this.user.lastname = response.data.lastname;
+      this.user.email = response.data.email;
+      this.user.isLoggued = true;
     } catch (error) {
       console.log(error.message);
     }
@@ -81,4 +83,6 @@ export default {
 @import "styles/cookie-consent";
 @import "styles/cookie-consent-bottom";
 @import "styles/cookie-consent-transition";
+@import "styles/modal.scss";
+@import "styles/form.scss";
 </style>

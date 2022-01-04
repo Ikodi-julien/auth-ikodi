@@ -1,17 +1,35 @@
 <template>
-  <form @submit.prevent="onSubmit">
-    <input type="text" name="firstname" placeholder="Prénom" v-model="firstname" />
-    <input type="text" name="lastname" placeholder="Nom" v-model="lastname" />
-    <input type="email" name="email" placeholder="Email" v-model="email" />
+  <form @submit.prevent="onSubmit" class="partial">
     <div class="group">
-      <input
-        type="password"
-        name="password1"
-        placeholder="Mot de passe"
-        @input="checkPwd1"
-        v-model="password1"
-        :class="this.isPwd1Ok ? '--valid' : ''"
-      />
+      <div class="inputrow">
+        <label for="password">Mot de passe actuel :</label>
+        <input
+          type="password"
+          name="password"
+          placeholder=""
+          @input="checkPwd1"
+          v-model="password1"
+          :class="this.isPwd1Ok ? '--valid' : ''"
+        />
+      </div>
+      <span :class="this.isPwd1Ok ? '--valid' : '--invalid'">
+        {{
+          this.isPwd1Ok ? "Ok !" : "Minimum 5 caractères dont au moins une majuscule et un nombre"
+        }}
+      </span>
+    </div>
+    <div class="group">
+      <div class="inputrow">
+        <label for="password1">Nouveau :</label>
+        <input
+          type="password"
+          name="password1"
+          placeholder="Nouveau mot de passe"
+          @input="checkPwd1"
+          v-model="password1"
+          :class="this.isPwd1Ok ? '--valid' : ''"
+        />
+      </div>
       <span :class="this.isPwd1Ok ? '--valid' : '--invalid'">
         {{
           this.isPwd1Ok ? "Ok !" : "Minimum 5 caractères dont au moins une majuscule et un nombre"
@@ -20,14 +38,17 @@
     </div>
 
     <div class="group">
-      <input
-        type="password"
-        name="password2"
-        placeholder="Confirmation du mot de passe"
-        v-model="password2"
-        @input="checkPwd2"
-        :class="this.isPwd1Ok && this.isPwd2Ok ? '--valid' : ''"
-      />
+      <div class="inputrow">
+        <label for="password2">Confirmation :</label>
+        <input
+          type="password"
+          name="password2"
+          placeholder="Confirmation"
+          v-model="password2"
+          @input="checkPwd2"
+          :class="this.isPwd1Ok && this.isPwd2Ok ? '--valid' : ''"
+        />
+      </div>
     </div>
     <input type="text" name="app" v-show="false" v-model="this.app" />
     <Button text="Valider" className="--blue" width="80%" />
@@ -41,7 +62,7 @@ import { BASE_URL } from "@/services/settings";
 import axios from "axios";
 
 export default {
-  name: "SignupForm",
+  name: "PasswordForm",
   components: {
     Button,
   },

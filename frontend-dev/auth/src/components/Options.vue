@@ -1,5 +1,5 @@
 <template>
-  <div class="options">
+  <div class="options" v-show="!user.isLoggued">
     <div class="options__socialaccounts">
       <a :href="`${this.GOOGLE_URL}?app=${this.app}`">
         <Button
@@ -29,8 +29,7 @@
       Mot de passe perdu ?
     </p>
     <Divider />
-
-    <div class="options__createprofile" v-show="!isLoggued">
+    <div class="options__wide">
       <Button
         @click="$emit('toggle-signup')"
         text="Créer un compte"
@@ -39,14 +38,45 @@
         dataTest="toggle-signup"
       />
     </div>
-    <div class="options__createprofile" v-show="isLoggued">
-      <Button
-        @click="$emit('toggle-profile')"
-        text="Modifier mes infos"
-        width="80%"
-        className="--grey"
-        dataTest="toggle-profile"
-      />
+  </div>
+
+  <div class="options" v-show="user.isLoggued">
+    <h2>
+      Vous êtes connecté en tant que <br /><em>{{ this.user.nickname }}</em>
+    </h2>
+    <!-- <div class="options__user__details">
+      <p>id: {{ this.user.id }}</p>
+      <p>pseudo: {{ this.user.nickname }}</p>
+      <p>prénom: {{ this.user.firstname }}</p>
+      <p>nom: {{ this.user.lastname }}</p>
+      <p>email: {{ this.user.email }}</p>
+    </div> -->
+    <div class="options__wide">
+      <div class="options__wide">
+        <Button
+          @click="$emit('toggle-profile')"
+          text="Modifier mes infos"
+          width="80%"
+          className="--blue"
+          dataTest="toggle-profile"
+        />
+      </div>
+      <div class="options__wide">
+        <Button
+          @click="() => console.log('hé')"
+          text="Déconnexion"
+          width="80%"
+          className="--grey"
+        />
+      </div>
+      <div class="options__wide">
+        <Button
+          @click="() => console.log('hoho !')"
+          text="Supprimer ce compte"
+          width="80%"
+          className="--grey"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -71,9 +101,9 @@ export default {
     };
   },
   props: {
-    isLoggued: {
-      type: Boolean,
-      default: false,
+    user: {
+      type: Object,
+      default: { isLoggued: false },
     },
   },
   mounted() {
@@ -123,12 +153,36 @@ export default {
     text-align: center;
     cursor: pointer;
   }
-  &__createprofile {
+  &__wide {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    height: $h-createprofile;
+    padding: 1rem 0;
     width: 100%;
+  }
+
+  & h2 {
+    padding: 2rem 1rem;
+    font-size: 1.3rem;
+    text-align: center;
+    line-height: 2.5rem;
+    & em {
+      display: inline-block;
+      font-size: 1.2em;
+      padding: 0.5rem;
+      border-bottom: 1px solid rgb(16, 92, 105);
+    }
+  }
+
+  &__user {
+    &__details {
+      width: 100%;
+      padding: 2rem;
+      & p {
+        margin: 1rem 0;
+      }
+    }
   }
   @media (max-width: 750px) {
     width: 80%;
