@@ -62,20 +62,10 @@
         />
       </div>
       <div class="options__wide">
-        <Button
-          @click="() => console.log('hé')"
-          text="Déconnexion"
-          width="80%"
-          className="--grey"
-        />
+        <Button @click="logout" text="Déconnexion" width="80%" className="--grey" />
       </div>
       <div class="options__wide">
-        <Button
-          @click="() => console.log('hoho !')"
-          text="Supprimer ce compte"
-          width="80%"
-          className="--grey"
-        />
+        <Button @click="deleteMe" text="Supprimer ce compte" width="80%" className="--grey" />
       </div>
     </div>
   </div>
@@ -86,6 +76,7 @@ import Button from "./Button.vue";
 import Divider from "./Divider.vue";
 import LoginForm from "./LoginForm.vue";
 import { GOOGLE_URL, GITHUB_URL } from "../services/settings";
+import axios from "axios";
 
 export default {
   components: {
@@ -104,6 +95,38 @@ export default {
     user: {
       type: Object,
       default: { isLoggued: false },
+    },
+  },
+  methods: {
+    logout() {
+      console.log("youou");
+      try {
+        axios.post(
+          "http://localhost:5050/logout",
+          {},
+          {
+            withCredentials: true,
+          }
+        );
+        alert("Vous êtes déconnecté");
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    deleteMe() {
+      if (
+        window.confirm(
+          `Confirmez-vous la suppression du compte associé à ${this.user.email} ? Cette action est définitive.`
+        )
+      ) {
+        try {
+          axios.delete("http://localhost:5050/me/credentials", { withCredentials: true });
+          window.location.reload();
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
   },
   mounted() {

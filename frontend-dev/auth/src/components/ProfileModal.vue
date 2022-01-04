@@ -4,10 +4,14 @@
       <i class="fas fa-times" @click="$emit('toggle-profile')"></i>
       <h1 class="modal__title">Modifier le Profil</h1>
       <Divider />
-      <ProfileForm @toggle-profileform="$emit('toggle-profileform')" :user="user" />
-      <h2 class="modal__title">Modifier le mot de passe</h2>
+      <ProfileForm @toggle-profile="$emit('toggle-profile')" :user="user" />
+      <h2 class="modal__title" v-show="!user.apisignup">Modifier le mot de passe</h2>
       <Divider />
-      <PasswordForm @toggle-passform="$emit('toggle-passform')" :user="user" />
+      <PasswordForm
+        @toggle-passform="$emit('toggle-passform')"
+        v-show="!user.apisignup"
+        :user="user"
+      />
     </div>
   </section>
 </template>

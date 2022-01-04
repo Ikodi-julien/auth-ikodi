@@ -43,6 +43,7 @@ export default {
         firstname: "",
         lastname: "",
         email: "",
+        apisignup: false,
       },
     };
   },
@@ -57,6 +58,7 @@ export default {
       this.user.firstname = response.data.firstname;
       this.user.lastname = response.data.lastname;
       this.user.email = response.data.email;
+      this.user.apisignup = response.data.apisignup;
       this.user.isLoggued = true;
     } catch (error) {
       console.log(error.message);

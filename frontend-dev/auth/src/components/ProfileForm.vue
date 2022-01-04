@@ -2,21 +2,21 @@
   <form @submit.prevent="onSubmit" class="partial">
     <div class="inputrow">
       <label for="nickname">Pseudo :</label>
-      <input type="text" name="nickname" placeholder="Pseudo" v-model="nickname" />
+      <input type="text" name="nickname" v-model="user.nickname" />
     </div>
     <div class="inputrow">
       <label for="firstname">Prénom :</label>
-      <input type="text" name="firstname" placeholder="Prénom" v-model="firstname" />
+      <input type="text" name="firstname" placeholder="Prénom" v-model="user.firstname" />
     </div>
     <div class="inputrow">
       <label for="lastname">Nom :</label>
-      <input type="text" name="lastname" placeholder="Nom" v-model="lastname" />
+      <input type="text" name="lastname" placeholder="Nom" v-model="user.lastname" />
     </div>
     <div class="inputrow">
       <label for="email">Email :</label>
-      <input type="email" name="email" placeholder="Email" v-model="email" />
+      <input type="email" name="email" v-model="user.email" :disabled="user.apisignup" />
     </div>
-    <div class="inputrow">
+    <div class="inputrow" v-show="!user.apisignup">
       <label for="password">Vérification mot de passe :</label>
       <input type="password" name="password" v-model="password" />
     </div>
@@ -44,31 +44,25 @@ export default {
   },
   data() {
     return {
-      nickname: "",
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      app: "auth",
+      user: this.user,
+      password: null,
+      app: null,
     };
   },
-  mounted() {
+  created() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     this.app = urlParams.get("app");
-    this.nickname = this.user.nickname;
-    this.firstname = this.user.firstname;
-    this.lastname = this.user.lastname;
-    this.email = this.user.email;
   },
   methods: {
     async onSubmit() {
       const formData = {
-        nickname: this.nickname,
-        firstname: this.firstname,
-        lastname: this.lastname,
-        email: this.email,
-        password: this.password,
+        nickname: this.user.nickname,
+        firstname: this.user.firstname,
+        lastname: this.user.lastname,
+        email: this.user.email,
+        apisignup: this.user.apisignup,
+        password: this.user.apisignup ? "apisignup" : this.password,
         app: this.app,
       };
 
