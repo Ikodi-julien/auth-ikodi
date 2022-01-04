@@ -7,16 +7,10 @@
           type="password"
           name="password"
           placeholder=""
-          @input="checkPwd1"
-          v-model="password1"
-          :class="this.isPwd1Ok ? '--valid' : ''"
+          @input="checkPwd"
+          v-model="password"
         />
       </div>
-      <span :class="this.isPwd1Ok ? '--valid' : '--invalid'">
-        {{
-          this.isPwd1Ok ? "Ok !" : "Minimum 5 caractères dont au moins une majuscule et un nombre"
-        }}
-      </span>
     </div>
     <div class="group">
       <div class="inputrow">
@@ -74,9 +68,7 @@ export default {
   },
   data() {
     return {
-      firstname: "",
-      lastname: "",
-      email: "",
+      password: "",
       password1: "",
       password2: "",
       app: "auth",
@@ -92,27 +84,24 @@ export default {
   methods: {
     async onSubmit() {
       const formData = {
-        firstname: this.firstname,
-        lastname: this.lastname,
-        email: this.email,
-        password1: this.password1,
-        password2: this.password2,
+        password: this.password,
+        newPassword: this.password1,
         app: this.app,
       };
 
-      const isForm = controllers.verifySignupForm(formData);
-
-      if (!isForm.valid) return isForm.messages.forEach((message) => alert(message));
-
-      try {
-        const response = await axios.post(`${BASE_URL}/signup`, formData);
-        if (response.data.code) return controllers.alertCode(response.data.code);
-        if (response.data.message) {
-          alert(response.data.message);
-          this.$emit("toggle-signup");
+      if (this.isPwd1Ok && this.isPwd2Ok) {
+        try {
+          const response = await axios.put(`${BASE_URL}/me/password`, formData, {
+            withCredentials: true,
+          });
+          if (response.data.code) return controllers.alertCode(response.data.code);
+          if (response.data.message) {
+            alert(response.data.message);
+            this.$emit("toggle-profile");
+          }
+        } catch (error) {
+          error.response ? alert(error.response.data.message) : alert(error.toString());
         }
-      } catch (error) {
-        error.response ? alert(error.response.data.message) : alert(error.toString());
       }
     },
     checkPwd1() {
@@ -126,7 +115,7 @@ export default {
       return (this.isPwd2Ok = this.password1 === this.password2);
     },
   },
-  emits: ["toggle-signup"],
+  emits: ["toggle-profile"],
 };
 </script>
 

@@ -44,7 +44,6 @@ export default {
   },
   data() {
     return {
-      user: this.user,
       password: null,
       app: null,
     };

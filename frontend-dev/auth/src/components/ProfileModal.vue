@@ -8,7 +8,7 @@
       <h2 class="modal__title" v-show="!user.apisignup">Modifier le mot de passe</h2>
       <Divider />
       <PasswordForm
-        @toggle-passform="$emit('toggle-passform')"
+        @toggle-profile="$emit('toggle-profile')"
         v-show="!user.apisignup"
         :user="user"
       />

@@ -62,54 +62,22 @@ const controllers = {
     return { valid: true };
   },
   alertCode: function (code) {
-    switch (code) {
-      case "empty":
-        alert("Au moins un des champs n'est pas rempli");
-        break;
-
-      case "invalidemail":
-        alert("Le format de l'email est invalide");
-        break;
-
-      case "usernotindb":
-        alert("Cet email ne correspond à aucun compte connu");
-        break;
-
-      case "isapisignup":
-        alert(
-          "Compte créer à partir d'un compte Google ou Github ou autre, donc peut-être réessayer avec un de ceux là ?"
-        );
-        break;
-
-      case "diffpwd":
-        alert("Les mots de passe ne sont pas identiques");
-        break;
-
-      case "minname":
-        alert("Au minimun un nom ou un pseudo est nécessaire");
-        break;
-
-      case "exist":
-        alert(
-          "Un compte existe déjà pour cet email, utiliser le lien pour récupérer un mot de passe perdu"
-        );
-        break;
-
-      case "inactive":
-        alert(
-          "L'email pour ce compte n'a pas été confirmé. Vous pouvez soit suivre le lien reçu par mail (valable 10 minutes) ou recréer un compte puis valider le nouveau lien reçu"
-        );
-        break;
-
-      case "invalidpwd":
-        alert(
-          "Le mot de passe doit contenir au minimum 5 caractères dont au moins une majuscule et un nombre"
-        );
-        break;
-
-      default:
-        break;
-    }
+    const textData = {
+      empty: "Au moins un des champs n'est pas rempli",
+      invalidemail: "Le format de l'email est invalide",
+      usernotindb: "Cet email ne correspond à aucun compte connu",
+      isapisignup:
+        "Compte créer à partir d'un compte Google ou Github ou autre, donc peut-être réessayer avec un de ceux là ?",
+      diffpwd: "Les mots de passe ne sont pas identiques",
+      minname: "Au minimun un nom ou un pseudo est nécessaire",
+      exist:
+        "Un compte existe déjà pour cet email, utiliser le lien pour récupérer un mot de passe perdu",
+      inactive:
+        "L'email pour ce compte n'a pas été confirmé. Vous pouvez soit suivre le lien reçu par mail (valable 10 minutes) ou recréer un compte puis valider le nouveau lien reçu",
+      invalidpwd:
+        "Le mot de passe doit contenir au minimum 5 caractères dont au moins une majuscule et un nombre",
+    };
+    alert(textData[code]);
   },
 };
 export default controllers;
