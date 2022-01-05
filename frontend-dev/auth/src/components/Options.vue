@@ -77,6 +77,7 @@ import Divider from "./Divider.vue";
 import LoginForm from "./LoginForm.vue";
 import { GOOGLE_URL, GITHUB_URL } from "../services/settings";
 import axios from "axios";
+import { BASE_URL } from "../services/settings";
 
 export default {
   components: {
@@ -99,10 +100,9 @@ export default {
   },
   methods: {
     logout() {
-      console.log("youou");
       try {
         axios.post(
-          "http://localhost:5050/logout",
+          `${BASE_URL}/logout`,
           {},
           {
             withCredentials: true,
@@ -121,7 +121,7 @@ export default {
         )
       ) {
         try {
-          axios.delete("http://localhost:5050/me/credentials", { withCredentials: true });
+          axios.delete(`${BASE_URL}/me/credentials`, { withCredentials: true });
           window.location.reload();
         } catch (error) {
           console.log(error);
