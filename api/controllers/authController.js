@@ -91,8 +91,8 @@ module.exports = {
 
       req.body.password = password1;
       // status(409) at least one of "firstname", "lastname" or "nickname",
-      if (firstname === "" && lastname === "" && nickname === "")
-        return res.json({ code: "minname" });
+      // if (firstname === "" && lastname === "" && nickname === "")
+      //   return res.json({ code: "minname" });
 
       // status (303) if email already in database
       const { userId, active } = await queries.getOneByEmail(email);
@@ -105,7 +105,7 @@ module.exports = {
       if (userId) queries.deleteMe(userId);
 
       // Do signup
-      if (!nickname) nickname = `${firstname}-${lastname}`;
+      if (nickname === "" || !nickname) nickname = email.split("@")[0];
       const hash = await bcrypt.hash(password1, saltRounds);
       const newUser = await queries.insertUser({
         ...req.body,
@@ -148,7 +148,8 @@ module.exports = {
   updateMe: async (req, res) => {
     console.log("updateMe");
     const { id } = req.user;
-    const { firstname, lastname, nickname, password, email } = req.body;
+    const { firstname, lastname, nickname, password, email, apisignup } =
+      req.body;
     try {
       // status (412) if input empty
       if (email === "" || password === "")
@@ -168,9 +169,11 @@ module.exports = {
           return res.status(303).json({ message: "email already in db" });
       }
       // compare passwords
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) return res.status(403).json({ message: "invalid password" });
-
+      if (!user.apisignup) {
+        const match = await bcrypt.compare(password, user.password);
+        if (!match)
+          return res.status(403).json({ message: "invalid password" });
+      }
       // Do update
       const userUpdated = await queries.updateMe({ ...req.body, id });
 
@@ -178,7 +181,7 @@ module.exports = {
       const [accessToken, refreshToken] = jwtService.getTokens(userUpdated);
       res.cookie("access_token", accessToken, cookieService.options);
       res.cookie("refresh_token", refreshToken, cookieService.options);
-      res.status(200).json({ message: "credentials updated" });
+      res.status(200).json({ message: "Infos utilisateur modifiées" });
     } catch (error) {
       console.log(error);
       res.sendStatus(500);
@@ -202,7 +205,10 @@ module.exports = {
       // compare passwords
       const user = await queries.getMe(id);
       const match = await bcrypt.compare(password, user.password);
-      if (!match) return res.status(403).json({ message: "invalid password" });
+      if (!match)
+        return res
+          .status(403)
+          .json({ message: "Ce n'est pas le bon mot de passe" });
 
       // Do update
       const hash = await bcrypt.hash(newPassword, saltRounds);
