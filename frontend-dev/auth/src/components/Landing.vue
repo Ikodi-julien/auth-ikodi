@@ -33,16 +33,18 @@ export default {
 <style scoped lang="scss">
 @import "../styles/vars.scss";
 .landing {
-  height: 50%;
+  height: fit-content;
   width: 80%;
   max-width: 900px;
   display: flex;
   justify-content: center;
   align-items: center;
 
+  @media (max-width: 1100px) {
+    width: 95%;
+  }
   @media (max-width: 750px) {
     flex-direction: column;
-    height: 80%;
     width: 100%;
   }
 }

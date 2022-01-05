@@ -11,7 +11,9 @@
         @toggle-profile="$emit('toggle-profile')"
         v-show="!user.apisignup"
         :user="user"
+        :pwdIsVisible="pwdIsVisible"
       />
+      <p><em>* Saisie obligatoire</em></p>
     </div>
   </section>
 </template>
@@ -42,4 +44,4 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style></style>

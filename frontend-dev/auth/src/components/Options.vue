@@ -15,11 +15,11 @@
           icon='<img src="https://img.icons8.com/fluency/25/000000/github.png"/>'
         />
       </a>
-      <Button
+      <!-- <Button
         text="Linkedin"
         color="#bdbdc6"
         icon='<img src="https://img.icons8.com/fluency/25/000000/linkedin.png"/>'
-      />
+      /> -->
     </div>
     <Divider text="OU" />
     <div class="options__formcontainer">
@@ -125,6 +125,7 @@ export default {
           window.location.reload();
         } catch (error) {
           console.log(error);
+          alert(`Il semble que cela n'a pas fonctionné, pour cette raison: "${error.toString()}"`);
         }
       }
     },
@@ -153,10 +154,11 @@ export default {
 
   &__socialaccounts {
     height: $h-socialheight;
+    min-height: 80px;
     display: flex;
     flex-wrap: wrap;
     width: 80%;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 
     @media (max-width: 500px) {
@@ -165,13 +167,14 @@ export default {
   }
   &__formcontainer {
     height: $h-formcontainer;
+    min-height: 250px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   &__forgotpassword {
-    height: $h-forgotpass;
+    padding: 1rem;
     width: 100%;
     text-align: center;
     cursor: pointer;

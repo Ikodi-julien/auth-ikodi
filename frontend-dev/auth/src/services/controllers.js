@@ -19,7 +19,8 @@ const controllers = {
       if (formData[item] === "")
         return { valid: false, message: "Il manque l'email ou le mot de passe" };
     }
-    if (formData.password.length < 5)
+    // password don't pass regex
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$/.test(formData.password))
       return {
         valid: false,
         message:
@@ -32,8 +33,8 @@ const controllers = {
     let messages = [];
 
     // empty input
-    if (formData.firstname === "" && formData.lastname === "")
-      messages.push("Renseigner au moins un du prénom ou du nom");
+    // if (formData.firstname === "" && formData.lastname === "")
+    //   messages.push("Renseigner au moins un du prénom ou du nom");
     if (formData.email === "" || formData.password1 === "" || formData.password2 === "")
       messages.push("Email et mots de passe obligatoires");
 
@@ -42,9 +43,9 @@ const controllers = {
       messages.push("Les mots de passe sont différents");
 
     // password don't pass regex
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/.test(formData.password1))
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$/.test(formData.password1))
       messages.push(
-        "Le mot de passe doit être composé de 5 caractères au minimum dont au moins une majuscule et un nombre."
+        "Le mot de passe doit être composé de 8 caractères au minimum dont au moins une majuscule et un nombre."
       );
 
     if (messages.length) return { valid: false, messages };
@@ -54,9 +55,10 @@ const controllers = {
     let messages = [];
 
     // empty input
-    if (formData.firstname === "" && formData.lastname === "" && formData.nicckname === "")
-      messages.push("Renseigner au moins un du prénom ou du nom");
-    if (formData.email === "") messages.push("Email et mots de passe obligatoires");
+    // if (formData.firstname === "" && formData.lastname === "" && formData.nicckname === "")
+    // messages.push("Renseigner au moins un du prénom ou du nom");
+    if (formData.email === "" || formData.password === "")
+      messages.push("Email et mot de passe obligatoires");
 
     if (messages.length) return { valid: false, messages };
     return { valid: true };
@@ -75,9 +77,10 @@ const controllers = {
       inactive:
         "L'email pour ce compte n'a pas été confirmé. Vous pouvez soit suivre le lien reçu par mail (valable 10 minutes) ou recréer un compte puis valider le nouveau lien reçu",
       invalidpwd:
-        "Le mot de passe doit contenir au minimum 5 caractères dont au moins une majuscule et un nombre",
+        "Le mot de passe doit contenir au minimum 8 caractères dont au moins une majuscule et un nombre",
     };
-    alert(textData[code]);
+    let text = textData[code] || "Oups, ce n'est pas le message prévu...";
+    alert(text);
   },
 };
 export default controllers;

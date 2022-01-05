@@ -1,33 +1,59 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <input type="text" name="firstname" placeholder="Prénom" v-model="firstname" />
-    <input type="text" name="lastname" placeholder="Nom" v-model="lastname" />
-    <input type="email" name="email" placeholder="Email" v-model="email" />
-    <div class="group">
-      <input
-        type="password"
-        name="password1"
-        placeholder="Mot de passe"
-        @input="checkPwd1"
-        v-model="password1"
-        :class="this.isPwd1Ok ? '--valid' : ''"
-      />
-      <span :class="this.isPwd1Ok ? '--valid' : '--invalid'">
-        {{
-          this.isPwd1Ok ? "Ok !" : "Minimum 5 caractères dont au moins une majuscule et un nombre"
-        }}
-      </span>
+    <div class="inputrow">
+      <label for="nickname">Pseudo :</label>
+      <input type="text" name="nickname" placeholder="Pseudo" v-model="nickname" />
+    </div>
+    <div class="inputrow">
+      <label for="firstname">Prénom :</label>
+      <input type="text" name="firstname" placeholder="Prénom" v-model="firstname" />
+    </div>
+
+    <div class="inputrow">
+      <label for="lastname">Nom :</label>
+      <input type="text" name="lastname" placeholder="Nom" v-model="lastname" />
+    </div>
+
+    <div class="inputrow">
+      <label for="email"><span>*</span>Email :</label>
+      <input type="email" name="email" placeholder="Email" v-model="email" />
     </div>
 
     <div class="group">
-      <input
-        type="password"
-        name="password2"
-        placeholder="Confirmation du mot de passe"
-        v-model="password2"
-        @input="checkPwd2"
-        :class="this.isPwd1Ok && this.isPwd2Ok ? '--valid' : ''"
-      />
+      <div class="inputrow">
+        <label for="password1"><span>*</span>Mot de passe :</label>
+        <input
+          :type="pwdIsVisible ? 'text' : 'password'"
+          name="password1"
+          placeholder="Choix du mdp"
+          minlength="8"
+          @input="checkPwd1"
+          v-model="password1"
+          :class="this.isPwd1Ok ? '--valid' : ''"
+        />
+        <FontAwesomeIcon :icon="visibleIcon" class="icon" @click="toggleVisible" />
+        <span :class="this.isPwd1Ok ? '--valid' : '--invalid pwdInfo'">
+          {{
+            this.isPwd1Ok ? "Ok !" : "Minimum 8 caractères dont au moins une majuscule et un nombre"
+          }}
+        </span>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="inputrow">
+        <label for="password2"><span>*</span>Confirmation :</label>
+        <input
+          :type="pwdIsVisible ? 'text' : 'password'"
+          name="password2"
+          placeholder="Confirmation du mdp"
+          minlength="8"
+          v-model="password2"
+          @input="checkPwd2"
+          :class="this.isPwd1Ok && this.isPwd2Ok ? '--valid' : ''"
+        />
+        <FontAwesomeIcon :icon="visibleIcon" class="icon" @click="toggleVisible" />
+      </div>
     </div>
     <input type="text" name="app" v-show="false" v-model="this.app" />
     <Button text="Valider" className="--blue" width="80%" />
@@ -39,11 +65,14 @@ import Button from "./Button.vue";
 import controllers from "@/services/controllers";
 import { BASE_URL } from "@/services/settings";
 import axios from "axios";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default {
   name: "SignupForm",
   components: {
     Button,
+    FontAwesomeIcon,
   },
   props: {
     user: {
@@ -53,6 +82,7 @@ export default {
   },
   data() {
     return {
+      nickname: "",
       firstname: "",
       lastname: "",
       email: "",
@@ -61,7 +91,13 @@ export default {
       app: "auth",
       isPwd1Ok: false,
       isPwd2Ok: false,
+      pwdIsVisible: false,
     };
+  },
+  computed: {
+    visibleIcon() {
+      return this.pwdIsVisible ? faEyeSlash : faEye;
+    },
   },
   mounted() {
     const queryString = window.location.search;
@@ -71,6 +107,7 @@ export default {
   methods: {
     async onSubmit() {
       const formData = {
+        nickname: this.nickname,
         firstname: this.firstname,
         lastname: this.lastname,
         email: this.email,
@@ -96,7 +133,7 @@ export default {
     },
     checkPwd1() {
       // console.log('checkPwd1');
-      const matchRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/.test(this.password1);
+      const matchRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$/.test(this.password1);
       this.isPwd1Ok = matchRegex;
       this.checkPwd2();
     },
@@ -104,9 +141,10 @@ export default {
       console.log("checkPwd2");
       return (this.isPwd2Ok = this.password1 === this.password2);
     },
+    toggleVisible() {
+      this.pwdIsVisible = !this.pwdIsVisible;
+    },
   },
   emits: ["toggle-signup"],
 };
 </script>
-
-<style lang="scss"></style>

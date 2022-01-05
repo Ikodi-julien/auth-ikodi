@@ -2,27 +2,30 @@
   <form @submit.prevent="onSubmit" class="partial">
     <div class="group">
       <div class="inputrow">
-        <label for="password">Mot de passe actuel :</label>
+        <label for="password"><span>*</span>Mot de passe :</label>
         <input
-          type="password"
+          :type="pwdIsVisible ? 'text' : 'password'"
           name="password"
-          placeholder=""
+          placeholder="Mot de passe actuel"
+          max="250"
           @input="checkPwd"
           v-model="password"
         />
+        <FontAwesomeIcon :icon="visibleIcon" class="icon" @click="toggleVisible" />
       </div>
     </div>
     <div class="group">
       <div class="inputrow">
-        <label for="password1">Nouveau :</label>
+        <label for="password1"><span>*</span>Nouveau :</label>
         <input
-          type="password"
+          :type="pwdIsVisible ? 'text' : 'password'"
           name="password1"
           placeholder="Nouveau mot de passe"
           @input="checkPwd1"
           v-model="password1"
           :class="this.isPwd1Ok ? '--valid' : ''"
         />
+        <FontAwesomeIcon :icon="visibleIcon" class="icon" @click="toggleVisible" />
       </div>
       <span :class="this.isPwd1Ok ? '--valid' : '--invalid'">
         {{
@@ -33,19 +36,20 @@
 
     <div class="group">
       <div class="inputrow">
-        <label for="password2">Confirmation :</label>
+        <label for="password2"><span>*</span>Confirmation :</label>
         <input
-          type="password"
+          :type="pwdIsVisible ? 'text' : 'password'"
           name="password2"
-          placeholder="Confirmation"
+          placeholder="Nouveau mot de passe"
           v-model="password2"
           @input="checkPwd2"
           :class="this.isPwd1Ok && this.isPwd2Ok ? '--valid' : ''"
         />
+        <FontAwesomeIcon :icon="visibleIcon" class="icon" @click="toggleVisible" />
       </div>
     </div>
     <input type="text" name="app" v-show="false" v-model="this.app" />
-    <Button text="Valider" className="--blue" width="80%" />
+    <Button text="Valider le mot de passe" className="--blue" width="80%" />
   </form>
 </template>
 
@@ -54,11 +58,14 @@ import Button from "./Button.vue";
 import controllers from "@/services/controllers";
 import { BASE_URL } from "@/services/settings";
 import axios from "axios";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default {
   name: "PasswordForm",
   components: {
     Button,
+    FontAwesomeIcon,
   },
   props: {
     user: {
@@ -74,7 +81,13 @@ export default {
       app: "auth",
       isPwd1Ok: false,
       isPwd2Ok: false,
+      pwdIsVisible: false,
     };
+  },
+  computed: {
+    visibleIcon() {
+      return this.pwdIsVisible ? faEyeSlash : faEye;
+    },
   },
   mounted() {
     const queryString = window.location.search;
@@ -106,7 +119,7 @@ export default {
     },
     checkPwd1() {
       // console.log('checkPwd1');
-      const matchRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/.test(this.password1);
+      const matchRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$/.test(this.password1);
       this.isPwd1Ok = matchRegex;
       this.checkPwd2();
     },
@@ -114,9 +127,12 @@ export default {
       console.log("checkPwd2");
       return (this.isPwd2Ok = this.password1 === this.password2);
     },
+    toggleVisible(event) {
+      this.pwdIsVisible = !this.pwdIsVisible;
+    },
   },
   emits: ["toggle-profile"],
 };
 </script>
 
-<style lang="scss"></style>
+<style></style>

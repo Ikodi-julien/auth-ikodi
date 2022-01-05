@@ -54,6 +54,7 @@ export default {
 <style scoped lang="scss">
 @import "../styles/vars.scss";
 .btn {
+  align-self: center;
   display: flex;
   justify-content: center;
   align-items: center;

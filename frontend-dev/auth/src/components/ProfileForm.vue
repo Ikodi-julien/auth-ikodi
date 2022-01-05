@@ -13,12 +13,13 @@
       <input type="text" name="lastname" placeholder="Nom" v-model="user.lastname" />
     </div>
     <div class="inputrow">
-      <label for="email">Email :</label>
+      <label for="email"><span>*</span>Email :</label>
       <input type="email" name="email" v-model="user.email" :disabled="user.apisignup" />
     </div>
     <div class="inputrow" v-show="!user.apisignup">
-      <label for="password">Vérification mot de passe :</label>
-      <input type="password" name="password" v-model="password" />
+      <label for="password"><span>*</span>Mot de passe :</label>
+      <input :type="pwdIsVisible ? 'text' : 'password'" name="password" v-model="password" />
+      <FontAwesomeIcon :icon="visibleIcon" class="icon" @click="toggleVisible" />
     </div>
     <input type="text" name="app" v-show="false" v-model="this.app" />
     <Button text="Valider le profil" className="--blue" width="80%" />
@@ -29,12 +30,15 @@
 import Button from "./Button.vue";
 import controllers from "@/services/controllers";
 import { BASE_URL } from "@/services/settings";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import axios from "axios";
 
 export default {
   name: "ProfileForm",
   components: {
     Button,
+    FontAwesomeIcon,
   },
   props: {
     user: {
@@ -44,9 +48,15 @@ export default {
   },
   data() {
     return {
-      password: null,
+      password: "",
       app: null,
+      pwdIsVisible: false,
     };
+  },
+  computed: {
+    visibleIcon() {
+      return this.pwdIsVisible ? faEyeSlash : faEye;
+    },
   },
   created() {
     const queryString = window.location.search;
@@ -82,9 +92,10 @@ export default {
         error.response ? alert(error.response.data.message) : alert(error.toString());
       }
     },
+    toggleVisible() {
+      this.pwdIsVisible = !this.pwdIsVisible;
+    },
   },
   emits: ["toggle-profile"],
 };
 </script>
-
-<style lang="scss"></style>
