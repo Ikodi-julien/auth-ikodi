@@ -25,13 +25,13 @@
           v-model="password1"
           :class="this.isPwd1Ok ? '--valid' : ''"
         />
+        <span :class="this.isPwd1Ok ? '--valid' : '--invalid'">
+          {{
+            this.isPwd1Ok ? "Ok !" : "Minimum 8 caractères dont au moins une majuscule et un nombre"
+          }}
+        </span>
         <FontAwesomeIcon :icon="visibleIcon" class="icon" @click="toggleVisible" />
       </div>
-      <span :class="this.isPwd1Ok ? '--valid' : '--invalid'">
-        {{
-          this.isPwd1Ok ? "Ok !" : "Minimum 5 caractères dont au moins une majuscule et un nombre"
-        }}
-      </span>
     </div>
 
     <div class="group">
@@ -119,7 +119,7 @@ export default {
     },
     checkPwd1() {
       // console.log('checkPwd1');
-      const matchRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$/.test(this.password1);
+      const matchRegex = controllers.testRegexPwd(this.password1);
       this.isPwd1Ok = matchRegex;
       this.checkPwd2();
     },

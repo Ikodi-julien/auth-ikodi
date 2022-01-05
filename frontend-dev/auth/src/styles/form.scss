@@ -68,10 +68,36 @@ form {
       @media screen and (max-width: 768px) {
         width: 100%;
       }
+
+      &:focus {
+        + span {
+          background-color: white;
+          border-radius: 4px;
+          padding: 4px 8px;
+          margin: 0 0 8px 0;
+          position: relative;
+          display: inline-block;
+
+          &.--invalid {
+            display: inline;
+            color: $grey;
+            font-style: italic;
+          }
+
+          &.--valid {
+            display: none;
+          }
+        }
+
+        &.--valid {
+          outline-color: green;
+        }
+      }
     }
     & .icon {
       position: absolute;
       right: 0;
+      top: 10px;
       width: 50px;
       height: 26px;
       padding: 0 0 10px;
@@ -88,32 +114,6 @@ form {
 
     span {
       display: none;
-    }
-
-    input {
-      &:focus {
-        + span {
-          background-color: white;
-          border-radius: 4px;
-          padding: 4px 8px;
-          margin: 0 0 8px 0;
-          position: relative;
-          display: inline-block;
-
-          &.--invalid {
-            color: $grey;
-            font-style: italic;
-          }
-
-          &.--valid {
-            display: none;
-          }
-        }
-
-        &.--valid {
-          outline-color: green;
-        }
-      }
     }
   }
 }

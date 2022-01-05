@@ -20,7 +20,7 @@ const controllers = {
         return { valid: false, message: "Il manque l'email ou le mot de passe" };
     }
     // password don't pass regex
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$/.test(formData.password))
+    if (!controllers.testRegexPwd(formData.password))
       return {
         valid: false,
         message:
@@ -43,7 +43,7 @@ const controllers = {
       messages.push("Les mots de passe sont différents");
 
     // password don't pass regex
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$/.test(formData.password1))
+    if (!controllers.testRegexPwd(formData.password1))
       messages.push(
         "Le mot de passe doit être composé de 8 caractères au minimum dont au moins une majuscule et un nombre."
       );
@@ -81,6 +81,9 @@ const controllers = {
     };
     let text = textData[code] || "Oups, ce n'est pas le message prévu...";
     alert(text);
+  },
+  testRegexPwd: function (pwd) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$/.test(pwd);
   },
 };
 export default controllers;

@@ -12,18 +12,20 @@
           :type="pwdIsVisible ? 'text' : 'password'"
           name="password"
           placeholder="Mot de passe"
+          minlength="8"
           max="250"
           @input="checkPwd"
           v-model="password"
           :class="this.isPwdOk ? '--valid' : ''"
         />
+
+        <span :class="this.isPwdOk ? '--valid' : '--invalid'">
+          {{
+            this.isPwdOk ? "Ok !" : "Minimum 8 caractères dont au moins une majuscule et un nombre"
+          }}
+        </span>
         <FontAwesomeIcon :icon="visibleIcon" class="icon" @click="toggleVisible" />
       </div>
-      <span :class="this.isPwdOk ? '--valid' : '--invalid'">
-        {{
-          this.isPwdOk ? "Ok !" : "Minimum 5 caractères dont au moins une majuscule et un nombre"
-        }}
-      </span>
     </div>
     <input type="text" name="app" v-show="false" v-model="this.app" />
     <Button @click="$emit('submit')" text="Connexion" className="--blue" width="80%" />
@@ -80,7 +82,7 @@ export default {
     },
     checkPwd() {
       // console.log('checkPwd1');
-      const matchRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/.test(this.password);
+      const matchRegex = controllers.testRegexPwd(this.password);
       this.isPwdOk = matchRegex;
     },
     toggleVisible(event) {
@@ -90,5 +92,3 @@ export default {
   emits: ["submit"],
 };
 </script>
-
-<style></style>
