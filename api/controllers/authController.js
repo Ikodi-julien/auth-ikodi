@@ -8,6 +8,7 @@ const cookieService = require("../services/cookie.service");
 const { FRONT_URL } = require("../services/settings");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
+const testRegexPwd = require("../services/testRegexPwd");
 
 module.exports = {
   /**
@@ -19,7 +20,7 @@ module.exports = {
   login: async (req, res, next) => {
     console.log("login");
     const { password, email, app } = req.body;
-    console.log(password, email, app);
+    // console.log(password, email, app);
     try {
       // Should return status (412) if input empty
       if (email === "" || password === "") {
@@ -86,8 +87,7 @@ module.exports = {
 
       // passwords
       if (password1 !== password2) return res.json({ code: "diffpwd" });
-      if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,50}$/.test(password1))
-        return res.json({ code: "invalidpwd" });
+      if (!testRegexPwd(password1)) return res.json({ code: "invalidpwd" });
 
       req.body.password = password1;
       // status(409) at least one of "firstname", "lastname" or "nickname",
