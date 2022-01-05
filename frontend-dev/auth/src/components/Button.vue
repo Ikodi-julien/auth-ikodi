@@ -87,4 +87,10 @@ export default {
   font-weight: 600;
   color: $lighter;
 }
+.--green {
+  border: none;
+  background-color: #167c16;
+  font-weight: 600;
+  color: $lighter;
+}
 </style>

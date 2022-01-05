@@ -34,7 +34,7 @@
         @click="$emit('toggle-signup')"
         text="Créer un compte"
         width="80%"
-        className="--grey"
+        className="--green"
         dataTest="toggle-signup"
       />
     </div>
@@ -44,13 +44,6 @@
     <h2>
       Vous êtes connecté en tant que <br /><em>{{ this.user.nickname }}</em>
     </h2>
-    <!-- <div class="options__user__details">
-      <p>id: {{ this.user.id }}</p>
-      <p>pseudo: {{ this.user.nickname }}</p>
-      <p>prénom: {{ this.user.firstname }}</p>
-      <p>nom: {{ this.user.lastname }}</p>
-      <p>email: {{ this.user.email }}</p>
-    </div> -->
     <div class="options__wide">
       <div class="options__wide">
         <Button
