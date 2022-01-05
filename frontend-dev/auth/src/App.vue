@@ -20,6 +20,7 @@ import SendPassModal from "./components/SendPassModal.vue";
 import ProfileModal from "./components/ProfileModal.vue";
 import CookieConsent from "./components/CookieConsent.vue";
 import axios from "axios";
+import { BASE_URL } from "./services/settings";
 
 export default {
   name: "App",
@@ -49,7 +50,7 @@ export default {
   },
   async mounted() {
     try {
-      const response = await axios.get("http://localhost:5050/me", { withCredentials: true });
+      const response = await axios.get(`${BASE_URL}/me`, { withCredentials: true });
 
       console.log(response.data);
       // set user state
