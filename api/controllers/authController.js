@@ -244,9 +244,9 @@ module.exports = {
     res.redirect("/");
   },
   redirect: (req, res) => {
-    let { app } = req.body;
+    const { app, email } = req.body;
     if (!app || app === "" || app === "null")
-      return res.render("login-success", { email: req.body.email });
+      return res.render("login-success", { email });
 
     const appUri =
       process.env.NODE_ENV === "production"
