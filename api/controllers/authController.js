@@ -43,7 +43,7 @@ module.exports = {
       // compare passwords
       const user = await queries.getMe(me.userId);
       const match = await bcrypt.compare(password, user.password);
-      if (!match) return res.redirect(`${FRONT_URL}/?code=invalidpwd`);
+      if (!match) return res.redirect(`${FRONT_URL}/?code=badpwd`);
       if (match) {
         // set JWT cookies http only
         const [accessToken, refreshToken] = jwtService.getTokens({

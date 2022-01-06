@@ -78,6 +78,7 @@ const controllers = {
         "L'email pour ce compte n'a pas été confirmé. Vous pouvez soit suivre le lien reçu par mail (valable 10 minutes) ou recréer un compte puis valider le nouveau lien reçu",
       invalidpwd:
         "Le mot de passe doit contenir au minimum 8 caractères dont au moins une majuscule et un nombre",
+      badpwd: "Ce n'est pas le mot de passe enregistré pour ce compte",
     };
     let text = textData[code] || "Oups, ce n'est pas le message prévu...";
     alert(text);
