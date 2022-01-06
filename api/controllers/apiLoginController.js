@@ -24,6 +24,7 @@ module.exports = {
     req.body = {};
     req.body.app = req.cookies["appname"];
     const { email } = req.credentials;
+    req.body.email = email;
     const { userId } = await queries.getOneByEmail(email);
 
     if (!userId && !req.loginCount) {
