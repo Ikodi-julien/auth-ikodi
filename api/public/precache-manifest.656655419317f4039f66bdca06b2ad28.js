@@ -1,7 +1,7 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c43d44a59632133b47a6",
-    "url": "/css/app.a3eb7222.css"
+    "revision": "040e27017eb4e516a4b8",
+    "url": "/css/app.7560d974.css"
   },
   {
     "revision": "15a4a1836b7425a6b1103436518ee08e",
@@ -16,6 +16,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/concord-portefolio.7c665a68.png"
   },
   {
+    "revision": "61bd20166f5fdedaaadb3f257a853ed4",
+    "url": "/img/feedback_portfolio.61bd2016.png"
+  },
+  {
     "revision": "600b61aa67d415020858a94275980ffe",
     "url": "/img/games_medley.600b61aa.png"
   },
@@ -28,12 +32,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/portfolio_portfolio.da9c0b79.png"
   },
   {
-    "revision": "d298427f607c08d29805305673fb55f0",
+    "revision": "7848fdca2595a2b4f90b2fc595d09f4f",
     "url": "/index.html"
   },
   {
-    "revision": "c43d44a59632133b47a6",
-    "url": "/js/app.4a462d97.js"
+    "revision": "040e27017eb4e516a4b8",
+    "url": "/js/app.6f8f76eb.js"
   },
   {
     "revision": "f2db01a1cf896945368e",

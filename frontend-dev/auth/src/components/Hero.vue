@@ -26,6 +26,10 @@
         <img src="../assets/multiplicorne_portfolio.png" alt="Multiplicorne" />
         <p>Multiplicorne</p>
       </a>
+      <a href="https://feedback.ikodi.eu">
+        <img src="../assets/feedback_portfolio.png" alt="Multiplicorne" />
+        <p>Feedback</p>
+      </a>
     </div>
     <h1 class="hero__text">Se connecter ou créer un compte</h1>
   </div>
