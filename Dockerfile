@@ -1,10 +1,18 @@
 FROM node:16
 WORKDIR /auth
 
-COPY ./package.json .
-COPY ./package-lock.json .
-RUN npm install --production
+COPY ./front/package.json ./front/
+COPY ./front/yarn.lock ./front/yarn.lock
+
+COPY ./api/package.json ./api/
+COPY ./api/package-lock.json ./api/package-lock.json
+
+RUN cd ./api && npm install --production
+RUN cd ./front && npm install --production
+
 COPY . .
-RUN npm run build
+
+RUN cd ./front && npm run build
+
 EXPOSE 5050
-CMD ["npm", "start"]
+CMD cd ./api && npm start
