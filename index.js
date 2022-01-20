@@ -4,8 +4,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const router = require("./routes/router");
 const PORT = process.env.PORT;
-const FRONT_PORT = process.env.FRONT_PORT;
-const APP_PORT = process.env.APP_PORT;
 
 const corsOptions = {
   origin:
@@ -21,9 +19,9 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
-app.set("views", "../front/dist/views");
+app.set("views", "./frontend/dist/views");
 app.set("view engine", "ejs");
-app.use(express.static("../front/dist"));
+app.use(express.static("./frontend/dist"));
 app.use(router);
 
 app.listen(process.env.PORT, () => {

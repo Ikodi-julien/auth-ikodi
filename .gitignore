@@ -3,6 +3,8 @@ node_modules/
 */dist
 dist/
 .env
+google_key*
+github_key*
 
 # local env files
 .env.local

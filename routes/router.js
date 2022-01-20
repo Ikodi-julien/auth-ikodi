@@ -34,7 +34,8 @@ const {
 /* -------------------------------------------------------- */
 
 router.get("/", (req, res) => {
-  res.sendFile(path.resolve("public/index.html"));
+  let filePath = path.join(__dirname, "../frontend/dist/index.html");
+  res.sendFile(filePath);
 });
 
 router.get("/doc", (req, res) => res.sendFile(resolve("doc.html")));
