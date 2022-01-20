@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production node index.js",
     "dev": "pm2 start index.js --watch -n auth-5050 -- NODE_ENV=develop",
     "generate-db": "sudo -i -u postgres psql -d ikodiauth -f /var/www/html/auth-ikodi/api/database/create.sql",
+    "dump-db": "sudo -i -u postgres pg_dump ikodiauth > database/init.sql",
     "deploy": "git pull && npm i && pm2 restart 9"
   },
   "repository": {
