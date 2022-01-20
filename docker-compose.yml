@@ -23,6 +23,8 @@ services:
       POSTGRES_USER: ${DB_OWNER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./database/create.sql:/docker-entrypoint-initdb.d/create.sql
 
   redis:
     image: redis:6
