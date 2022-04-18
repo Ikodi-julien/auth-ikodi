@@ -1,7 +1,7 @@
 const githubKey =
   process.env.NODE_ENV === "production"
-    ? require("./github_key")
-    : require("./github_key_local.json");
+    ? require("./keys/github_key")
+    : require("./keys/github_key_local.json");
 
 const {
   client_id,

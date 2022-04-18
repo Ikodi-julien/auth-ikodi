@@ -2,8 +2,8 @@ const { google } = require("googleapis");
 
 const OAuth2Data =
   process.env.NODE_ENV === "production"
-    ? require("./google_key")
-    : require("./google_key_local");
+    ? require("./keys/google_key")
+    : require("./keys/google_key_local");
 // const OAuth2Data = {
 //   web: {
 //     client_id: 1234,
