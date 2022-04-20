@@ -2,8 +2,9 @@ const chronofitQueries = require("../queries/chronofitQueries");
 
 module.exports = {
   getTrainings: async (req, res) => {
-    const data = await chronofitQueries.getTrainings();
-    res.json({ data });
+    const result = await chronofitQueries.getTrainings();
+    // console.log(result);
+    res.json(result);
   },
   setNewTraining: async (req, res) => {
     try {
@@ -13,7 +14,7 @@ module.exports = {
         training: req.body,
         userId,
       });
-
+      // console.log(newTraining.data);
       res.json(newTraining);
     } catch (error) {
       console.log(error);

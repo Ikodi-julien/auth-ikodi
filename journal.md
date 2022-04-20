@@ -4,6 +4,8 @@
 
 Dans le cadre de la nouvelle version de chronofit, ajout d'une table "trainings" avec contrainte de clé étrangère sur users.id pour stockage des entrainements format JSON. Création du script de démarrage 'create_table_trainings.sql'
 
+Création du router chronofitRouter et des routes GET /chronofit/trainings et POST /chronofit/new-training
+
 ## 23/11/2021 et les jours suivants
 
 - Poursuite de la rédaction des issues,

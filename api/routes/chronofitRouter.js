@@ -8,7 +8,7 @@ const {
   setNewTraining,
 } = require("../controllers/chronofitController");
 
-chronofitRouter.get("/chronofit/trainings", getTrainings);
+chronofitRouter.get("/chronofit/trainings-done", getTrainings);
 chronofitRouter.post("/chronofit/new-training", setNewTraining);
 
 module.exports = chronofitRouter;
