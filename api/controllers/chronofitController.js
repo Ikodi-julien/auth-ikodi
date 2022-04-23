@@ -11,7 +11,7 @@ module.exports = {
       const userId = 50;
       console.log(req.body);
       const newTraining = await chronofitQueries.insertTraining({
-        training: req.body,
+        ...req.body,
         userId,
       });
       // console.log(newTraining.data);

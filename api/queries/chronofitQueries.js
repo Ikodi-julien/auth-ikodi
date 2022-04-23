@@ -13,11 +13,18 @@ module.exports = {
    * @returns {Object} training_id
    */
   insertTraining: async (data) => {
-    const { training, userId } = data;
+    const { userId, name, type, duration, timecap, exos } = data;
 
-    const queryString = `INSERT INTO auth.trainings ("user_id", "training") VALUES ($1,$2) RETURNING id`;
+    const queryString = `INSERT INTO auth.trainings ("user_id", "name", "type", "duration", "timecap", "exos") VALUES ($1,$2,$3,$4,$5,$6) RETURNING id, user_id, name, type, duration, timecap, exos, created_at`;
 
-    const result = await db.query(queryString, [userId, training]);
+    const result = await db.query(queryString, [
+      userId,
+      name,
+      type,
+      duration,
+      timecap,
+      exos,
+    ]);
     return result.rows[0];
   },
 };
