@@ -3,7 +3,12 @@ const chronofitQueries = require("../queries/chronofitQueries");
 module.exports = {
   getTrainings: async (req, res) => {
     const result = await chronofitQueries.getTrainings();
-    // console.log(result);
+    console.log(result);
+    const trainingsDone = result.map((training) => {
+      // training.created_at = training.created_at.slice(0, 9);
+      console.log(training.date);
+      return training;
+    });
     res.json(result);
   },
   setNewTraining: async (req, res) => {
