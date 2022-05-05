@@ -2,7 +2,7 @@ const db = require("../database/psqlDB");
 
 module.exports = {
   getTrainings: async () => {
-    const queryString = `SELECT id, user_id, name, type, duration, timecap, exos, created_at, to_char(created_at, 'DD TMmon YYYY, HH24hMI') as date FROM auth.trainings`;
+    const queryString = `SELECT id, user_id, name, type, duration, timecap, exos, created_at, to_char(created_at, 'DD TMmon YYYY, HH24hMI') as date FROM auth.trainings ORDER BY created_at DESC`;
 
     const result = await db.query(queryString);
     // console.log(result);

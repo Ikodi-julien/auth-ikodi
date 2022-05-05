@@ -18,7 +18,7 @@ module.exports = {
    * @returns
    */
   login: async (req, res, next) => {
-    console.log("login");
+    // console.log("authController login");
     const { password, email, app } = req.body;
     // console.log(password, email, app);
     try {

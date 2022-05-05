@@ -6,6 +6,6 @@ module.exports = {
   FRONT_URL:
     process.env.NODE_ENV === "production"
       ? "https://auth.ikodi.eu"
-      : "http://localhost:8080",
+      : "http://localhost:5050",
   URL_CHUNK: process.env.NODE_ENV === "production" ? "https://" : "http://",
 };

@@ -15,7 +15,7 @@ module.exports = {
         // console.log('id value:', reply);
         if (reply === "login") return next();
 
-        console.log("in redis mw, 'tokens invalidated'");
+        console.log("in redis mw, 'tokens invalidated'", id);
         return res.status(401).json({ message: "tokens invalidated" });
       });
     } catch (error) {
