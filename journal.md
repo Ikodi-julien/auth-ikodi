@@ -1,5 +1,26 @@
 # Journal auth.ikodi
 
+## 07/05/2022
+
+Coté front, récupération de appName dans cookie et redirect si présent.
+A faire :
+
+- Supprimer le cookie après redirect
+- Vérifier que ok après le build,
+
+## 05/05/2022
+
+Fait un build de l'app spécial localhost pour dev de chronofit
+
+## 29/04/2022
+
+Formatage du timestamp dans la requête qui récupère les entrainements.
+Utiliser 'TMmon', TM pour 'translate mode' et 'mon' pour le mois en lettre abrégé.
+
+## 23/04/2022
+
+Modification du type de la colonne exos de la table trainings json -> json[]
+
 ## 18/04/22
 
 Dans le cadre de la nouvelle version de chronofit, ajout d'une table "trainings" avec contrainte de clé étrangère sur users.id pour stockage des entrainements format JSON. Création du script de démarrage 'create_table_trainings.sql'

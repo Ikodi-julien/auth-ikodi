@@ -11,6 +11,7 @@ const { redirect } = require("./authController");
 module.exports = {
   redirectUri: (req, res) => {
     const { app } = req.query;
+    console.log("redirect uri", app);
     let authUri;
     if (req.path === "/google") authUri = googleAuthUri;
     if (req.path === "/github") authUri = githubAuthUri;

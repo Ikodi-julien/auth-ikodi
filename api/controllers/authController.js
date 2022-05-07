@@ -20,7 +20,7 @@ module.exports = {
   login: async (req, res, next) => {
     // console.log("authController login");
     const { password, email, app } = req.body;
-    // console.log(password, email, app);
+    console.log("auth controller", password, email, app);
     try {
       // Should return status (412) if input empty
       if (email === "" || password === "") {

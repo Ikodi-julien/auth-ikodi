@@ -16,10 +16,10 @@
         />
       </a>
       <!-- <Button
-        text="Linkedin"
-        color="#bdbdc6"
-        icon='<img src="https://img.icons8.com/fluency/25/000000/linkedin.png"/>'
-      /> -->
+          text="Linkedin"
+          color="#bdbdc6"
+          icon='<img src="https://img.icons8.com/fluency/25/000000/linkedin.png"/>'
+        /> -->
     </div>
     <Divider text="OU" />
     <div class="options__formcontainer">
@@ -39,7 +39,6 @@
       />
     </div>
   </div>
-
   <div class="options" v-show="user.isLoggued">
     <h2>
       Vous êtes connecté en tant que <br /><em>{{ this.user.nickname }}</em>
@@ -125,7 +124,16 @@ export default {
   },
   mounted() {
     const queryString = window.location.search;
+    const appName = document.cookie.split("appname=")[1];
+    console.log("appName", appName);
+
+    if (appName) {
+      // document.cookie = "appname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location.href = `https://${appName}.ikodi.eu`;
+    }
+
     const urlParams = new URLSearchParams(queryString);
+    // console.log(urlParams.get("app"));
     this.app = urlParams.get("app");
   },
   emits: ["toggle-signup", "toggle-sendpass", "toggle-profile"],
