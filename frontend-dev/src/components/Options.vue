@@ -127,7 +127,7 @@ export default {
     const appName = document.cookie.split("appname=")[1];
     console.log("appName", appName);
 
-    if (appName !== "" && appName !== "null") {
+    if (appName && appName !== "" && appName !== "null") {
       document.cookie = "appname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       window.location.href = `https://${appName}.ikodi.eu`;
       return;
