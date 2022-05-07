@@ -97,12 +97,13 @@ form {
     & .icon {
       position: absolute;
       right: 0;
-      top: 10px;
+      bottom: 10px;
       width: 50px;
       height: 26px;
       padding: 0 0 10px;
       display: flex;
       align-items: center;
+      color: rgba(0, 0, 0, 0.4);
       @media screen and (max-width: 768px) {
         bottom: 10px;
       }

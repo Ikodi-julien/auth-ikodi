@@ -2,11 +2,10 @@
 
 ## 07/05/2022
 
-Coté front, récupération de appName dans cookie et redirect si présent.
-A faire :
+Coté front, récupération de appName dans cookie et redirect sur l'app origine si présent -> ok
 
-- Supprimer le cookie après redirect
-- Vérifier que ok après le build,
+- Supprimer le cookie après redirect -> ok
+- Vérifier que ok après le build ->
 
 ## 05/05/2022
 

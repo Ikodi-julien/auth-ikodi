@@ -128,8 +128,9 @@ export default {
     console.log("appName", appName);
 
     if (appName) {
-      // document.cookie = "appname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "appname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       window.location.href = `https://${appName}.ikodi.eu`;
+      return;
     }
 
     const urlParams = new URLSearchParams(queryString);
