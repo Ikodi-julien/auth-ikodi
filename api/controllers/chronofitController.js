@@ -2,28 +2,45 @@ const chronofitQueries = require("../queries/chronofitQueries");
 
 module.exports = {
   getTrainings: async (req, res) => {
-    const result = await chronofitQueries.getTrainings();
-    console.log(result);
-    const trainingsDone = result.map((training) => {
-      // training.created_at = training.created_at.slice(0, 9);
-      console.log(training.date);
-      return training;
-    });
-    res.json(result);
+    const { id } = req.user;
+    try {
+      const result = await chronofitQueries.getTrainings(id);
+      // console.log(result);
+      const trainingsDone = result.map((training) => {
+        // training.created_at = training.created_at.slice(0, 9);
+        return training;
+      });
+      res.json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error });
+    }
   },
   setNewTraining: async (req, res) => {
+    const { id } = req.user;
     try {
-      const userId = 50;
       console.log(req.body);
       const newTraining = await chronofitQueries.insertTraining({
         ...req.body,
-        userId,
+        userId: id,
       });
       // console.log(newTraining.data);
       res.json(newTraining);
     } catch (error) {
       console.log(error);
       res.sendStatus(500);
+    }
+  },
+  deleteTraining: async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    try {
+      const isDeleted = await chronofitQueries.deleteTraining({ id, userId });
+      res.json({ data: isDeleted ? true : false });
+    } catch (error) {
+      console.log("delete training error : ", error);
+      res.status(500).json({ error });
     }
   },
 };

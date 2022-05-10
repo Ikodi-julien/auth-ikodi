@@ -1,11 +1,14 @@
 # Journal auth.ikodi
 
+## 10/05/2022
+
+FEAT: Delete training in chronofitRouter.
+
 ## 07/05/2022
 
 Coté front, récupération de appName dans cookie et redirect sur l'app origine si présent -> ok
-
-- Supprimer le cookie après redirect -> ok
-- Vérifier que ok après le build ->
+Supprimer le cookie après redirect -> ok
+Vérifier que ok après le build -> ok (mais du m'y reprendre à trois fois)
 
 ## 05/05/2022
 
