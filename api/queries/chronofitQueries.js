@@ -1,11 +1,13 @@
 const db = require("../database/psqlDB");
 
 module.exports = {
-  getTrainings: async () => {
-    const queryString = `SELECT id, user_id, name, type, duration, timecap, exos, created_at, to_char(created_at, 'DD TMmon YYYY, HH24hMI') as date FROM auth.trainings ORDER BY created_at DESC`;
+  getTrainings: async (id) => {
+    const queryString = `SELECT id, user_id, name, type, duration, timecap, exos, created_at, to_char(created_at, 'DD TMmon YYYY, HH24hMI') as date FROM auth.trainings 
+    WHERE user_id=$1
+    ORDER BY created_at DESC`;
 
-    const result = await db.query(queryString);
-    // console.log(result);
+    const result = await db.query(queryString, [id]);
+    console.log("getTrainings", result);
     return result.rows;
   },
   /**
@@ -26,5 +28,17 @@ module.exports = {
       exos,
     ]);
     return result.rows[0];
+  },
+  deleteTraining: async (data) => {
+    const { id, userId } = data;
+    // console.log("deleteTraining : ", id, userId);
+    const queryString = "DELETE FROM auth.trainings WHERE id=$1 and user_id=$2";
+
+    try {
+      const result = await db.query(queryString, [id, userId]);
+      return result.rowCount ? true : false;
+    } catch (error) {
+      return error;
+    }
   },
 };
