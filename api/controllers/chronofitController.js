@@ -19,7 +19,7 @@ module.exports = {
   setNewTraining: async (req, res) => {
     const { id } = req.user;
     try {
-      console.log(req.body);
+      // console.log(req.body);
       const newTraining = await chronofitQueries.insertTraining({
         ...req.body,
         userId: id,
@@ -40,6 +40,21 @@ module.exports = {
       res.json({ data: isDeleted ? true : false });
     } catch (error) {
       console.log("delete training error : ", error);
+      res.status(500).json({ error });
+    }
+  },
+  updateTraining: async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user.id;
+    try {
+      const isPut = await chronofitQueries.updateTraining({
+        id,
+        userId,
+        ...req.body,
+      });
+      res.json({ data: isPut ? true : false });
+    } catch (error) {
+      console.log("update training error : ", error);
       res.status(500).json({ error });
     }
   },

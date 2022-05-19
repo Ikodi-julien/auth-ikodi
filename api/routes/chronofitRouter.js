@@ -7,9 +7,15 @@ const {
   getTrainings,
   setNewTraining,
   deleteTraining,
+  updateTraining,
 } = require("../controllers/chronofitController");
 
 chronofitRouter.get("/chronofit/trainings-done", jwtMW.verify, getTrainings);
+chronofitRouter.put(
+  "/chronofit/trainings-done/:id",
+  jwtMW.verify,
+  updateTraining
+);
 chronofitRouter.post("/chronofit/new-training", jwtMW.verify, setNewTraining);
 chronofitRouter.delete("/chronofit/training/:id", jwtMW.verify, deleteTraining);
 
