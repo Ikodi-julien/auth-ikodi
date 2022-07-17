@@ -1,8 +1,13 @@
 # Journal auth.ikodi
 
+## 17/07/2022
+
+Modification durée des cookies d'authentification à 1 mois.
+
 ## 10/05/2022
 
 FEAT: Delete training in chronofitRouter.
+Create trainings table on aws
 
 ## 07/05/2022
 
