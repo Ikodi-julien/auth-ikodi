@@ -1,26 +1,24 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
-const accessTokenLifeSpan = 3600;
-const refreshTokenLifeSpan = 3600*24*7;
+const accessTokenLifeSpan = 3600 * 24 * 7;
+const refreshTokenLifeSpan = 3600 * 24 * 30;
 
 const jwtService = {
-
   getTokens: (payload) => {
-    
     const accessToken = jwt.sign(payload, JWT_SECRET, {
-      expiresIn: accessTokenLifeSpan
+      expiresIn: accessTokenLifeSpan,
     });
     const refreshToken = jwt.sign(payload, JWT_SECRET, {
-      expiresIn: refreshTokenLifeSpan
-    })
-    
+      expiresIn: refreshTokenLifeSpan,
+    });
+
     return [accessToken, refreshToken];
   },
   getExpiredAccessToken: (payload) => {
     const expiredAccessToken = jwt.sign(payload, JWT_SECRET, {
-      expiresIn: 1
+      expiresIn: 1,
     });
     return expiredAccessToken;
-  }
-}
-module.exports = {jwtService, accessTokenLifeSpan, refreshTokenLifeSpan}
+  },
+};
+module.exports = { jwtService, accessTokenLifeSpan, refreshTokenLifeSpan };

@@ -7,7 +7,7 @@ module.exports = {
     ORDER BY created_at DESC`;
 
     const result = await db.query(queryString, [id]);
-    console.log("getTrainings", result);
+    // console.log("getTrainings", result);
     return result.rows;
   },
   /**
@@ -40,5 +40,26 @@ module.exports = {
     } catch (error) {
       return error;
     }
+  },
+  updateTraining: async (data) => {
+    const { id, userId, training } = data;
+
+    const queryString = `UPDATE auth.trainings 
+    SET "name"=$1, "type"=$2, "duration"=$3, "timecap"=$4, "exos"=$5 
+    WHERE auth.trainings.id = $6
+    AND auth.trainings.user_id = $7
+    RETURNING id`;
+
+    const result = await db.query(queryString, [
+      training.name,
+      training.type,
+      training.duration,
+      training.timecap,
+      training.exos,
+      id,
+      userId,
+    ]);
+    console.log("updateTraining", result);
+    return result.rows[0];
   },
 };
