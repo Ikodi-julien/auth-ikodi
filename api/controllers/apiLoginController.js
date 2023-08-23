@@ -24,6 +24,8 @@ module.exports = {
   login: async (req, res, next) => {
     req.body = {};
     req.body.app = req.cookies["appname"];
+    console.log("apiLoginController", req.cookies["appname"]);
+
     const { email } = req.credentials;
     req.body.email = email;
     const { userId } = await queries.getOneByEmail(email);
@@ -34,11 +36,18 @@ module.exports = {
     }
     // set JWT cookies http only
     const me = await queries.getMe(userId);
-    // console.log(me);
+    console.log("apiLoginController.me", me);
+
     const [accessToken, refreshToken] = jwtService.getTokens({
       ...me,
       password: "",
     });
+
+    console.log(
+      "apiLoginController.jwtService.getTokens",
+      accessToken,
+      refreshToken
+    );
 
     res.cookie("access_token", accessToken, cookieService.options);
     res.cookie("refresh_token", refreshToken, cookieService.options);
@@ -47,9 +56,10 @@ module.exports = {
     return redirect(req, res);
   },
   signup: async (req, res, next) => {
-    console.log("google signup");
+    console.log("apiLoginController.signup");
     let { firstname, lastname, nickname, password, email } = req.credentials;
-    // console.log(req.credentials);
+    console.log("apiLoginController", req.credentials);
+
     try {
       const hash = await bcrypt.hash(password, 10);
       const newUserId = await queries.insertUser({
@@ -60,7 +70,7 @@ module.exports = {
         email,
         apisignup: true,
       });
-      console.log("newUser", newUserId);
+      console.log("apiLoginController newUser", newUserId);
       return next();
     } catch (error) {
       console.log(error);

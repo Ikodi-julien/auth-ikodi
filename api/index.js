@@ -11,7 +11,7 @@ const PORT = process.env.PORT;
 const corsOptions = {
   origin:
     process.env.NODE_ENV === "production"
-      ? [/\.ikodi.eu\/?$/]
+      ? [/\.pellin.eu\/?$/]
       : [/^http:\/\/localhost\:\d{4}$/],
   credentials: true,
 };

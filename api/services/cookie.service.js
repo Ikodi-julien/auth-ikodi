@@ -5,8 +5,9 @@ module.exports = {
           httpOnly: true,
           sameSite: "None",
           secure: true,
-          domain: "ikodi.eu",
-          expires: new Date(new Date.now() + 3000000),
+          domain: "pellin.eu",
+          // Add 90 days to current date
+          maxAge: 60 * 60 * 1000 * 24 * 90,
         }
       : {
           httpOnly: true,

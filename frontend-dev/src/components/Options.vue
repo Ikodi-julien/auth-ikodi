@@ -129,12 +129,12 @@ export default {
 
     if (appName && appName !== "" && appName !== "null") {
       document.cookie = "appname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      window.location.href = `https://${appName}.ikodi.eu`;
+      window.location.href = `https://${appName}.pellin.eu`;
       return;
     }
 
     const urlParams = new URLSearchParams(queryString);
-    // console.log(urlParams.get("app"));
+    console.log("urlParam", urlParams.get("app"));
     this.app = urlParams.get("app");
   },
   emits: ["toggle-signup", "toggle-sendpass", "toggle-profile"],

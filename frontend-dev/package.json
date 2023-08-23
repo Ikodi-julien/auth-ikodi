@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && rm -rf ../api/public/* && cp -r ./dist/* ../api/public/ && mkdir ../api/public/views && cp -r ../api/views/* ../api/public/views/ ",
+    "build": "NODE_ENV=production vue-cli-service build && rm -rf ../api/public/* && cp -r ./dist/* ../api/public/ && mkdir ../api/public/views && cp -r ../api/views/* ../api/public/views/ ",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"

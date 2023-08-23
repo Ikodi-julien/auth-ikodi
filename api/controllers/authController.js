@@ -250,9 +250,10 @@ module.exports = {
 
     const appUri =
       process.env.NODE_ENV === "production"
-        ? `https://${app}.ikodi.eu`
+        ? `https://${app}.pellin.eu`
         : `${FRONT_URL}`;
-    // console.log('redirect to:', app);
+    // console.log(process.env.NODE_ENV);
+    console.log("redirect to:", app);
     return res.redirect(appUri);
   },
 };

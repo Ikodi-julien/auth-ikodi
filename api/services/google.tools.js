@@ -4,6 +4,7 @@ const OAuth2Data =
   process.env.NODE_ENV === "production"
     ? require("./keys/google_key")
     : require("./keys/google_key_local");
+// console.log("OAuth2Data", OAuth2Data);
 // const OAuth2Data = {
 //   web: {
 //     client_id: 1234,
@@ -37,6 +38,7 @@ const googleAuthUri = oAuth2Client.generateAuthUrl({
  * @param {string} code
  */
 const getGoogleAccountFromCode = async (code) => {
+  console.log("getGoogleAccountFromCode", code);
   try {
     // Gets the access token for the given code.
     const data = await oAuth2Client.getToken(code);
@@ -68,7 +70,7 @@ const getGoogleAccountFromCode = async (code) => {
       email,
     };
   } catch (error) {
-    console.log(error);
+    console.log("google.tools", error);
     return false;
   }
 };

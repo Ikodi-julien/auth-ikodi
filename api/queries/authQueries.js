@@ -1,4 +1,4 @@
-const db = require("../database/psqlDB");
+const { myQuery, myQueryReturnInsertId } = require("../database/mysqlDB");
 
 module.exports = {
   /**
@@ -7,26 +7,27 @@ module.exports = {
    * @returns
    */
   getOneByEmail: async (email) => {
-    const queryString = `SELECT id, apisignup, active, password FROM auth.users WHERE email=$1`;
+    const queryString = `SELECT id, apisignup, active, password FROM auth.users WHERE email= ?`;
+    const results = await myQuery(queryString, [email]);
 
-    const result = await db.query(queryString, [email]);
-
-    return result.rowCount
+    return results.length > 0
       ? {
-          userId: result.rows[0].id,
-          apisignup: result.rows[0].apisignup,
-          active: result.rows[0].active,
+          userId: results[0].id,
+          apisignup: results[0].apisignup,
+          active: results[0].active,
         }
       : {
           userId: false,
           active: false,
         };
   },
-  getMe: async (id) => {
-    const queryString = `SELECT "id", "firstname", "lastname", "nickname", "email", "password", "apisignup", "active" FROM auth.users WHERE id=$1`;
 
-    const result = await db.query(queryString, [id]);
-    return result.rows[0];
+  getMe: async (id) => {
+    const queryString = `SELECT id, firstname, lastname, nickname, email, password, apisignup, active FROM auth.users WHERE id= ?`;
+
+    const result = await myQuery(queryString, [id]);
+    console.log("getMe", id, result);
+    return result[0];
   },
   /**
    * Insert new user in table users
@@ -44,19 +45,20 @@ module.exports = {
       emailToken,
     } = data;
 
-    const queryString = `INSERT INTO auth.users ("firstname", "lastname", "nickname", "email", "password", "apisignup", "active", "emailtoken") VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id, firstname, lastname, nickname, email, apisignup, active`;
+    const queryString = `INSERT INTO auth.users (firstname, lastname, nickname, email, password, apisignup, active, emailtoken) VALUES ( ?,?,?,?,?,?,?,?)`;
 
-    const result = await db.query(queryString, [
+    const insertId = await myQueryReturnInsertId(queryString, [
       firstname,
       lastname,
       nickname,
       email,
       password,
       apisignup,
-      "false",
+      0,
       emailToken,
     ]);
-    return result.rows[0];
+    console.log("insertId", insertId);
+    return insertId;
   },
   /**
    * Delete a user from table users
@@ -64,45 +66,45 @@ module.exports = {
    * @returns {Number} returns id from user deleted
    */
   deleteMe: async (id) => {
-    const queryString = `DELETE FROM auth.users WHERE id=$1 RETURNING id`;
-    const result = await db.query(queryString, [id]);
-    return result.rows[0].id;
+    const queryString = `DELETE FROM auth.users WHERE id= ? RETURNING id`;
+    const result = await myQuery(queryString, [id]);
+    return result[0].id;
   },
   updateMe: async (data) => {
     const { id, firstname, lastname, nickname, email, apisignup } = data;
 
-    const queryString = `UPDATE auth.users SET "firstname"=$2, "lastname"=$3, "email"=$4, "nickname"=$5, "apisignup"=$6 WHERE id=$1 RETURNING *`;
+    const queryString = `UPDATE auth.users SET firstname= ?, lastname= ?, email= ?, nickname= ?, apisignup= ? WHERE id= ?`;
 
-    const result = await db.query(queryString, [
-      id,
+    const result = await myQuery(queryString, [
       firstname,
       lastname,
       email,
       nickname,
       apisignup,
+      id,
     ]);
     return result.rows[0];
   },
   updateMePassword: async (data) => {
     const { id, newPassword } = data;
 
-    const queryString = `UPDATE auth.users SET "password"=$2 WHERE id=$1 RETURNING id`;
+    const queryString = `UPDATE auth.users SET password= ? WHERE id= ? RETURNING id`;
 
-    const result = await db.query(queryString, [id, newPassword]);
+    const result = await myQuery(queryString, [newPassword, id]);
     return result.rows[0].id;
   },
   updateEmailToken: async (data) => {
     const { id, emailToken } = data;
 
-    const queryString = `UPDATE auth.users SET "emailtoken"=$2 WHERE id=$1 RETURNING id`;
+    const queryString = `UPDATE auth.users SET emailtoken= ? WHERE id= ? RETURNING id`;
 
-    const result = await db.query(queryString, [id, emailToken]);
+    const result = await myQuery(queryString, [emailToken, id]);
     return result.rows[0].id;
   },
   setActive: async (id) => {
-    const queryString = `UPDATE auth.users SET "active"=true, "emailtoken"=null WHERE id=$1 RETURNING id`;
+    const queryString = `UPDATE auth.users SET active=true, emailtoken=null WHERE id= ? `;
 
-    const result = await db.query(queryString, [id]);
+    const result = await myQuery(queryString, [id]);
     return result.rows[0].id;
   },
   /**
@@ -111,7 +113,7 @@ module.exports = {
    */
   count: async () => {
     const queryString = `SELECT * FROM auth.users`;
-    const result = await db.query(queryString);
+    const result = await myQuery(queryString);
     return result.rowCount;
   },
 };

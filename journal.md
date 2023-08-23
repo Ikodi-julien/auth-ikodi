@@ -1,5 +1,9 @@
 # Journal auth.ikodi
 
+## 23/07/2022
+
+Déploiement avec modif maxAge cookies à 3 mois -> ok
+
 ## 17/07/2022
 
 Modification durée des cookies d'authentification à 1 mois.
